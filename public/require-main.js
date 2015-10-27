@@ -1,0 +1,85 @@
+require.config({
+	baseUrl:"App",
+	paths:{
+		jquery:"./../Scripts/jquery-2.1.1",
+		angular:"./../Scripts/angular",
+		angularRoute:"./../Scripts/angular-state-route",
+		less:"./../Scripts/less.js-master/dist/less",
+		primus:"./../Scripts/primusClient",
+		angularPrimus:"./../Scripts/angular-primus",
+		angularAnimate:"./../Scripts/angular-animate",
+		angularMaterial:"./../Scripts/angularMaterial",
+		material:"./../Scripts/materialize-v0.97.1/materialize/js/materialize",
+		angularAria:"./../Scripts/angular-aria",
+		hammer:"./../Scripts/Hammer",
+		hammerJquery:"./../Scripts/jqueryHammer",
+		ngFx:"./../Scripts/ngFx",
+		tweenMax:"./../Scripts/tweenMax",
+		tweenLite:"./../Scripts/tweenLite"
+	},
+	shim:{
+		jquery:{
+			exports:"$"
+		},
+		angular:{
+			deps:["jquery"],
+			exports:"angular"
+		},
+		angularRoute:{
+			deps:["angular"]
+		},
+		App:{
+			deps:["angularRoute"]
+		},
+		less:{
+			exports:"less"
+		},
+		primus:{
+			exports:"Primus"
+		},
+		angularPrimus:{
+			deps:["angular","primus"],
+			exports:"primus"
+		},
+		angularAnimate:{
+			deps:["angular"]
+		},
+		material:{
+			deps:["jquery","hammerJquery"]
+		},
+		angularAria:{
+			deps:["angular"]
+		},
+		angularMaterial:{
+			deps:["angularAnimate","angularAria"]
+		},
+		tweenMax:{
+			deps:["jquery"],
+			exports:"TweenMax"
+		},
+		tweenLite:{
+			deps:["jquery"],
+			exports:"TweenMax"
+		},
+		ngFx:{
+			deps:["angular","angularAnimate","tweenMax"]
+		},
+		hammer:{
+			deps:["jquery"],
+			exports:"Hammer"
+		},
+		hammerJquery:{
+			deps:["jquery","hammer"]
+		}
+	}
+});
+window.name="NG_DEFER_BOOTSTRAP!";
+require(["hammer","hammerJquery"],function(Hammer){
+require(["angularRoute"],function(){
+	require(["App"],function(){
+		angular.element(document).ready(function(){
+			angular.resumeBootstrap();
+		});
+	});
+});
+});

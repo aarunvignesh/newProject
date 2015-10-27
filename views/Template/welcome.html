@@ -1,0 +1,58 @@
+
+<div class="textFieldDemo1">
+<div layout="column" class="row">
+	<div class="col s12 m6 l4 offset-m5 offset-l7 moveDown">	
+		<!-- <div class="sign-in-window col s12 m12 l12"> -->
+  		<md-card class="card z-depth-5 signInCard signIn animated" ng-class="{'flipInY':showSignIn && !signInWrong,'flipOutY':!showSignIn,'tada':showSignIn && signInWrong}">
+  			<div class="card-image">
+		  		<img ng-src="./Styles/cartoonFriends.png"/>
+		  		<span class="card-title signIn-card-title-text">Sign In</span>
+	  		</div>
+	  		<md-card-content>
+	  				<md-input-container>
+		         		<label>Email</label>
+		          		<input type="text" ng-model="userField" required/>
+	        		</md-input-container>
+	        	
+	        		<md-input-container class="pass-move-up">
+		         		<label>Password</label>
+		          		<input type="password" ng-model="passField" required/>
+	        		</md-input-container>
+        	</md-card-content>
+        	<div class="card-action">
+        		<md-button class="blue-text text-darken-1" ng-click="needSignUp();">Sign Up</md-button>
+        		<md-button class="md-raised md-primary right wave-effect" ng-click="submitSignInForm();">Sign In</md-button>
+        	</div>
+		</md-card>
+		</div>
+		<div class="col s12 m6 l4 offset-m5 offset-l7 moveDown">	
+		<md-card class="card z-depth-5 signInCard signUpCard animated" ng-class="{'flipInY':!showSignIn && !signUpWrong,'flipOutY':showSignIn && noFlipOnFirst,'ng-hide':!noFlipOnFirst,'tada':!showSignIn && signUpWrong}">
+			<div class="card-image">
+				<img ng-src="./Styles/joinUs (1).png"/>
+		  		<span class="card-title signIn-card-title-text signUpText">Sign Up</span>
+	  		</div>
+	  		<md-card-content>
+	  				<md-input-container>
+		         		<label>Email</label>
+		          		<input type="text" ng-model="newEmail"/>
+	        		</md-input-container>
+	        	
+	        		<md-input-container class="pass-move-up">
+		         		<label>Password</label>
+		          		<input type="password" ng-model="newPassword"/>
+	        		</md-input-container>
+
+	        		<md-input-container class="pass-move-up">
+		         		<label>Confirm Password</label>
+		          		<input type="password" ng-model="cnfPassword"/>
+	        		</md-input-container>
+        	</md-card-content>
+        	<div class="card-action sign-up-card-action">
+        		<md-button class="blue-text text-darken-1"  ng-click="backtoSignIn();">Have an Account?</md-button>
+        		<md-button class="md-raised md-primary right wave-effect" ng-click="signUpCreation();">Sign Up</md-button>
+        	</div>
+		</md-card>
+		</div>
+	</div>
+</div>
+</div>

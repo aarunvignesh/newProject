@@ -1,0 +1,38 @@
+
+module.exports=function(grunt){
+	grunt.initConfig({
+		requirejs: {
+		  	compile: {
+			    options: 
+			    {
+			      baseUrl: "public/App",
+			      mainConfigFile: "public/require-main.js",
+			      name: "App", // assumes a production build using almond
+			      out: "public/App.js",
+				  done: function(done, output) {
+				        var duplicates = require('rjs-build-analysis').duplicates(output);
+
+				        if (Object.keys(duplicates).length > 0) {
+				          grunt.log.subhead('Duplicates found in requirejs build:');
+				          for (var key in duplicates) {
+				            grunt.log.error(duplicates[key] + ": " + key);
+				          }
+				          return done(new Error('r.js built duplicate modules, please check the excludes option.'));
+				        } else {
+				          grunt.log.success("No duplicates found!");
+				        }
+
+				        done();
+	      			}
+			    }
+  			}
+		}
+	});
+
+	require('load-grunt-tasks')(grunt);
+
+	grunt.registerTask('default', [
+		'requirejs',
+		
+	]);	
+};
