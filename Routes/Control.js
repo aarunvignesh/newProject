@@ -46,7 +46,7 @@ var ctrl={
 		res.send({err:"User Auhentication Failed"});
 	},
 	fileRender:function(req,res){
-		res.render("index");
+		res.render(require('./../config')("htmlFile"));
 	},
 	knowErrorReason:function(req,res){
 		res.send(req.flash('message'));

@@ -71,9 +71,10 @@ require.config({
 		hammerJquery:{
 			deps:["jquery","hammer"]
 		}
-	}
+	},
+	deps:["App"]
 });
-window.name="NG_DEFER_BOOTSTRAP!";
+/*window.name="NG_DEFER_BOOTSTRAP!";
 require(["hammer","hammerJquery"],function(Hammer){
 require(["angularRoute"],function(){
 	require(["App"],function(){
@@ -82,4 +83,4 @@ require(["angularRoute"],function(){
 		});
 	});
 });
-});
+});*/

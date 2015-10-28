@@ -9,6 +9,7 @@ var passport=require('passport');
 var local=require('passport-local').Strategy;
 var localStrategy=require('./Shared/Passport');
 var flash=require('connect-flash');
+require('dotenv').load();
 var config=require('./config');
 
 var mongoose=require('mongoose').connect(config("mongo"));
@@ -23,8 +24,9 @@ app.use(flash());
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(express.static(path.join(__dirname,"public")));
-localStrategy(passport);
 app.use(routes);
+localStrategy(passport);
+
 app.get("*",function(req,res,next){
 	if(req.isAuthenticated()){
 		next();
@@ -33,6 +35,6 @@ app.get("*",function(req,res,next){
 		res.redirect("/");
 	}
 });
-var httpServer=http.createServer(app).listen(config("server").port);
 
+var httpServer=http.createServer(app).listen(config("server").port);
 require("./Shared/Socket/mainSocket").create(httpServer);

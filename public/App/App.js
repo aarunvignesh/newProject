@@ -1,7 +1,6 @@
 
 define(["angular","angularRoute","angularPrimus","angularMaterial","ngFx","./Controller/index","./Services/index","./Factory/index"],
 	function(angular,angularRoute,angularPrimus,angularMaterial,ngFx,controller,services,factory){
-
 	var app=angular.module("newApp",["ui.router","primus","ngMaterial","ngAnimate","ngFx"])
 	.config(["$stateProvider","primusProvider","$mdThemingProvider","$urlRouterProvider",
 		function($stateProvider,primusProvider,$mdThemingProvider,$urlRouterProvider){
@@ -92,5 +91,6 @@ define(["angular","angularRoute","angularPrimus","angularMaterial","ngFx","./Con
 	services(app);
 	controller(app);
 	factory(app);
+	angular.bootstrap(angular.element("html"), ["newApp"]) 
 	return app;
 });

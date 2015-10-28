@@ -1,21 +1,5 @@
-var config={
-	mongo:{
-		url:"mongodb://127.0.0.1",
-		port:"27017",
-		username:"",
-		password:"",
-		database:"NewDB"
-	},
-	redis:{
-		url:"",
-		port:"",
-		username:"",
-		password:""
-	},
-	server:{
-		port:1722
-	}
-};
+var config=require('config');
+
 module.exports=function(server){
 	var obj;
 	switch(server){
@@ -26,6 +10,9 @@ module.exports=function(server){
 				break;	
 		case "server":
 				obj=config.server;
+				break;
+		case "htmlFile":
+				obj=config.htmlFileName;
 				break;			
 	}
 	return obj;
