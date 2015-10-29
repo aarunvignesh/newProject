@@ -1,4 +1,5 @@
 var user=require("./../Schema/User");
+var rndGenerate=require("./../Shared/rndTxtgenerate");
 var data={
 	signIn:function(args,callback){
 		
@@ -30,8 +31,8 @@ var data={
 				newUser.email=args.email,
 				newUser.password=args.password
 				newUser.verifiedEmail=false;
-				newUser.randomEmailValidationText="A1B2C3";
 				newUser.save();
+				rndGenerate.newRandomTextGenerate(newUser);
 				callback(null,{success:newUser});
 			}
 		});

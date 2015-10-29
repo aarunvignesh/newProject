@@ -12,6 +12,12 @@ define(["angular","angularRoute","angularPrimus","angularMaterial","ngFx","./Con
 					controller:"loginController"
 				}
 			)
+		.state('verify',
+				{
+					url:"/verify",
+					templateUrl:"/template/verify"
+				}
+			)
 		.state('profile',
 				{
 					url:"/profile",
@@ -73,14 +79,20 @@ define(["angular","angularRoute","angularPrimus","angularMaterial","ngFx","./Con
 
 		themeFactory.initTheme();
 
-
 		$rootScope.$on("$stateChangeStart",function(event,next,current){
 			var auth=authenticate.isAuthenticatedUser();
 			auth.then(
-					function(){
-						$state.go('profile');
+					function(user){
+						$rootScope.loginPage=false;
+						if(user.validationStatus){
+							$state.go('profile');
+						}
+						else{
+							$state.go('verify');
+						}
 					},
 					function(){
+						$rootScope.loginPage=true;
 						$state.go('welcome');
 						return false;
 					}

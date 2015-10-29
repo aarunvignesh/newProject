@@ -9,6 +9,7 @@ define(["angular"],function(){
 					scope.userDetails.email=res.email;
 					scope.userDetails.id=res.id;
 					scope.userDetails.name=res.email.split("@")[0];
+					scope.userDetails.validationStatus=res.validationStatus;
 					deferUser.resolve(scope.userDetails);
 				}
 				else if(res.err){
@@ -69,7 +70,7 @@ define(["angular"],function(){
 			var deferUser=$q.defer();
 			if(scope.userDetails.email&&scope.userDetails.id&&scope.userDetails.name){
 				$timeout(function() {
-					deferUser.resolve(true);
+					deferUser.resolve(scope.userDetails);
 				}, 10);
 				return deferUser.promise;
 			}
@@ -79,7 +80,8 @@ define(["angular"],function(){
 					scope.userDetails.email=res.email;
 					scope.userDetails.id=res.id;
 					scope.userDetails.name=res.email.split("@")[0];
-					deferUser.resolve(true);
+					scope.userDetails.validationStatus=res.validationStatus;
+					deferUser.resolve(scope.userDetails);
 				}
 				else if(res.err){
 						this.userDetails=res;

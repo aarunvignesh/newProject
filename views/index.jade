@@ -3,6 +3,6 @@ html
 		title Angular
 		script(type="text/javascript", src="./Scripts/Require.js", data-main="./require-production.js")
 
-	body(class="loginScreen")
+	body(ng-class="{'loginScreen':$rootScope.loginPage,'appScreen':!$rootScope.loginPage}")
 		div()
 			ui-view

@@ -14,4 +14,4 @@ var data={
 		return defer.promise;
 	}
 };
-return data;
+module.exports=data;

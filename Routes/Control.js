@@ -8,7 +8,7 @@ var ctrl={
 						res.sendFile(path.resolve(__dirname+"/../views/Template/welcome.html"));
 						break;
 			case "diagonostics":
-						res.sendFile(path.resolve(__dirname+"/../views/Template/diagonostics.html"));
+						res.sendFile(path.resolve(__dirname+"/../views/Template/profile.html"));
 						break;
 			case "chat":
 						res.sendFile(path.resolve(__dirname+"/../views/Template/chat.html"));
@@ -16,13 +16,16 @@ var ctrl={
 			case "illegal":
 						res.sendFile(path.resolve(__dirname+"/../views/Template/illegal.html"));
 						break;
+			case "verify":
+						res.sendFile(path.resolve(__dirname+"/../views/Template/verify.html"));
+						break;
 		}
 	},
 	successLogin:function(req,res){
 		if(req.user){
 			User.userById({id:req.user._id},function(err,user){
 				if(err){
-					res.send({id:req.user._id,email:req.user.email,validationStatus:"NA"});
+					res.send({err:"Error Occured with Database"});
 				}
 				else{
 					if(user.verifiedEmail){
