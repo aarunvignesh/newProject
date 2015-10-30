@@ -27,6 +27,8 @@ app.use(express.static(path.join(__dirname,"public")));
 app.use(routes);
 localStrategy(passport);
 
+
+
 app.get("*",function(req,res,next){
 	if(req.isAuthenticated()){
 		next();

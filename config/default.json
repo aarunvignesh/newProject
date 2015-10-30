@@ -12,6 +12,10 @@
 		"username":"",
 		"password":""
 	},
+	"email":{
+		"username":"pingme.team@gmail.com",
+		"password":"shivaping2208"
+	},
 	"server":{
 		"port":1722
 	},

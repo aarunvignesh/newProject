@@ -13,6 +13,9 @@ module.exports=function(server){
 				break;
 		case "htmlFile":
 				obj=config.htmlFileName;
+				break;	
+		case "emailAuthenDetails":
+				obj=config.email;
 				break;			
 	}
 	return obj;
