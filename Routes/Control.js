@@ -1,5 +1,6 @@
 var path=require('path');
 var User=require("./../lib/User")();
+var updateUser=require("./../lib/UpdateUser")();
 
 var ctrl={
 	templateThrower:function(req,res){
@@ -43,7 +44,28 @@ var ctrl={
 		}
 	},
 	randomTextValidator:function(req,res){
-
+		if(req.body.id){
+			User.userById({id:req.body.id},function(err,user){
+				if(err){
+					res.send({err:"Error Occured"});
+				}
+				else if(user){
+					if(req.body.verifyPin===user.randomEmailValidationText){
+						user.verifiedEmail=true;
+						var defer=updateUser.updateUser(user);
+						defer.then(function(){
+							res.send({success:"Update Successful.... Access granted..."});
+						},
+						function(){
+							res.send({err:"Facing New Issue will Recover Soon...."});
+						});
+					}
+					else{
+						res.send({err:"Wrong PIN"});
+					}
+				}
+			});
+		}
 	},
 	failiureLogin:function(req,res){
 		res.send({err:"User Auhentication Failed"});

@@ -15,7 +15,8 @@ define(["angular","angularRoute","angularPrimus","angularMaterial","ngFx","./Con
 		.state('verify',
 				{
 					url:"/verify",
-					templateUrl:"/template/verify"
+					templateUrl:"/template/verify",
+					controller:"verifyController"
 				}
 			)
 		.state('profile',

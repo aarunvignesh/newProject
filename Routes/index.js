@@ -17,8 +17,11 @@ app.get("/success",control.successLogin);
 app.get("/failiure",control.failiureLogin);
 app.get("/knowErrReason",control.knowErrorReason);
 app.get("/template/:needTemplate",control.templateThrower);
-app.get("/api/:rndEmail",control.randomTextValidator);
 app.post("/logout",control.logoutUser);
+
+
+app.post("/api/rndtxtValidate",control.randomTextValidator);
+
 
 app.all("*",function(req,res,next){
 	if(req.isAuthenticated()){

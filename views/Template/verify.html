@@ -1,14 +1,44 @@
-<div class="row">
+<div class="verifyPage">
+<div layout="column" class="row">
 	<div class="col s12 m12 l12">
 		
 			<md-button class="md-raised md-primary right" ng-click="logout()">Logout</md-button>
-		
-		<span>Sorry due to security reasons, we need to verify your email address so kindly proceed by checking your and enter your verify PIN. Then you can proceed.</span>
-
-		<span>Hi,</span>
-				<br/>&nbsp; <span>We are happy to welcome in joining with us. Due to security reasons we are requesting this </span>
-				<span>security check.</span><br/>
-				<span> Your verification code is <b>nkjsbajkb</b></span><br/>
-				<span>Thanks and Regards,<br/>Pingme Team</span>
 	</div>
+</div>
+<div layout="column" class="row">
+	<div class="col s10 m10 l10 offset-m1 offset-l1 offset-s1 center">
+			<span class="white-text flow-text">
+				Due to security reasons, we need to verify your email address so kindly proceed by entering the PIN that we have sent to your e-mail address.
+			</span>
+	</div>
+</div>
+<div layout="column" class="row">
+	<div class="col s12 m12 l6 offset-l3 verifyCard verifyCardLayout animated bounceInUp">
+		<div class="col s3 m3 l3 blue imageCntr emailIcon">
+			<i class="large material-icons">email</i>
+		</div>
+		<div class="col s9 m9 l9 white inputCntr">
+			<md-input-container>
+		         		<label>Please enter your Verify PIN here</label>
+		          		<input type="text" ng-model="verifypin" required/>
+	        </md-input-container>
+	        <md-input-container>
+		         		<label>Please select an username</label>
+		          		<input type="text" ng-model="username" maxlength="15" required/>
+	        </md-input-container>
+	        <div class="blue-text">
+	        	<span class="userLink">
+					{{userUrl}}
+				</span>
+			</div>
+			
+		</div>
+	</div>
+</div>	
+<div layout="column" class="row">
+	<div ng-show="showButtons" ng-class="{'fadeIn':showButtons}" class="col s12 m12 l4 offset-l4 animated">
+		<md-button class="white-text text-darken-1">Regenerate pin</md-button>
+        <md-button class="md-raised md-primary right wave-effect" ng-click="proceed();">Proceed</md-button>
+	</div>
+</div>	
 </div>

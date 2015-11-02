@@ -1,5 +1,5 @@
 /**
- * @license AngularJS v1.5.0-build.4291+sha.693021c
+ * @license AngularJS v1.4.7
  * (c) 2010-2015 Google, Inc. http://angularjs.org
  * License: MIT
  */
@@ -108,17 +108,17 @@ function $AriaProvider() {
    *
    * @param {object} config object to enable/disable specific ARIA attributes
    *
-   *  - **ariaHidden** – `{boolean}` – Enables/disables aria-hidden tags
-   *  - **ariaChecked** – `{boolean}` – Enables/disables aria-checked tags
-   *  - **ariaDisabled** – `{boolean}` – Enables/disables aria-disabled tags
-   *  - **ariaRequired** – `{boolean}` – Enables/disables aria-required tags
-   *  - **ariaInvalid** – `{boolean}` – Enables/disables aria-invalid tags
-   *  - **ariaMultiline** – `{boolean}` – Enables/disables aria-multiline tags
-   *  - **ariaValue** – `{boolean}` – Enables/disables aria-valuemin, aria-valuemax and aria-valuenow tags
-   *  - **tabindex** – `{boolean}` – Enables/disables tabindex tags
-   *  - **bindKeypress** – `{boolean}` – Enables/disables keypress event binding on `&lt;div&gt;` and
+   *  - **ariaHidden** â€“ `{boolean}` â€“ Enables/disables aria-hidden tags
+   *  - **ariaChecked** â€“ `{boolean}` â€“ Enables/disables aria-checked tags
+   *  - **ariaDisabled** â€“ `{boolean}` â€“ Enables/disables aria-disabled tags
+   *  - **ariaRequired** â€“ `{boolean}` â€“ Enables/disables aria-required tags
+   *  - **ariaInvalid** â€“ `{boolean}` â€“ Enables/disables aria-invalid tags
+   *  - **ariaMultiline** â€“ `{boolean}` â€“ Enables/disables aria-multiline tags
+   *  - **ariaValue** â€“ `{boolean}` â€“ Enables/disables aria-valuemin, aria-valuemax and aria-valuenow tags
+   *  - **tabindex** â€“ `{boolean}` â€“ Enables/disables tabindex tags
+   *  - **bindKeypress** â€“ `{boolean}` â€“ Enables/disables keypress event binding on `&lt;div&gt;` and
    *    `&lt;li&gt;` elements with ng-click
-   *  - **bindRoleForClick** – `{boolean}` – Adds role=button to non-interactive elements like `div`
+   *  - **bindRoleForClick** â€“ `{boolean}` â€“ Adds role=button to non-interactive elements like `div`
    *    using ng-click, making them more accessible to users of assistive technologies
    *
    * @description
