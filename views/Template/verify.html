@@ -20,15 +20,18 @@
 		<div class="col s9 m9 l9 white inputCntr">
 			<md-input-container>
 		         		<label>Please enter your Verify PIN here</label>
-		          		<input type="text" ng-model="verifypin" required/>
+		          		<input type="text" ng-model="verifypin" maxlength="7" required/>
 	        </md-input-container>
 	        <md-input-container>
 		         		<label>Please select an username</label>
 		          		<input type="text" ng-model="username" maxlength="15" required/>
 	        </md-input-container>
 	        <div class="blue-text">
-	        	<span class="userLink">
+	        	<span class="userLink" ng-show="showUrl">
 					{{userUrl}}
+				</span>
+				<span class="green-text userLink" ng-show="!showUrl">
+					Sorry Username unavailable.... Please try a different...
 				</span>
 			</div>
 			

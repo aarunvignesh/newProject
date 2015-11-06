@@ -1,12 +1,18 @@
 define(["angular"],function(){
-	var controller=["$scope","$http","authenticate","$state","chatService","$timeout","$animateCss","$location","$mdToast",
-	function($scope,$http,authenticate,$state,chatService,$timeout,$animateCss,$location,$mdToast){
+	var controller=["$scope","$http","authenticate","$state","chatService","$timeout","$animateCss","$location","toastFactory",
+	function($scope,$http,authenticate,$state,chatService,$timeout,$animateCss,$location,toastFactory){
+
 		$scope.username="";
-		$scope.userUrl=$location.$$absUrl.split("verify")[0]+"profile/";
+
+		$scope.userUrl = $location.$$absUrl.split("verify")[0]+"profile/";
+
+		$scope.showUrl = true;
+
 		$scope.$watch("username",function(value){
 			value=value?value:"";
 			$scope.userUrl=$location.$$absUrl.split("verify")[0]+"profile/"+value;
 		});
+
 		$scope.proceed = function(){
 			if($scope.verifypin && $scope.username){
 				$http.post("/api/rndtxtValidate",{
@@ -17,30 +23,29 @@ define(["angular"],function(){
 						$state.go("profile");
 					}
 					else{
-						$mdToast.show({
-							template:prepareWarnToastMessage(res.err),
-							position:"top right",
-							hideDelay:2000
-						});
+						toastFactory.showWarnToast(res.err);
 					}
 					
 				}).error(function(){
-					$mdToast.show({
-							template:prepareWarnToastMessage("Facing New Issue will Recover Soon...."),
-							position:"top right",
-							hideDelay:2000
-					});
+					toastFactory.showWarnToast("Facing New Issue will Recover Soon....");
 				});
 			}
+			else{
+				if(!scope.verifypin){
+					toastFactory.showWarnToast("Please provide your verification PIN");
+				}
+				else{
+					toastFactory.showWarnToast("Please provide username");
+				}
+			}
 		};
+
 		$scope.$on("$viewContentLoaded",function(){
 			$timeout(function() {
 				$scope.showButtons=true;
 			}, 1000);
 		});
-		 var prepareWarnToastMessage=function(msg){
-			return '<md-toast class="animated bounceInDown" style="background:darkred;">'+msg+'</md-toast>'
-		};
+		 
 	}];
 	return controller;
 });
