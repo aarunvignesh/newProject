@@ -2,6 +2,7 @@ var mongo=require('mongoose');
 var schema=mongo.Schema({
 	email:String,
 	password:String,
+	username:String,
 	socketId:String,
 	verifiedEmail:Boolean,
 	randomEmailValidationText:String,

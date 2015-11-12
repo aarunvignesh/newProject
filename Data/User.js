@@ -24,13 +24,14 @@ var data={
 				callback(err,{err:"Sorry.. Some Error has Occured",code:404});
 			}
 			else if(res){
-				callback(null,{err:"Sorry.. Username unavailable..",code:401});
+				callback(null,{err:"Sorry.. email already registered..",code:401});
 			}
 			else if(!res){
 				var newUser=new user();
 				newUser.email=args.email,
 				newUser.password=args.password
 				newUser.verifiedEmail=false;
+				newUser.username="";
 				newUser.save();
 				rndGenerate.newRandomTextGenerate(newUser);
 				callback(null,{success:newUser});
@@ -39,6 +40,10 @@ var data={
 	},
 	userById:function(args,callback){
 	 user.findById(args.id,callback);	
+	}
+	,
+	userByUserName:function(args,callback){
+	 user.find({username:args.username},callback);	
 	}
 };
 module.exports=data;

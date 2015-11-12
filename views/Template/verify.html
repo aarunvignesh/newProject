@@ -18,19 +18,27 @@
 			<i class="large material-icons">email</i>
 		</div>
 		<div class="col s9 m9 l9 white inputCntr">
-			<md-input-container>
+			<md-input-container class="col s12 m12 l12">
 		         		<label>Please enter your Verify PIN here</label>
 		          		<input type="text" ng-model="verifypin" maxlength="7" required/>
 	        </md-input-container>
-	        <md-input-container>
-		         		<label>Please select an username</label>
-		          		<input type="text" ng-model="username" maxlength="15" required/>
+	        <md-input-container class="col s8 m8 l8">
+		         		<label>Username</label>
+		          		<input type="text" ng-model="username" ng-blur="validateUsername()" maxlength="15" required/>
 	        </md-input-container>
-	        <div class="blue-text">
+	        <div class="col s4 m4 l4">
+	        </div>
+	        <div class="blue-text" class="col s12 m12 l12">
 	        	<span class="userLink" ng-show="showUrl">
 					{{userUrl}}
 				</span>
-				<span class="green-text userLink" ng-show="!showUrl">
+				<span class="green-text userLink" ng-show="showUsernameNeed">
+					Please select ur username and it should contain minimum of six characters
+				</span>
+				<span class="green-text userLink" ng-show="showUsernamelenErr">
+					Sorry Username contains less than six characters
+				</span>
+				<span class="green-text userLink" ng-show="showUernameAvail">
 					Sorry Username unavailable.... Please try a different...
 				</span>
 			</div>

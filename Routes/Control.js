@@ -22,6 +22,20 @@ var ctrl={
 						break;
 		}
 	},
+	checkUserName:function(req,res){
+		User.userByUserName({username:req.params.username},function(err,user){
+			if(err){
+				res.send({err:"Facing New Issue will recover soon....",code:404});
+			}
+			else if(user.length!=0){
+				res.send({err:"Requested Username is not available..",code:304});
+			}
+			else if(user.length==0){
+				res.send({success:"Username is available..."});
+			}
+			
+		});
+	},
 	successLogin:function(req,res){
 		if(req.user){
 			User.userById({id:req.user._id},function(err,user){
@@ -52,6 +66,7 @@ var ctrl={
 				else if(user){
 					if(req.body.verifyPin===user.randomEmailValidationText){
 						user.verifiedEmail=true;
+						user.username=req.body.username;
 						var defer=updateUser.updateUser(user);
 						defer.then(function(){
 							res.send({success:"Update Successful.... Access granted..."});

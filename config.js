@@ -1,4 +1,7 @@
+require('dotenv').load();
 var config=require('config');
+
+console.log(config);
 
 module.exports=function(server){
 	var obj;
@@ -9,7 +12,7 @@ module.exports=function(server){
 		case "redis":
 				break;	
 		case "server":
-				obj=config.server;
+				obj=process.env.PORT?{port:process.env.PORT}:config.server;
 				break;
 		case "htmlFile":
 				obj=config.htmlFileName;

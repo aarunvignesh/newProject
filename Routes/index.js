@@ -21,6 +21,7 @@ app.post("/logout",control.logoutUser);
 
 
 app.post("/api/rndtxtValidate",control.randomTextValidator);
+app.get("/api/checkUserName/:username",control.checkUserName);
 
 
 app.all("*",function(req,res,next){

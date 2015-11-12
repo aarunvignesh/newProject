@@ -2,7 +2,6 @@ html
 	head
 		title Angular
 		script(type="text/javascript", src="./Scripts/Require.js", data-main="./require-production.js")
-
-	body(ng-class="{'loginScreen':$rootScope.loginPage,'appScreen':!$rootScope.loginPage}")
+	body(ng-class="{'loginScreen':$root.loginPage,'appScreen':!$root.loginPage}")
 		div()
 			ui-view

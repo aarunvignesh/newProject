@@ -9,7 +9,7 @@ var passport=require('passport');
 var local=require('passport-local').Strategy;
 var localStrategy=require('./Shared/Passport');
 var flash=require('connect-flash');
-require('dotenv').load();
+
 var config=require('./config');
 
 var mongoose=require('mongoose').connect(config("mongo"));
@@ -39,4 +39,5 @@ app.get("*",function(req,res,next){
 });
 
 var httpServer=http.createServer(app).listen(config("server").port);
+console.log(config("server").port);
 require("./Shared/Socket/mainSocket").create(httpServer);
