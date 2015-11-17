@@ -15,7 +15,7 @@
 		"password":"shivaping2208"
 	},
 	"server":{
-		"port":1722
+		"port":5000
 	},
 	"htmlFileName":"index-debug"
 }

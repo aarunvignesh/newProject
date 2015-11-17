@@ -1,55 +1,53 @@
-<div class="verifyPage">
-<div layout="column" class="row">
-	<div class="col s12 m12 l12">
-		
-			<md-button class="md-raised md-primary right" ng-click="logout()">Logout</md-button>
+<div class="" layout="column">
+	<div layout="row" layout-align="end end" layout-padding>
+		 <md-button class="md-fab md-primary" aria-label="Logout" ng-click="logout()">
+          <i class="material-icons white-text">power_settings_new</i>
+        </md-button>
 	</div>
-</div>
-<div layout="column" class="row">
-	<div class="col s10 m10 l10 offset-m1 offset-l1 offset-s1 center">
-			<span class="white-text flow-text">
+	<div class="" layout="row" layout-align="center center">
+		<span flex="80" class="flow-text white-text warn-text">
 				Due to security reasons, we need to verify your email address so kindly proceed by entering the PIN that we have sent to your e-mail address.
-			</span>
+		</span>
 	</div>
-</div>
-<div layout="column" class="row">
-	<div class="col s12 m12 l6 offset-l3 verifyCard verifyCardLayout animated bounceInUp">
-		<div class="col s3 m3 l3 blue imageCntr emailIcon">
-			<i class="large material-icons">email</i>
+	<div class="" layout="row" layout-align="center center">
+		<div flex="55" flex-md="70" flex-sm="90" flex-grow layout="row" class="verifyCard animated" ng-class="{'wobble':wrongPin,bounceInUp:enterFlag}">
+				
+					<!-- <div class="cardContainer z-depth-5"> -->
+						<div flex="30" layout="column" layout-align="center center" class="white-text blue imageCntr emailIcon imageCntr">
+							<i class="large material-icons">email</i>
+						</div>
+						<div flex="70"  layout-padding class="white inputCntr" layout="column">
+							<md-input-container>
+						         		<label>Please enter your Verify PIN here</label>
+						          		<input type="text" ng-model="verifypin" maxlength="7" required/>
+					        </md-input-container>
+					        <div layout="row">
+						        <md-input-container flex="80">
+							         		<label>Username</label>
+							          		<input type="text" ng-model="username" ng-keyup="usernameKeyup()" ng-blur="validateUsername()" maxlength="15" required/>
+						        </md-input-container>
+						        <div flex="20" layout="column">
+										<div class="blue lighten-5 blue-text text-darken-1 availbility-btn" ng-show="showAvailBtn">check availablity</div>
+						        </div>
+					    	</div>
+					        <div layout="column" class="errCntr">
+					        	<span class="userLink" ng-class="{'blue-text':($index==0 || $index==1),'red-text':!($index==0 || $index==1)}" ng-repeat="error in userValidationerror track by $index" ng-show="error.value">
+									{{error.errText}}
+								</span>
+							</div>
+							<div layout="row" layout-sm="column">
+								<!-- <div flex="50"> -->
+									<md-button class="blue-text text-darken-1" ng-click="showRegenDialog($event)">Regenerate</md-button>
+								<!-- </div> -->
+								<div flex="50" hide-sm layout="row" layout-align="end end">
+									
+								</div>
+									<md-button class="md-raised md-primary wave-effect" ng-click="proceed();" ng-disabled="(!userValidationerror[1].value || !verifypin)">Proceed</md-button>
+							</div>	
+						</div>
+					<!-- </div> -->
+				
 		</div>
-		<div class="col s9 m9 l9 white inputCntr">
-			<md-input-container class="col s12 m12 l12">
-		         		<label>Please enter your Verify PIN here</label>
-		          		<input type="text" ng-model="verifypin" maxlength="7" required/>
-	        </md-input-container>
-	        <md-input-container class="col s8 m8 l8">
-		         		<label>Username</label>
-		          		<input type="text" ng-model="username" ng-blur="validateUsername()" maxlength="15" required/>
-	        </md-input-container>
-	        <div class="col s4 m4 l4">
-	        </div>
-	        <div class="blue-text" class="col s12 m12 l12">
-	        	<span class="userLink" ng-show="showUrl">
-					{{userUrl}}
-				</span>
-				<span class="green-text userLink" ng-show="showUsernameNeed">
-					Please select ur username and it should contain minimum of six characters
-				</span>
-				<span class="green-text userLink" ng-show="showUsernamelenErr">
-					Sorry Username contains less than six characters
-				</span>
-				<span class="green-text userLink" ng-show="showUernameAvail">
-					Sorry Username unavailable.... Please try a different...
-				</span>
-			</div>
-			
-		</div>
 	</div>
-</div>	
-<div layout="column" class="row">
-	<div ng-show="showButtons" ng-class="{'fadeIn':showButtons}" class="col s12 m12 l4 offset-l4 animated">
-		<md-button class="white-text text-darken-1">Regenerate pin</md-button>
-        <md-button class="md-raised md-primary right wave-effect" ng-click="proceed();">Proceed</md-button>
-	</div>
-</div>	
+
 </div>

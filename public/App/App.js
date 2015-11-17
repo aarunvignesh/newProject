@@ -22,23 +22,19 @@ define(["angular","angularRoute","angularPrimus","angularMaterial","ngFx","./Con
 			)
 		.state('profile',
 				{
-					url:"/profile",
+					url:"/profile/:username",
 					templateUrl:"/template/diagonostics",
 					controller:"profileController",
 					resolve:{
-						establishSocket:["authenticate","$q","$timeout",function(authenticate,$q,$timeout){
-							var deferred=$q.defer();
-							var id=authenticate.getUserId();
-							$timeout(
-								function(){
-									if(id.id)
-									deferred.resolve(id);
-									else
-									deferred.reject();
-								}
-								);
-							return deferred.promise;
+						profileDetails:["$http","$stateParams","authenticate","$q",
+						function($http,$stateParams,authenticate,$q){
+							var defer=$q.defer();
+							$http.post("api/userdetails/",{username:$stateParams.username}).success(function(res){
+								defer.resolve(res);
+							});
+							return defer.promise;
 						}]
+
 					}
 				}
 			);
@@ -87,7 +83,12 @@ define(["angular","angularRoute","angularPrimus","angularMaterial","ngFx","./Con
 					function(user){
 						$rootScope.loginPage=false;
 						if(user.validationStatus){
-							$state.go('profile');
+							if(next.name!="profile"){
+								$state.go('profile',{username:user.username});
+							}
+							else{
+								return true;
+							}
 						}
 						else{
 							$state.go('verify');

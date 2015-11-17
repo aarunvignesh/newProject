@@ -8,7 +8,7 @@ require.config({
 		primus:"./../Scripts/primusClient",
 		angularPrimus:"./../Scripts/angular-primus",
 		angularAnimate:"./../Scripts/angular-animate",
-		angularMaterial:"./../Scripts/angularMaterial",
+		angularMaterial:"./../Scripts/angular-material",
 		material:"./../Scripts/materialize-v0.97.1/materialize/js/materialize",
 		angularAria:"./../Scripts/angular-aria",
 		hammer:"./../Scripts/Hammer",

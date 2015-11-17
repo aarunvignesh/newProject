@@ -18,7 +18,7 @@ define(["angular"],function(angular){
 					.authenticateUser(sendData)
 					.then(function(user){
 						$scope.noFlipOnFirst=false;
-						$state.go("profile");
+						$state.go("profile",{username:user.username});
 					},
 					function(err){
 						$scope.userField="";

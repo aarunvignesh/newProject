@@ -2,6 +2,8 @@ var path=require('path');
 var User=require("./../lib/User")();
 var updateUser=require("./../lib/UpdateUser")();
 
+var rndGenerate=require("./../Shared/rndTxtgenerate");
+
 var ctrl={
 	templateThrower:function(req,res){
 		switch(req.params.needTemplate){
@@ -44,7 +46,7 @@ var ctrl={
 				}
 				else{
 					if(user.verifiedEmail){
-						res.send({id:req.user._id,email:req.user.email,validationStatus:true});
+						res.send({id:req.user._id,email:req.user.email,validationStatus:true,username:user.username});
 					}
 					else{
 						res.send({id:req.user._id,email:req.user.email,validationStatus:false});
@@ -57,29 +59,51 @@ var ctrl={
 			res.send({err:"User has not Authenticated"});
 		}
 	},
+	randomTextGenerator: function(req,res){
+		User.userById({username:req.params.id},function(err,user){
+			if(err){
+					res.send({err:"Facing New Issue will recover soon....",code:404});
+			}
+			else{
+				rndGenerate.newRandomTextGenerate(user);
+				res.send({success:"Successfully triggered mail Request",code:200});
+			}
+		});
+	},
 	randomTextValidator:function(req,res){
 		if(req.body.id){
-			User.userById({id:req.body.id},function(err,user){
+			User.userByUserName({username:req.body.username},function(err,userAvail){
 				if(err){
-					res.send({err:"Error Occured"});
+					res.send({err:"Facing New Issue will recover soon....",code:404});
 				}
-				else if(user){
-					if(req.body.verifyPin===user.randomEmailValidationText){
-						user.verifiedEmail=true;
-						user.username=req.body.username;
-						var defer=updateUser.updateUser(user);
-						defer.then(function(){
-							res.send({success:"Update Successful.... Access granted..."});
-						},
-						function(){
-							res.send({err:"Facing New Issue will Recover Soon...."});
-						});
-					}
-					else{
-						res.send({err:"Wrong PIN"});
-					}
+				else if(userAvail.length!=0){
+					res.send({err:"Requested Username is not available..",code:304});
 				}
+				else if(userAvail.length==0){
+					User.userById({id:req.body.id},function(err,user){
+						if(err){
+							res.send({err:"Facing New Issue will recover soon....",code:404});
+						}
+						else if(user){
+							if(req.body.verifyPin===user.randomEmailValidationText){
+								user.verifiedEmail=true;
+								user.username=req.body.username;
+								var defer=updateUser.updateUser(user);
+								defer.then(function(){
+									res.send({success:"Update Successful.... Access granted..."});
+								},
+								function(){
+									res.send({err:"Facing New Issue will Recover Soon....",code:404});
+								});
+							}
+							else{
+								res.send({err:"Verification PIN is incorrect",code:420});
+							}
+						}
+					});
+			    }
 			});
+			
 		}
 	},
 	failiureLogin:function(req,res){

@@ -10,6 +10,7 @@ define(["angular"],function(){
 					scope.userDetails.id=res.id;
 					scope.userDetails.name=res.email.split("@")[0];
 					scope.userDetails.validationStatus=res.validationStatus;
+					scope.userDetails.username= res.username;
 					deferUser.resolve(scope.userDetails);
 				}
 				else if(res.err){
@@ -56,7 +57,14 @@ define(["angular"],function(){
 			});
 			return deferUser.promise;
 		};
-
+		this.getUsername=function(){
+			if(scope.userDetails.username){
+				return {username:scope.userDetails.username};
+			}
+			else{
+				return {err:"::User Not Authenticated::"}
+			}
+		};
 		this.getUserId=function(){
 			if(scope.userDetails.id){
 				return {id:scope.userDetails.id};
@@ -66,13 +74,66 @@ define(["angular"],function(){
 			}
 		};
 
+		this.setUserValidationStatus = function (value){
+			scope.userDetails.validationStatus=value;
+		};
+
+		this.refreshUserdetails=function(){
+			var deferUser=$q.defer();
+
+			$http.get('/api/fetchUser/'+scope.userDetails.id)
+			.success(function(res){
+				if(res.email){
+					scope.userDetails.email=res.email;
+					scope.userDetails.id=res.id;
+					scope.userDetails.name=res.email.split("@")[0];
+					scope.userDetails.validationStatus=res.validationStatus;
+					deferUser.resolve(scope.userDetails);
+				}
+				else if(res.err){
+						this.userDetails=res;
+						deferUser.reject();
+					}
+			})
+			.error(function(err){
+				this.userDetails=res;
+				deferUser.reject();
+			});
+
+			return deferUser;
+		};
+
+		this.refreshUserDetails=function(){
+			var deferUser=$q.defer();
+
+			$http.get("/success").success(function(res){
+				if(res.email){
+					scope.userDetails.email=res.email;
+					scope.userDetails.id=res.id;
+					scope.userDetails.name=res.email.split("@")[0];
+					scope.userDetails.validationStatus=res.validationStatus;
+					scope.userDetails.username= res.username;
+					deferUser.resolve(scope.userDetails);
+				}
+				else if(res.err){
+						this.userDetails=res;
+						deferUser.reject();
+					}
+				}).error(function(err){
+				this.userDetails=res;
+				deferUser.reject();
+			});
+
+			return deferUser.promise;
+		};
+
 		this.isAuthenticatedUser=function(){
 			var deferUser=$q.defer();
 			if(scope.userDetails.email&&scope.userDetails.id&&scope.userDetails.name){
 				$timeout(function() {
 					deferUser.resolve(scope.userDetails);
 				}, 10);
-				return deferUser.promise;
+				//return deferUser.promise;
 			}
 			else{
 				$http.get("/success").success(function(res){
@@ -81,6 +142,7 @@ define(["angular"],function(){
 					scope.userDetails.id=res.id;
 					scope.userDetails.name=res.email.split("@")[0];
 					scope.userDetails.validationStatus=res.validationStatus;
+					scope.userDetails.username= res.username;
 					deferUser.resolve(scope.userDetails);
 				}
 				else if(res.err){
@@ -102,6 +164,7 @@ define(["angular"],function(){
 					deferUser.resolve();
 				}
 				else{
+					scope.userDetails={err:"User Logged Out"};
 					deferUser.reject();
 				}
 			}).error(function(){
