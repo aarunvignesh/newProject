@@ -3,6 +3,14 @@ html
 		title Angular
 		script(type="text/javascript", src="./Scripts/Require.js" data-main="./require-main.js")
 	body(ng-class="{'loginScreen':$root.loginPage,'appScreen':!$root.loginPage}")
+		div(layout="row" flex="1" class="animationBackground" style="position:absolute;")
+			li
+			li
+			li
+			li
+			li
+			li
+			li
 		div(class="container-fluid")
 			ui-view
 		

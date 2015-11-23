@@ -5,12 +5,23 @@ var primus=require("primus"),
 	room=require("primus-rooms"),
     emitter=require("primus-emitter"),
 	cluster=require("primus-cluster"),
+    redisConfig = require("./../../config")("redis"),
 	socketConfigObject={
 		transformer:"engine.io",
 		parser:"json"
+        // ,cluster: {
+        //     redis: createRedisClient
+        // },
+        // iknowclusterwillbreakconnections:true
 	},
 	primusServer
-	,path=require('path');
+	,path=require('path'),
+    redis = require('redis');
+    function createRedisClient() {
+      var client = redis.createClient(redisConfig.port,redisConfig.url);
+      
+      return client;
+    }
 
 var create=function(server){
     primusServer=new primus(server,socketConfigObject);
@@ -19,7 +30,7 @@ var create=function(server){
 
     primusServer.use('emitter', emitter);
 
-   // primusServer.use('cluster', cluster);
+    //primusServer.use('cluster', cluster);
 
     primusServer.library();
 

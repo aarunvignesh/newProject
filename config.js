@@ -8,8 +8,6 @@ module.exports=function(server){
 	switch(server){
 		case "mongo":
 				obj=config.mongo.url+":"+config.mongo.port+"/"+config.mongo.database;
-				break;
-		case "redis":
 				break;	
 		case "server":
 				obj=process.env.PORT?{port:process.env.PORT}:config.server;
@@ -19,6 +17,9 @@ module.exports=function(server){
 				break;	
 		case "emailAuthenDetails":
 				obj=config.email;
+				break;
+		case "redis":
+				obj=config.redis;
 				break;			
 	}
 	return obj;

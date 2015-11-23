@@ -9,12 +9,25 @@ var passport=require('passport');
 var local=require('passport-local').Strategy;
 var localStrategy=require('./Shared/Passport');
 var flash=require('connect-flash');
+// var cluster=require('cluster');
+// var cpuNo=require('os').cpus().length;
+// if(cluster.isMaster){
+// 	for(i=0;i<cpuNo;i++){
+// 		cluster.fork();
+// 	}
+// 	cluster.on('exit',function(worker,code,signal){
+// 		console.log("Worker died" +worker.process.pid);
+// 		cluster.fork();
+// 	});
+// 	return;
+// }
 
 var config=require('./config');
 
 var mongoose=require('mongoose').connect(config("mongo"));
 app.use(body.urlencoded());
 app.use(body.json());
+
 
 app.set('view engine','jade');
 app.engine('html',require('ejs').renderFile);
@@ -38,6 +51,12 @@ app.get("*",function(req,res,next){
 	}
 });
 
-var httpServer=http.createServer(app).listen(config("server").port);
-console.log(config("server").port);
-require("./Shared/Socket/mainSocket").create(httpServer);
+var httpServer;
+
+
+//else{
+	httpServer=http.createServer(app).listen(config("server").port);
+	
+	console.log(config("server").port);
+	require("./Shared/Socket/mainSocket").create(httpServer);	
+//}

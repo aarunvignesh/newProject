@@ -3,5 +3,11 @@ html
 		title Angular
 		script(type="text/javascript", src="./Scripts/Require.js", data-main="./require-production.js")
 	body(ng-class="{'loginScreen':$root.loginPage,'appScreen':!$root.loginPage}")
+		div(layout="row" class="animationBackground" style="position:absolute;")
+			li
+			li
+			li
+			li
+			li
 		div()
 			ui-view
