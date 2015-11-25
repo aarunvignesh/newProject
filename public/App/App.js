@@ -76,7 +76,12 @@ define(["angular","angularRoute","angularPrimus","angularMaterial","ngFx","./Con
 		){
 
 		themeFactory.initTheme();
-
+		$rootScope.$on("$viewContentLoaded",function(){
+			angular.element(".animationBackground>li").height(angular.element(".animationBackground>li").width());
+		});
+		window.addEventListener("resize",function(){
+			angular.element(".animationBackground>li").height(angular.element(".animationBackground>li").width());
+		});
 		$rootScope.$on("$stateChangeStart",function(event,next,current){
 			var auth=authenticate.isAuthenticatedUser();
 			auth.then(

@@ -1,7 +1,47 @@
-<div class="container-fluid  profileContainer">
-	<div class="col-md-12">
-		<button class="btn btn-default pull-right" ng-click="logout()">Logout</button>
-
-		<div class="sampleAnimation"></div>
+	
+<div layout="row" layout-fill>
+	<section layout="row" flex>
+		<md-sidenav class="md-sidenav-left" md-component-id="mainSlider">
+	      <md-toolbar>
+	      	<div class="md-toolbar-tools">
+	        	<h1 flex="80">Sidenav Left</h1>
+	        	<md-icon><i class="material-icons white-text" ng-click="openSlideNav();">reorder</i></md-icon>
+	    	</div>
+	      </md-toolbar>
+	      <md-content layout-padding>
+	       
+	        <md-button ng-click="logout()" class="md-primary">
+	          Logout
+	        </md-button>
+	      </md-content>
+	    </md-sidenav>
+	 </section>   
+	<div flex="100" layout="column">
+		
+			<md-fab-toolbar md-open="false" count="0" md-direction="left">
+					 <md-fab-trigger class="align-with-text">
+					      <md-button ng-click="hideNavigator();" aria-label="menu" class="md-fab md-primary">
+					        <md-icon><i class="material-icons white-text">reorder</i></md-icon>
+					      </md-button>
+				   	 </md-fab-trigger>
+				   	  <md-toolbar>
+					      <md-fab-actions class="md-toolbar-tools">
+					        <md-button aria-label="comment" class="md-icon-button" ng-click="hideNavigator();">
+					           <i class="material-icons white-text">subject</i>
+					        </md-button>
+					        <md-button aria-label="label" class="md-icon-button" ng-click="hideNavigator();">
+					          <i class="material-icons white-text">message</i>
+					        </md-button>
+					        <md-button aria-label="photo" class="md-icon-button" ng-click="hideNavigator();">
+					            <i class="material-icons white-text">language</i>
+					        </md-button>
+					      </md-fab-actions>
+	    			</md-toolbar>
+			</md-fab-toolbar>
+		<div class="absolute fixTotop" ng-hide="hideSliderNav">
+			<md-button class="md-fab md-primary" aria-label="Logout" ng-click="openSlideNav();">
+	          <i class="material-icons white-text">power_settings_new</i>
+	        </md-button>
+    	</div>
 	</div>
 </div>

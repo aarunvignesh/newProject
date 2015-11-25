@@ -94,14 +94,14 @@ define(["angular"],function(){
 		    	cancel:"Cancel"
 		    });
 		    $mdDialog.show(confirm).then(function() {
-		      $scope.status = 'You decided to get rid of your debt.';
+		     regeneratePin();
 		    }, function() {
-		      $scope.status = 'You decided to keep your debt.';
+		      
 		    });
 			
 		};
 
-		$scope.regeneratePin=function(){
+		var regeneratePin=function(){
 			var userId=authenticate.getUserId().id;
 			if(userId){
 				$http.get("/api/regenPin/"+userId).success(function(res){

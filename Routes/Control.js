@@ -60,7 +60,8 @@ var ctrl={
 		}
 	},
 	randomTextGenerator: function(req,res){
-		User.userById({username:req.params.id},function(err,user){
+		console.log(req.params.id);
+		User.userById({id:req.params.id},function(err,user){
 			if(err){
 					res.send({err:"Facing New Issue will recover soon....",code:404});
 			}
