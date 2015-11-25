@@ -3,15 +3,15 @@ html
 		title Angular
 		script(type="text/javascript", src="./Scripts/Require.js", data-main="./require-production.js")
 	body(ng-class="{'loginScreen':$root.loginPage,'appScreen':!$root.loginPage}")
-		div(layout="row" flex="1" class="animationBackground" style="color:white;")
-			li
-			li
-			li
-			li
-			li
-			li
-			li
-			li
-			li
+		div(layout="row" flex="100" flex-layout="row" layout-padding class="animationBackground" style="color:white;")
+			li(flex="10")
+			li(flex="10")
+			li(flex="10")
+			li(flex="10")
+			li(flex="10")
+			li(flex="10")
+			li(flex="10")
+			li(flex="10")
+			li(flex="10")
 		div()
 			ui-view
