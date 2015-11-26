@@ -25,14 +25,14 @@
 					      </md-button>
 				   	 </md-fab-trigger>
 				   	  <md-toolbar>
-					      <md-fab-actions class="md-toolbar-tools">
-					        <md-button aria-label="comment" class="md-icon-button" ng-click="hideNavigator();">
+					      <md-fab-actions class="md-toolbar-tools" ng-mousedown="$event.preventDefault();" ng-click="hideNavigator();">
+					        <md-button aria-label="comment" class="md-icon-button" ng-click="">
 					           <i class="material-icons white-text">subject</i>
 					        </md-button>
-					        <md-button aria-label="label" class="md-icon-button" ng-click="hideNavigator();">
+					        <md-button aria-label="label" class="md-icon-button" ng-click="">
 					          <i class="material-icons white-text">message</i>
 					        </md-button>
-					        <md-button aria-label="photo" class="md-icon-button" ng-click="hideNavigator();">
+					        <md-button aria-label="photo" class="md-icon-button" ng-click="">
 					            <i class="material-icons white-text">language</i>
 					        </md-button>
 					      </md-fab-actions>
