@@ -83,6 +83,7 @@ define(["angular","angularRoute","angularPrimus","angularMaterial","ngFx","./Con
 			angular.element(".animationBackground>li").height(angular.element(".animationBackground>li").width());
 		});
 		$rootScope.$on("$stateChangeStart",function(event,next,current){
+			$rootScope.showLoading=true;
 			var auth=authenticate.isAuthenticatedUser();
 			auth.then(
 					function(user){
@@ -105,6 +106,11 @@ define(["angular","angularRoute","angularPrimus","angularMaterial","ngFx","./Con
 						return false;
 					}
 			);
+		});
+
+
+		$rootScope.$on("$stateChangeSuccess",function(event,next,current){
+			$rootScope.showLoading=false;
 		});
 		
 	}]);
