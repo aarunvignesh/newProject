@@ -6,11 +6,13 @@ define(["angular"],function(){
 			var deferUser=$q.defer();
 			$http.post("/signIn",sendData).success(function(res){
 				if(res.email){
-					scope.userDetails.email=res.email;
-					scope.userDetails.id=res.id;
-					scope.userDetails.name=res.email.split("@")[0];
-					scope.userDetails.validationStatus=res.validationStatus;
-					scope.userDetails.username= res.username;
+					scope.userDetails.email = res.email;
+					scope.userDetails.id = res.id;
+					scope.userDetails.name = res.email.split("@")[0];
+					scope.userDetails.validationStatus = res.validationStatus;
+					scope.userDetails.username = res.username;
+					scope.userDetails.isProfilepic = res.isProfilepic;
+					scope.userDetails.isCoverpic = res.isCoverpic;
 					deferUser.resolve(scope.userDetails);
 				}
 				else if(res.err){
@@ -38,6 +40,11 @@ define(["angular"],function(){
 					scope.userDetails.email=res.email;
 					scope.userDetails.id=res.id;
 					scope.userDetails.name=res.email.split("@")[0];
+
+					scope.userDetails.validationStatus = res.validationStatus;
+					scope.userDetails.username = res.username;
+					scope.userDetails.isProfilepic = res.isProfilepic;
+					scope.userDetails.isCoverpic = res.isCoverpic;
 					deferUser.resolve(scope.userDetails);
 				}
 				else if(res.err){
@@ -84,29 +91,12 @@ define(["angular"],function(){
 			scope.userDetails.validationStatus=value;
 		};
 
-		this.refreshUserdetails=function(){
-			var deferUser=$q.defer();
+		this.setprofilePhoto = function (value){
+			scope.userDetails.isProfilepic=value;
+		};
 
-			$http.get('/api/fetchUser/'+scope.userDetails.id)
-			.success(function(res){
-				if(res.email){
-					scope.userDetails.email=res.email;
-					scope.userDetails.id=res.id;
-					scope.userDetails.name=res.email.split("@")[0];
-					scope.userDetails.validationStatus=res.validationStatus;
-					deferUser.resolve(scope.userDetails);
-				}
-				else if(res.err){
-						this.userDetails=res;
-						deferUser.reject();
-					}
-			})
-			.error(function(err){
-				this.userDetails=res;
-				deferUser.reject();
-			});
-
-			return deferUser;
+		this.setcoverPhoto = function (value){
+			scope.userDetails.isCoverpic=value;
 		};
 
 		this.refreshUserDetails=function(){
@@ -119,6 +109,8 @@ define(["angular"],function(){
 					scope.userDetails.name=res.email.split("@")[0];
 					scope.userDetails.validationStatus=res.validationStatus;
 					scope.userDetails.username= res.username;
+					scope.userDetails.isProfilepic = res.isProfilepic;
+					scope.userDetails.isCoverpic = res.isCoverpic;
 					deferUser.resolve(scope.userDetails);
 				}
 				else if(res.err){
@@ -139,28 +131,12 @@ define(["angular"],function(){
 				$timeout(function() {
 					deferUser.resolve(scope.userDetails);
 				}, 10);
-				//return deferUser.promise;
+				return deferUser.promise;
 			}
 			else{
-				$http.get("/success").success(function(res){
-				if(res.email){
-					scope.userDetails.email=res.email;
-					scope.userDetails.id=res.id;
-					scope.userDetails.name=res.email.split("@")[0];
-					scope.userDetails.validationStatus=res.validationStatus;
-					scope.userDetails.username= res.username;
-					deferUser.resolve(scope.userDetails);
-				}
-				else if(res.err){
-						this.userDetails=res;
-						deferUser.reject();
-					}
-				}).error(function(err){
-				this.userDetails=res;
-				deferUser.reject();
-			});
+				return scope.refreshUserDetails();
 			}
-			return deferUser.promise;
+			
 		};
 
 		this.logoutUser=function(){

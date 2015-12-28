@@ -41,6 +41,16 @@ define(["angular","angularRoute","angularPrimus","angularMaterial","ngFx","ngFlo
 								defer.resolve(res);
 							});
 							return defer.promise;
+						}],
+						adminDetails:["authenticate","$q",function(authenticate,$q){
+							var defer = $q.defer();
+							authenticate.isAuthenticatedUser().then(function(user){
+								defer.resolve(user);
+							},
+							function(){
+								defer.reject();
+							});
+							return defer.promise;
 						}]
 
 					}

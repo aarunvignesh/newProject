@@ -1,27 +1,39 @@
 define(["angular"],function(){
 	var controller=["$scope","$http","authenticate","$state","chatService","profileDetails"
-	,"$timeout","$mdSidenav","$mdDialog",
+	,"$timeout","$mdSidenav","$mdDialog","adminDetails","backgroundFactory",
 	
-	function($scope,$http,authenticate,$state,chatService,profileDetails,$timeout,$mdSidenav,$mdDialog){
+	function($scope,$http,authenticate,$state,chatService,profileDetails,$timeout
+		,$mdSidenav,$mdDialog,adminDetails,backgroundFactory){
 		$scope.adminUser=false;
 
-		if(profileDetails.code == 200 || profileDetails == 202){
+		$scope.profileUserDetails={};
+
+		var adminName = authenticate.getUsername();
+
+		if(profileDetails.code == 200 || profileDetails.code == 202){
 			if(profileDetails.code==200){
 				$scope.adminUser = true;
+				$scope.profileUserDetails=adminDetails;
 			}
 			else{
 				$scope.adminUser = false;
+
+				$scope.profileUserDetails=profileDetails.user;
 			}
 		}
 		else{
-			var name = authenticate.getUsername();
+			
 			if(name.username){
 
-				$state.go('profile',{username:name.username});
+				$state.go('profile',{username:adminName.username});
 			}
 		};
+
+		if($scope.profileUserDetails.isCoverpic){
+			backgroundFactory.setCoverPhoto(angular.element("#mainProfilepanel"),adminName.username);
+		}
 		
-		
+		backgroundFactory.setProfilePhoto(angular.element("#profileImagepanel"),adminName.username);
 
 		$scope.openSettings=function(){
 

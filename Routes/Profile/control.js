@@ -3,6 +3,20 @@ var User=require("./../../lib/User")();
 var updateUser=require("./../../lib/UpdateUser")();
 var multer=require("multer");
 var mkdir=require("mkdirp");
+var fs = require('fs');
+var path = require('path');
+
+function fileExists(filePath)
+{
+    try
+    {
+        return fs.statSync(filePath).isFile();
+    }
+    catch (err)
+    {
+        return false;
+    }
+}
 
 var receiveConfig = multer.diskStorage({
 	destination: function(req,file,callback){
@@ -51,25 +65,40 @@ var ctrl={
 			res.send({result:"redirect back...",code:420});
 		}
 	},
+	photoThrower:function(req,res){
+		if(fileExists("./account/"+req.params.username+"/"+req.params.type+".jpeg")){
+			res.sendFile(path.resolve(__dirname+"/../../account/"+req.params.username+"/"+req.params.type+".jpeg"));
+		}
+		else{
+			if(req.params.type=="cover"){
+				res.sendFile(path.resolve(__dirname+"/../../pattern.jpg"));
+			}
+			else{
+				res.sendFile(path.resolve(__dirname+"/../../user.png"));
+			}
+		}
+	},
 	receivePhoto:function(req,res){
 		upload(req,res,function(err) {
         if(err) {
             return res.send({code:420,error:"Error uploading file."});
         }	
         else{
-        	
-	        User.userByUserName({username:req.user.username}
+	        User.userById({id:req.user._id}
 				,function(err,user){
+					console.log(user);
 					if(err){
 						res.send({code:420,success:"Facing New issue will recover soon"});
 					}
-					else if(user.length>0){
+					else if(user){
 						if(req.params.type=="profile"){
 							user.isProfilepicupdated = true;
 						}
-						else if(req.params.type=="profile"){
+						else if(req.params.type=="cover"){
 							user.isCoverpicupdated = true;
 						}
+						console.log(req.params.type);
+						console.log(user);
 						var defer = updateUser.updateUser(user);
 						defer.then(function(){
 							res.send({code:200,success:"File is uploaded"});

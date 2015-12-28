@@ -46,7 +46,13 @@ var ctrl={
 				}
 				else{
 					if(user.verifiedEmail){
-						res.send({id:req.user._id,email:req.user.email,validationStatus:true,username:user.username});
+						
+						res.send({id:req.user._id,email:req.user.email,
+							validationStatus:true,
+							username:user.username,
+							isProfilepic:user.isProfilepicupdated,
+							isCoverpic:user.isCoverpicupdated
+						});
 					}
 					else{
 						res.send({id:req.user._id,email:req.user.email,validationStatus:false});
