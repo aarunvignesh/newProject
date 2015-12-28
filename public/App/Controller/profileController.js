@@ -23,17 +23,17 @@ define(["angular"],function(){
 		}
 		else{
 			
-			if(name.username){
+			if(adminName.username){
 
 				$state.go('profile',{username:adminName.username});
 			}
 		};
 
 		if($scope.profileUserDetails.isCoverpic){
-			backgroundFactory.setCoverPhoto(angular.element("#mainProfilepanel"),adminName.username);
+			backgroundFactory.setCoverPhoto(angular.element("#mainProfilepanel"),$scope.profileUserDetails.username);
 		}
 		
-		backgroundFactory.setProfilePhoto(angular.element("#profileImagepanel"),adminName.username);
+		backgroundFactory.setProfilePhoto(angular.element("#profileImagepanel"),$scope.profileUserDetails.username);
 
 		$scope.openSettings=function(){
 

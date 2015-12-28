@@ -8,7 +8,7 @@ module.exports=function(grunt){
 			      baseUrl: "public/App",
 			      mainConfigFile: "public/require-main.js",
 			      name: "App", // assumes a production build using almond
-			      out: "public/productionApp.js",
+			      out: "public/App.js",
 				  done: function(done, output) {
 				        var duplicates = require('rjs-build-analysis').duplicates(output);
 				        console.log("in rjs-build-analysis");;

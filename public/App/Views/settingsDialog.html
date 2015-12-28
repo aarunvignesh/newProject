@@ -1,0 +1,79 @@
+<md-dialog style="width:60%;height:70%;">
+  <form>
+    <md-toolbar>
+      <div class="md-toolbar-tools">
+        <h2>Settings</h2>
+        <span flex></span>
+        <md-button class="md-icon-button" ng-click="close()">
+          <md-icon md-svg-icon="close" aria-label="Close dialog"></md-icon>
+        </md-button>
+      </div>
+    </md-toolbar>
+    <md-dialog-content style="max-width:800px;max-height:810px; ">
+      <md-tabs md-dynamic-height md-border-bottom>
+        <md-tab label="Profile">
+          <md-content class="md-padding">
+            <h1 class="md-display-2">Profile Details</h1>
+            
+          </md-content>
+        </md-tab>
+        <md-tab label="Account">
+          <md-content class="md-padding">
+            <h1 class="md-display-2">Change Password</h1>
+            
+          </md-content>
+        </md-tab>
+        <md-tab label="Display Picture">
+          <md-content class="md-padding">
+            <div layout="row" layout-padding>
+              <div flex="50"  flow-init="{target:'/api/upload/profile',singleFile:true, testChunks:false}" flow-files-submitted="checkFile($flow,'profile');">
+                <h4 style="text-align:center;color:#3434B1;text-decoration:uppercase;">Profile Photo</h1>
+                 <div class="dropPhoto" layout="column" flow-drop flow-attrs="{accept:'image/jpeg'}" flow-upload-started="fileUploadStarted('profile');" flow-complete="fileUploadComplete('profile');" flow-file-progress="uploadprofileProgress($flow,'profile');" ng-class="{'photoadded':!profileFlags.showLoading && !profileFlags.showText, 'dragonDropper':dragOverProfile}" flow-drag-enter="dragOverProfile=true;" flow-drag-leave="dragOverProfile=false;" style="position:relative;">
+                      <div ng-show="profileFlags.showText" layout="column" layout-align="center center" layout-fill class="" style="text-align:center;color:#3597AF;height:100%;position:absolute;">Drop your photo in this profile bin</div>
+                      <md-progress-circular md-mode="determinate" layout="column" layout-align="center center" layout-fill ng-show="profileFlags.showLoading" ng-value="profileFlags.loadingValue" style="height:100%;position:absolute;"></md-progress-circular>
+                      <div layout="column" layout-align="center center" layout-fill style="position:absolute;">
+                        <img ng-show="!profileFlags.showLoading && !profileFlags.showText" flow-img="$flow.files[0]"  ng-class="{'setHeight':!profileEmptyText,'ng-hide':profileEmptyText}"/>
+                      </div>
+                 </div> 
+                 <div layout="row" layout-align="center center" style="margin-top:5px;">
+                      <md-button type="file" ng-click="uploadProfile();" class="md-raised md-primary">
+                      <md-icon class="material-icons" md-svg-icon="cloud-upload"></md-icon>
+                      Upload
+                      </md-button>
+                  </div>
+                  <input id="uploadProfilephoto" type="file" flow-btn flow-attrs="{accept:'image/jpeg'}" style="display:none;"/>
+              </div>
+              <div flex="50"  flow-init="{target:'/api/upload/cover',singleFile:true, testChunks:false}" flow-files-submitted="checkFile($flow,'cover');">
+                <h4 style="text-align:center;color:#3434B1;text-decoration:uppercase;">Cover Photo</h1>
+                 <div class="dropPhoto" layout="column" flow-drop flow-attrs="{accept:'image/jpeg'}" flow-upload-started="fileUploadStarted('cover');" flow-complete="fileUploadComplete('cover');" flow-file-progress="uploadprofileProgress($flow,'cover');" ng-class="{'photoadded':!coverFlags.showLoading && !coverFlags.showText, 'dragonDropper':dragOverProfile}" flow-drag-enter="dragOverProfile=true;" flow-drag-leave="dragOverProfile=false;" style="position:relative;">
+                      <div ng-show="coverFlags.showText" layout="column" layout-align="center center" layout-fill class="" style="text-align:center;color:#3597AF;height:100%;position:absolute;">Drop your photo in this cover bin</div>
+                      <md-progress-circular md-mode="determinate" layout="column" layout-align="center center" layout-fill ng-show="coverFlags.showLoading" ng-value="coverFlags.loadingValue" style="height:100%;position:absolute;"></md-progress-circular>
+                      <div layout="column" layout-align="center center" layout-fill style="position:absolute;">
+                        <img ng-show="!coverFlags.showLoading && !coverFlags.showText" flow-img="$flow.files[0]"  ng-class="{'setHeight':!profileEmptyText,'ng-hide':profileEmptyText}"/>
+                      </div>
+                 </div> 
+                 <div layout="row" layout-align="center center" style="margin-top:5px;">
+                      <md-button type="file" ng-click="uploadCover();" class="md-raised md-primary">
+                      <md-icon class="material-icons" md-svg-icon="cloud-upload"></md-icon>
+                      Upload
+                      </md-button>
+                  </div>
+                  <input id="uploadCoverphoto" type="file" flow-btn flow-attrs="{accept:'image/jpeg'}" style="display:none;"/>
+              </div>
+            </div>
+            
+          </md-content>
+        </md-tab>
+      </md-tabs>
+    </md-dialog-content>
+    <md-dialog-actions layout="row" style="display:none;">
+      <span flex></span>
+      <md-button ng-click="answer('not useful')" >
+        Not Useful
+      </md-button>
+      <div>
+        
+      </div>
+    </md-dialog-actions>
+  </form>
+</md-dialog>

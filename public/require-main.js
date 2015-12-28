@@ -31,13 +31,10 @@ require.config({
 			deps:["angular"]
 		},
 		flowStand:{
-			deps:["jquery"]
+			deps:["jquery","angular"]
 		},
 		ngFlow:{
-			deps:["flowStand","angular"]
-		},
-		App:{
-			deps:["angularRoute"]
+			deps:["flowStand"]
 		},
 		less:{
 			exports:"less"

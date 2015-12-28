@@ -1,0 +1,54 @@
+ <div>
+  <md-toolbar>
+      <div class="md-toolbar-tools">
+        <md-button aria-label="comment" style="font-size:50px;" class="md-icon-button" ng-click="gotoProfile();">
+			
+          <md-icon class="material-icons" md-svg-icon="arrow-left-bold"></md-icon>
+		</md-button>
+      
+        <h3>
+          <span>First Name</span>
+        </h3>
+        <span flex>
+        </span>
+        <div flex="20" flex-sm="60" flex-md="40" layout="row" layout-align="center center">
+	        <h5>
+          		<span>Online</span>
+        	</h5>
+	        <md-switch class="md-warn" aria-label="online">
+	        </md-switch>
+	        <h5>
+          		<span>Offline</span>
+        	</h5>
+    	</div>
+    		<md-button aria-label="comment" ng-click="openMsgSlideNav();" class="md-icon-button">
+		 <md-icon class="material-icons" md-svg-icon="account-multiple"></md-icon>
+		</md-button>
+      </div>
+      
+    </md-toolbar>
+    <!-- <section> -->
+	        <md-sidenav class="md-sidenav-right md-whiteframe-z2" md-component-id="msgSlider">
+		   		  <md-toolbar class="md-theme-light">
+		        <h1 class="md-toolbar-tools">Friends</h1>
+		      </md-toolbar>
+		      <md-content layout-padding>
+		       		
+		      </md-content>
+		    </md-sidenav>
+  		<!-- </section> -->
+	<div layout-container>
+		<div flex="90" layout="row" style="height:calc(100% - 150px);" layout-padding class="parent">
+				<!-- <md-grid-list
+			        md-cols-sm="1" md-cols-md="2" md-cols-gt-md="6"
+			        md-row-height-gt-md="1:1" md-row-height="4:3" flex-offset="10" flex="100"
+			         >
+
+			    
+			  </md-grid-list> -->
+			  <msg-grid></msg-grid>
+		</div>
+		<div flex="100" style="height:50px;">
+		</div>
+	</div>
+</div>
