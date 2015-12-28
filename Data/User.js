@@ -32,6 +32,8 @@ var data={
 				newUser.password=args.password
 				newUser.verifiedEmail=false;
 				newUser.username="";
+				newUser.isProfilepicupdated=false;
+				newUser.isCoverpicupdated=false;
 				newUser.save();
 				rndGenerate.newRandomTextGenerate(newUser);
 				callback(null,{success:newUser});

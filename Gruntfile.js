@@ -8,10 +8,10 @@ module.exports=function(grunt){
 			      baseUrl: "public/App",
 			      mainConfigFile: "public/require-main.js",
 			      name: "App", // assumes a production build using almond
-			      out: "public/App.js",
+			      out: "public/productionApp.js",
 				  done: function(done, output) {
 				        var duplicates = require('rjs-build-analysis').duplicates(output);
-
+				        console.log("in rjs-build-analysis");;
 				        if (Object.keys(duplicates).length > 0) {
 				          grunt.log.subhead('Duplicates found in requirejs build:');
 				          for (var key in duplicates) {

@@ -1,5 +1,5 @@
 define(["angular","less"],function(angular,less){
-	var themeFactoryFn=[function(){
+	var themeFactoryFn=["$timeout",function($timeout){
 		var themeFactory={
 			initTheme:function(){
 				less.pageLoadFinished.then(function(){console.log("Finished");});
@@ -7,8 +7,10 @@ define(["angular","less"],function(angular,less){
 				themesheet.appendTo('head');
 				less.sheets[0]=themesheet[0];
 				less.refresh().then(function(){
-					
-					angular.element(".animationBackground>li").height(angular.element(".animationBackground>li").width());
+					$timeout(function() {
+
+						angular.element(".animationBackground>li").height(angular.element(".animationBackground>li").width());
+					}, 700);
 				});
 				less.refreshStyles();
 			}

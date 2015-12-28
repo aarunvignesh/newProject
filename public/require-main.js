@@ -15,7 +15,9 @@ require.config({
 		hammerJquery:"./../Scripts/jqueryHammer",
 		ngFx:"./../Scripts/ngFx",
 		tweenMax:"./../Scripts/tweenMax",
-		tweenLite:"./../Scripts/tweenLite"
+		tweenLite:"./../Scripts/tweenLite",
+		flowStand:"./../Scripts/ng-flow-standalone",
+		ngFlow:"./../Scripts/ng-flow"
 	},
 	shim:{
 		jquery:{
@@ -27,6 +29,12 @@ require.config({
 		},
 		angularRoute:{
 			deps:["angular"]
+		},
+		flowStand:{
+			deps:["jquery"]
+		},
+		ngFlow:{
+			deps:["flowStand","angular"]
 		},
 		App:{
 			deps:["angularRoute"]

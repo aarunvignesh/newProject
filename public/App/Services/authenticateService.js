@@ -1,5 +1,5 @@
 define(["angular"],function(){
-	var service=["$http","$q","$timeout",function($http,$q,$timeout){
+	var service=["$http","$q","$timeout","$state",function($http,$q,$timeout,$state){
 		var scope=this;
 		this.userDetails={};
 		this.authenticateUser=function(sendData){
@@ -57,19 +57,25 @@ define(["angular"],function(){
 			});
 			return deferUser.promise;
 		};
+
+
 		this.getUsername=function(){
 			if(scope.userDetails.username){
 				return {username:scope.userDetails.username};
 			}
 			else{
+				$state.go('welcome');
 				return {err:"::User Not Authenticated::"}
 			}
 		};
+
+
 		this.getUserId=function(){
 			if(scope.userDetails.id){
 				return {id:scope.userDetails.id};
 			}
 			else{
+				$state.go('welcome');
 				return {err:"::User Not Authenticated::"}
 			}
 		};
@@ -156,6 +162,7 @@ define(["angular"],function(){
 			}
 			return deferUser.promise;
 		};
+
 		this.logoutUser=function(){
 			var deferUser=$q.defer();
 			$http.post("/logout",{id:scope.userDetails.id}).success(function(res){

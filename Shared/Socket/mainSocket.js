@@ -37,11 +37,12 @@ var create=function(server){
     primusServer.on('connection',function(spark){
 
         spark.on("data",function(ev){
-            console.log(ev);
+           console.log("DATA");
+           console.log(ev);
         });
         
     	spark.on('initialHandshake',function(msg){
-            console.log(msg);
+            console.log(spark.id);
     	});
         
     });

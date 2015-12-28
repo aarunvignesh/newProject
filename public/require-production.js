@@ -1,4 +1,4 @@
 require.config({
-	deps:["App"]
+	deps:["productionApp"]
 });
 

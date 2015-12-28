@@ -6,6 +6,8 @@ var schema=mongo.Schema({
 	socketId:String,
 	verifiedEmail:Boolean,
 	randomEmailValidationText:String,
+	isProfilepicupdated:Boolean,
+	isCoverpicupdated:Boolean,
 	// otherDetails:{
 	// 	phoneNo:"string",
 	// 	college:"string",

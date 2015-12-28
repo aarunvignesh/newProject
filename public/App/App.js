@@ -1,10 +1,10 @@
 
-define(["angular","angularRoute","angularPrimus","angularMaterial","ngFx","./Controller/index","./Services/index","./Factory/index"],
-	function(angular,angularRoute,angularPrimus,angularMaterial,ngFx,controller,services,factory){
-	var app=angular.module("newApp",["ui.router","primus","ngMaterial","ngAnimate","ngFx"])
+define(["angular","angularRoute","angularPrimus","angularMaterial","ngFx","ngFlow","./Controller/index","./Services/index","./Factory/index","./Directives/index"],
+	function(angular,angularRoute,angularPrimus,angularMaterial,ngFx,ngFlow,controller,services,factory,directives){
+	var app=angular.module("newApp",["ui.router","primus","ngMaterial","ngAnimate","ngFx","flow"])
 
-	.config(["$stateProvider","primusProvider","$mdThemingProvider","$urlRouterProvider",
-		function($stateProvider,primusProvider,$mdThemingProvider,$urlRouterProvider){
+	.config(["$stateProvider","primusProvider","$mdThemingProvider","$urlRouterProvider","$mdIconProvider",
+		function($stateProvider,primusProvider,$mdThemingProvider,$urlRouterProvider,$mdIconProvider){
 		$stateProvider
 		.state('welcome',
 				{
@@ -20,6 +20,13 @@ define(["angular","angularRoute","angularPrimus","angularMaterial","ngFx","./Con
 					controller:"verifyController"
 				}
 			)
+		.state('messages',
+				{
+					url:"/messages",
+					templateUrl:"/template/messages",
+					controller:"messagesController"
+				}
+			)
 		.state('profile',
 				{
 					url:"/profile/:username",
@@ -29,7 +36,8 @@ define(["angular","angularRoute","angularPrimus","angularMaterial","ngFx","./Con
 						profileDetails:["$http","$stateParams","authenticate","$q",
 						function($http,$stateParams,authenticate,$q){
 							var defer=$q.defer();
-							$http.post("api/userdetails/",{username:$stateParams.username}).success(function(res){
+							$http.post("api/userdetails/",{username:$stateParams.username})
+							.success(function(res){
 								defer.resolve(res);
 							});
 							return defer.promise;
@@ -55,6 +63,7 @@ define(["angular","angularRoute","angularPrimus","angularMaterial","ngFx","./Con
 		.setDefaultMultiplex(false);
 		$mdThemingProvider.theme('default');
 		$urlRouterProvider.otherwise('/welcome');
+		$mdIconProvider.defaultIconSet('./Styles/mdi.svg')
 	}])
 	.run([
 	"$state",
@@ -64,6 +73,7 @@ define(["angular","angularRoute","angularPrimus","angularMaterial","ngFx","./Con
 	"$http",
 	"authenticate",
 	"themeFactory",
+	"chatService",
 	
 	function(
 		$state,
@@ -72,7 +82,8 @@ define(["angular","angularRoute","angularPrimus","angularMaterial","ngFx","./Con
 		$rootScope,
 		$http,
 		authenticate,
-		themeFactory
+		themeFactory,
+		chatService
 		){
 
 		themeFactory.initTheme();
@@ -89,7 +100,9 @@ define(["angular","angularRoute","angularPrimus","angularMaterial","ngFx","./Con
 					function(user){
 						$rootScope.loginPage=false;
 						if(user.validationStatus){
-							if(next.name!="profile"){
+							chatService.joinMe(authenticate.getUserId());
+							var allowedRoutes=["profile","messages"];
+							if(allowedRoutes.indexOf(next.name)<0){
 								$state.go('profile',{username:user.username});
 							}
 							else{
@@ -108,6 +121,9 @@ define(["angular","angularRoute","angularPrimus","angularMaterial","ngFx","./Con
 			);
 		});
 
+		$rootScope.$on("$stateChangeError",function(event,next,current){
+			$rootScope.showLoading=false;
+		});
 
 		$rootScope.$on("$stateChangeSuccess",function(event,next,current){
 			$rootScope.showLoading=false;
@@ -119,6 +135,7 @@ define(["angular","angularRoute","angularPrimus","angularMaterial","ngFx","./Con
 	services(app);
 	controller(app);
 	factory(app);
+	directives(app);
 	angular.bootstrap(angular.element("html"), ["newApp"]) 
 	return app;
 });

@@ -1,7 +1,11 @@
 define(["angular","primus"],function(){
-	var chatService=["authenticate","primus",function(authenticate,primus){
+	var chatService=["authenticate","primus","$rootScope",function(authenticate,primus,$rootScope){
 		this.joinMe=function(userObj){
-			primus.send("initialHandshake",userObj);
+			if(!$rootScope.connectionEstablished){
+
+				primus.send("initialHandshake",userObj);
+				$rootScope.connectionEstablished=true;
+			}
 		};	
 	}];
 	return chatService;

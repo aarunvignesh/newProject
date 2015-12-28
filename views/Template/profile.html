@@ -5,7 +5,7 @@
 	      <md-toolbar>
 	      	<div class="md-toolbar-tools">
 	        	<h1 flex="80">Sidenav Left</h1>
-	        	<md-icon><i class="material-icons white-text" ng-click="openSlideNav();">reorder</i></md-icon>
+	        	<md-icon class="material-icons pointer" md-svg-icon="close" ng-click="openSlideNav();">reorder</md-icon>
 	    	</div>
 	      </md-toolbar>
 	      <md-content layout-padding>
@@ -18,29 +18,29 @@
 	 </section>   
 	<div flex="100" layout="column">
 		
-			<md-fab-toolbar md-open="false" count="0" md-direction="left">
+			<md-fab-toolbar md-open="fabOpen" count="0" md-direction="left">
 					 <md-fab-trigger class="align-with-text">
-					      <md-button ng-click="hideNavigator();" aria-label="menu" class="md-fab md-primary">
-					        <md-icon><i class="material-icons white-text">reorder</i></md-icon>
+					      <md-button aria-label="menu" class="md-fab md-primary">
+					       <md-icon class="material-icons" md-svg-icon="yeast"></md-icon>
 					      </md-button>
 				   	 </md-fab-trigger>
 				   	  <md-toolbar>
-					      <md-fab-actions class="md-toolbar-tools" ng-mousedown="$event.preventDefault();" ng-click="hideNavigator();">
-					        <md-button aria-label="comment" class="md-icon-button" ng-click="">
-					           <i class="material-icons white-text">subject</i>
+					      <md-fab-actions class="md-toolbar-tools">
+					        <md-button aria-label="comment" class="md-icon-button" ng-click="openSettings();">
+					           <md-icon class="material-icons" md-svg-icon="settings"></md-icon>
 					        </md-button>
-					        <md-button aria-label="label" class="md-icon-button" ng-click="">
-					          <i class="material-icons white-text">message</i>
+					        <md-button aria-label="label" class="md-icon-button" ng-click="gotoMessages();">
+					          <md-icon class="material-icons" md-svg-icon="message"></md-icon>
 					        </md-button>
 					        <md-button aria-label="photo" class="md-icon-button" ng-click="">
-					            <i class="material-icons white-text">language</i>
+					            <md-icon class="material-icons" md-svg-icon="account-star"></md-icon>
 					        </md-button>
 					      </md-fab-actions>
 	    			</md-toolbar>
 			</md-fab-toolbar>
-		<div class="absolute fixTotop" ng-hide="hideSliderNav">
+		<div class="absolute fixTotop" ng-hide="fabOpen">
 			<md-button class="md-fab md-primary" aria-label="Logout" ng-click="openSlideNav();">
-	          <i class="material-icons white-text">power_settings_new</i>
+	         <md-icon class="material-icons" md-svg-icon="view-headline"></md-icon>
 	        </md-button>
     	</div>
 	</div>

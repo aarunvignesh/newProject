@@ -13,8 +13,8 @@ var ctrl={
 			case "diagonostics":
 						res.sendFile(path.resolve(__dirname+"/../views/Template/profile.html"));
 						break;
-			case "chat":
-						res.sendFile(path.resolve(__dirname+"/../views/Template/chat.html"));
+			case "messages":
+						res.sendFile(path.resolve(__dirname+"/../views/Template/messages.html"));
 						break;
 			case "illegal":
 						res.sendFile(path.resolve(__dirname+"/../views/Template/illegal.html"));
@@ -73,13 +73,16 @@ var ctrl={
 	},
 	randomTextValidator:function(req,res){
 		if(req.body.id){
+			//checking any users with same requested username
 			User.userByUserName({username:req.body.username},function(err,userAvail){
 				if(err){
 					res.send({err:"Facing New Issue will recover soon....",code:404});
 				}
+				//User available with requested username
 				else if(userAvail.length!=0){
 					res.send({err:"Requested Username is not available..",code:304});
 				}
+				//Username available since no user with requested username
 				else if(userAvail.length==0){
 					User.userById({id:req.body.id},function(err,user){
 						if(err){
