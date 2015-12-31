@@ -1,6 +1,4 @@
-	
-<div layout="row" layout-fill id="mainProfilepanel">
-	<section layout="row" flex>
+<section layout="row" flex>
 		<md-sidenav class="md-sidenav-left" md-component-id="mainSlider">
 	      <md-toolbar>
 	      	<div class="md-toolbar-tools">
@@ -15,8 +13,11 @@
 	        </md-button>
 	      </md-content>
 	    </md-sidenav>
-	 </section>   
-	<div flex="100" layout="column">
+	 </section> 	
+
+<div layout="column" layout-fill id="mainProfilepanel">
+	  
+	<div>
 		
 			<md-fab-toolbar md-open="fabOpen" count="0" md-direction="left">
 					 <md-fab-trigger class="align-with-text">
@@ -43,8 +44,42 @@
 	         <md-icon class="material-icons" md-svg-icon="view-headline"></md-icon>
 	        </md-button>
     	</div>
-    	<div class="absolute profileContainer" layout="row">
-    		<div id="profileImagepanel" class="profileImage"></div>
+    	
+    	<div layout-container layout="column" class="profilePage">
+    		<div class="profileName" layout="row" layout-padding layout-align="end center">
+    			<div class="profileNameCntr">
+    				<span ng-bind="profileUserDetails.name"></span>
+    			</div>
+    		</div>
+    		<div class="profileBase" layout-gt-sm="row" layout-sm="column" layout-padding layout-align-gt-sm="start end">
+    				<div class="profileContainer md-whiteframe-20dp" flex-sm="80" flex-gt-sm="30" layout-padding  layout="row">
+    					<div id="profileImagepanel" flex class="profileImage"></div>
+    				</div>
+    				<div hide-sm flex></div>
+    				<div class="profileDetailBtnCntr" flex-lg="20" flex-md="40" flex-sm layout="row" layout-align="center center">
+    					<md-menu md-offset="0 -7">
+				          <md-button aria-label="user details" class="md-fab md-primary" ng-click="$mdOpenMenu($event)">
+				            <md-icon md-svg-icon="account"></md-icon>
+				          </md-button>
+				          <md-menu-content layout="column" width="8" style="padding:0px;border-radius:5px;">
+				           	 <md-whiteframe layout-padding class="md-whiteframe-1dp" layout-container layout-align="center center">
+							     <div layout-fill layout="row" layout-align="end center">
+					             <h4> Studied at</h4> &nbsp;Kamaraj College of Engineering and Technology
+					           	</div>
+					           	<md-divider ></md-divider>
+					           	<div layout-fill layout="row" layout-align="end center">
+					             <h4> Works at</h4> &nbsp;Pearson English Business Solutions
+					           	</div>
+					           	
+							  </md-whiteframe>
+				          </md-menu-content>
+				        </md-menu>
+				        <md-button aria-label="user details" class="md-fab md-primary" ng-click="$mdOpenMenu($event)">
+				            <md-icon md-svg-icon="close"></md-icon>
+				         </md-button>
+    				</div>
+    		</div>
+    		<div class="profileFooter"></div>
     	</div>
 	</div>
 </div>

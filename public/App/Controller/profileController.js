@@ -12,10 +12,12 @@ define(["angular"],function(){
 
 		if(profileDetails.code == 200 || profileDetails.code == 202){
 			if(profileDetails.code==200){
+
 				$scope.adminUser = true;
 				$scope.profileUserDetails=adminDetails;
 			}
 			else{
+				
 				$scope.adminUser = false;
 
 				$scope.profileUserDetails=profileDetails.user;
