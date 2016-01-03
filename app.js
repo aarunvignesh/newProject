@@ -9,6 +9,7 @@ var passport=require('passport');
 var local=require('passport-local').Strategy;
 var localStrategy=require('./Shared/Passport');
 var flash=require('connect-flash');
+
 // var cluster=require('cluster');
 // var cpuNo=require('os').cpus().length;
 // if(cluster.isMaster){

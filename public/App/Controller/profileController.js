@@ -37,6 +37,24 @@ define(["angular"],function(){
 		
 		backgroundFactory.setProfilePhoto(angular.element("#profileImagepanel"),$scope.profileUserDetails.username);
 
+
+		$scope.setProfiledetailScroller = function(setter){
+			if(setter)
+			{
+				
+				angular.element(".profilescrollersetter").perfectScrollbar();
+			}
+			else{
+				$timeout(function() {
+					
+					angular.element(".profilescrollersetter").perfectScrollbar("update");
+				}, 10);
+			}
+
+		};
+
+		$scope.setProfiledetailScroller(true);
+
 		$scope.openSettings=function(){
 
 			$mdDialog.show({

@@ -17,7 +17,9 @@ require.config({
 		tweenMax:"./../Scripts/tweenMax",
 		tweenLite:"./../Scripts/tweenLite",
 		flowStand:"./../Scripts/ng-flow-standalone",
-		ngFlow:"./../Scripts/ng-flow"
+		ngFlow:"./../Scripts/ng-flow",
+		perfectScroll:"./../Scripts/perfect-scrollbar",
+		angularperfectScroll:"./../Scripts/angular-perfect-scrollbar"
 	},
 	shim:{
 		jquery:{
@@ -75,6 +77,12 @@ require.config({
 		},
 		hammerJquery:{
 			deps:["jquery","hammer"]
+		},
+		perfectScroll:{
+			deps:["jquery"]
+		},
+		angularperfectScroll:{
+			deps:["perfectScroll","angular"]
 		}
 	},
 	deps:["App"]

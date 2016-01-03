@@ -58,20 +58,83 @@
     				<div hide-sm flex></div>
     				<div class="profileDetailBtnCntr" flex-lg="20" flex-md="40" flex-sm layout="row" layout-align="center center">
     					<md-menu md-offset="0 -7">
-				          <md-button aria-label="user details" class="md-fab md-primary" ng-click="$mdOpenMenu($event)">
+				          <md-button aria-label="user details" class="md-fab md-primary" ng-click="$mdOpenMenu($event);setProfiledetailScroller(false);">
 				            <md-icon md-svg-icon="account"></md-icon>
 				          </md-button>
-				          <md-menu-content layout="column" width="8" style="padding:0px;border-radius:5px;">
-				           	 <md-whiteframe layout-padding class="md-whiteframe-1dp" layout-container layout-align="center center">
-							     <div layout-fill layout="row" layout-align="end center">
-					             <h4> Studied at</h4> &nbsp;Kamaraj College of Engineering and Technology
+				          <md-menu-content layout="column" width="8" class="profile-menu">
+				          <!-- <perfect-scrollbar layout-container layout-padding class="scroller" wheel-propagation="true" wheel-speed="10" min-scrollbar-length="20"> -->
+				           	 <md-whiteframe layout-padding class="md-whiteframe-1dp profilescrollersetter" layout-container layout-align="center center">
+				           	 	<div layout="row">
+							     <div flex="20" layout="row">
+							     	<md-icon class="icon-color" md-svg-icon="book-open"></md-icon>
+							     </div>	
+							     <div flex="80" layout="column">
+							     	<div class="profile-details-title">
+							     		<h4 class="no-margin"> Studied at</h4> 
+							     	</div>	
+							     	<div class="profile-details">
+							     		TVS Matriculation Higher Secondary School
+							     	</div>
+							     </div>
 					           	</div>
 					           	<md-divider ></md-divider>
-					           	<div layout-fill layout="row" layout-align="end center">
-					             <h4> Works at</h4> &nbsp;Pearson English Business Solutions
+							     <div layout="row">
+							     <div flex="20" layout="row">
+							     	<md-icon class="icon-color" md-svg-icon="school"></md-icon>
+							     </div>	
+							     <div flex="80" layout="column">
+							     	<div class="profile-details-title">
+							     		<h4 class="no-margin"> Graduated at</h4> 
+							     	</div>	
+							     	<div class="profile-details">
+							     		Kamaraj College of Engineering and Technology
+							     	</div>
+							     </div>
+					           	</div>
+					           	<md-divider ></md-divider>
+					           	<div layout="row">
+							     <div flex="20" layout="row">
+							     	<md-icon class="icon-color" md-svg-icon="worker"></md-icon>
+							     </div>	
+							     <div flex="80" layout="column">
+							     	<div class="profile-details-title">
+							     		<h4 class="no-margin"> Works at</h4> 
+							     	</div>	
+							     	<div class="profile-details">
+							     		Pearson English
+							     	</div>
+							     </div>
+					           	</div>
+					           	<div layout="row">
+							     <div flex="20" layout="row">
+							     	<md-icon class="icon-color" md-svg-icon="gender-male-female"></md-icon>
+							     </div>	
+							     <div flex="80" layout="column">
+							     	<div class="profile-details-title">
+							     		<h4 class="no-margin"> Gender</h4> 
+							     	</div>	
+							     	<div class="profile-details">
+							     		male
+							     	</div>
+							     </div>
+					           	</div>
+					           	<md-divider ></md-divider>
+					           	<div layout="row">
+							     <div flex="20" layout="row">
+							     	<md-icon class="icon-color" md-svg-icon="baby"></md-icon>
+							     </div>	
+							     <div flex="80" layout="column">
+							     	<div class="profile-details-title">
+							     		<h4 class="no-margin">Born on</h4> 
+							     	</div>	
+							     	<div class="profile-details">
+							     		22/08/1990
+							     	</div>
+							     </div>
 					           	</div>
 					           	
 							  </md-whiteframe>
+							<!-- </perfect-scrollbar> -->
 				          </md-menu-content>
 				        </md-menu>
 				        <md-button aria-label="user details" class="md-fab md-primary" ng-click="$mdOpenMenu($event)">
