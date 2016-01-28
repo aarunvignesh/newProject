@@ -52,8 +52,9 @@
     			</div>
     		</div>
     		<div class="profileBase" layout-gt-sm="row" layout-sm="column" layout-padding layout-align-gt-sm="start end">
-    				<div class="profileContainer md-whiteframe-20dp" flex-sm="80" flex-gt-sm="30" layout-padding  layout="row">
+    				<div class="profileContainer md-whiteframe-20dp" flex-sm="80" flex-gt-sm="30" layout-padding layout="row">
     					<div id="profileImagepanel" flex class="profileImage"></div>
+    					
     				</div>
     				<div hide-sm flex></div>
     				<div class="profileDetailBtnCntr" flex-lg="20" flex-md="40" flex-sm layout="row" layout-align="center center">
@@ -64,73 +65,36 @@
 				          <md-menu-content layout="column" width="8" class="profile-menu">
 				          <!-- <perfect-scrollbar layout-container layout-padding class="scroller" wheel-propagation="true" wheel-speed="10" min-scrollbar-length="20"> -->
 				           	 <md-whiteframe layout-padding class="md-whiteframe-1dp profilescrollersetter" layout-container layout-align="center center">
+				           	 	<div layout="column"  ng-if="profileDetailKeys.length>0" ng-repeat="key in profileDetailKeys">
 				           	 	<div layout="row">
 							     <div flex="20" layout="row">
-							     	<md-icon class="icon-color" md-svg-icon="book-open"></md-icon>
+							     	<md-icon class="icon-color" md-svg-icon="{{detailTemplate[key].icon}}"></md-icon>
 							     </div>	
 							     <div flex="80" layout="column">
 							     	<div class="profile-details-title">
-							     		<h4 class="no-margin"> Studied at</h4> 
+							     		<h4 class="no-margin">{{detailTemplate[key].title}}</h4> 
 							     	</div>	
 							     	<div class="profile-details">
-							     		TVS Matriculation Higher Secondary School
+							     		{{profileUserDetails.otherDetails[key].detail}}
 							     	</div>
-							     </div>
 					           	</div>
-					           	<md-divider ></md-divider>
-							     <div layout="row">
-							     <div flex="20" layout="row">
-							     	<md-icon class="icon-color" md-svg-icon="school"></md-icon>
-							     </div>	
-							     <div flex="80" layout="column">
-							     	<div class="profile-details-title">
-							     		<h4 class="no-margin"> Graduated at</h4> 
-							     	</div>	
-							     	<div class="profile-details">
-							     		Kamaraj College of Engineering and Technology
-							     	</div>
-							     </div>
 					           	</div>
-					           	<md-divider ></md-divider>
-					           	<div layout="row">
-							     <div flex="20" layout="row">
-							     	<md-icon class="icon-color" md-svg-icon="worker"></md-icon>
-							     </div>	
-							     <div flex="80" layout="column">
-							     	<div class="profile-details-title">
-							     		<h4 class="no-margin"> Works at</h4> 
-							     	</div>	
-							     	<div class="profile-details">
-							     		Pearson English
-							     	</div>
-							     </div>
+							     <md-divider ng-if="!$last"></md-divider>
 					           	</div>
-					           	<div layout="row">
+					           	<div class="empty-placehoder" layout="column" ng-focus="$event.preventDefault();" ng-click="adminUser ? openSettings() : javascript.void(0);" ng-if="profileDetailKeys.length==0">
+				           	 	<div layout="row">
 							     <div flex="20" layout="row">
-							     	<md-icon class="icon-color" md-svg-icon="gender-male-female"></md-icon>
+							  		 <md-icon class="icon-color" md-svg-icon="{{adminUser?'settings':'account'}}"></md-icon>
 							     </div>	
-							     <div flex="80" layout="column">
-							     	<div class="profile-details-title">
-							     		<h4 class="no-margin"> Gender</h4> 
-							     	</div>	
-							     	<div class="profile-details">
-							     		male
-							     	</div>
-							     </div>
+							     <div flex="80" layout="column"  class="profile-details">
+							     	<h4 ng-if="adminUser">
+							     	We need to know more about you. Update us under profile tab in settings.
+							     	</h4>
+							     	<h4 ng-if="!adminUser">
+							     	{{profileUserDetails.name}} hasn't shared details with us.
+							     	</h4>
 					           	</div>
-					           	<md-divider ></md-divider>
-					           	<div layout="row">
-							     <div flex="20" layout="row">
-							     	<md-icon class="icon-color" md-svg-icon="baby"></md-icon>
-							     </div>	
-							     <div flex="80" layout="column">
-							     	<div class="profile-details-title">
-							     		<h4 class="no-margin">Born on</h4> 
-							     	</div>	
-							     	<div class="profile-details">
-							     		22/08/1990
-							     	</div>
-							     </div>
+					           	</div>
 					           	</div>
 					           	
 							  </md-whiteframe>

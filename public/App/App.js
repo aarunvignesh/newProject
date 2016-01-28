@@ -104,7 +104,7 @@ define(["angular","angularRoute","angularPrimus","angularMaterial","ngFx","ngFlo
 			angular.element(".animationBackground>li").height(angular.element(".animationBackground>li").width());
 		});
 		$rootScope.$on("$stateChangeStart",function(event,next,current){
-			$rootScope.showLoading=true;
+			//$rootScope.showLoading=true;
 			var auth=authenticate.isAuthenticatedUser();
 			auth.then(
 					function(user){
@@ -120,6 +120,7 @@ define(["angular","angularRoute","angularPrimus","angularMaterial","ngFx","ngFlo
 							}
 						}
 						else{
+							if($location.$$path != "/verify")
 							$state.go('verify');
 						}
 					},
@@ -132,11 +133,11 @@ define(["angular","angularRoute","angularPrimus","angularMaterial","ngFx","ngFlo
 		});
 
 		$rootScope.$on("$stateChangeError",function(event,next,current){
-			$rootScope.showLoading=false;
+			//$rootScope.showLoading=false;
 		});
 
 		$rootScope.$on("$stateChangeSuccess",function(event,next,current){
-			$rootScope.showLoading=false;
+			//$rootScope.showLoading=false;
 		});
 		
 	}]);

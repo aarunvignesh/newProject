@@ -1,16 +1,18 @@
-﻿//@import "../../Scripts/materialize-v0.97.1/materialize/css/materialize.css";
+﻿@import "./../animate.css";
+//@import "../../Scripts/materialize-v0.97.1/materialize/css/materialize.css";
 @import "../../Scripts/materialize-v0.97.1/materialize/css/angular-material-layout.css";
 @import "../../Scripts/materialize-v0.97.1/materialize/css/angular-material.css";
 @import "../../Scripts/bootstrap-3.3.2-dist/css/bootstrap-theme.min.css";
 @import "../../Scripts/materialize-v0.97.1/materialize/css/materialize.min.css";
 @import "./../perfect-scrollbar.css";
-@import url("http://fonts.googleapis.com/icon?family=Material+Icons");
+//@import url("http://fonts.googleapis.com/icon?family=Material+Icons");
 
 //@import url(https://fonts.googleapis.com/css?family=PT+Sans);
-@import "./../animate.css";
+
 html{
   
     font-family:RobotoDraft,Roboto,'Helvetica Neue',sans-serif;
+    overflow:hidden !important;
 }
 .warn-text{
  text-align:center;
@@ -20,6 +22,7 @@ html{
 .no-margin{
   margin:0px;
 }
+
 
 
 .profilescrollersetter {
@@ -33,6 +36,14 @@ html{
 .profile-menu{
   padding:0px;
   border-radius:5px;
+  .empty-placehoder{
+    border:2px dashed #CA6868;
+    cursor:pointer;
+  }
+  .empty-placehoder:focus{
+    border:2px dashed #CA6868;
+    outline:0;
+  }
   .profile-details-title{
     padding-bottom: 10px;
     border-bottom: 1px dashed rgba(128, 128, 128, 0.31);
@@ -51,6 +62,9 @@ html{
     color:#B3B3B5;
     width:75px;
     height:75px;
+  }
+  .layout-row{
+    padding: 5px 0px 5px 0px;
   }
 }
 
@@ -84,6 +98,14 @@ html{
   }
 }
 
+.settingsDialog{
+  width:900px;
+  height:450px;
+  .profileSettings{
+    height:300px;
+    overflow:hidden;
+  }
+}
 
 .profileDetails{
     bottom:50px;
@@ -294,6 +316,46 @@ html{
   min-height:35px;
   }
 
+ui-view.ng-enter, ui-view.ng-leave {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top:0;
+  bottom:0;
+  -webkit-transition:all .5s ease-in-out;
+  -moz-transition:all .5s ease-in-out;
+  -o-transition:all .5s ease-in-out;
+  transition:all .5s ease-in-out;
+}
 
+ui-view.ng-enter {
+  opacity: 0;
+  -webkit-transform:scale3d(0.5, 0.5, 0.5);
+  -moz-transform:scale3d(0.5, 0.5, 0.5);
+  transform:scale3d(0.5, 0.5, 0.5);
+}
+
+ui-view.ng-enter-active {
+  opacity: 1;
+  -webkit-transform:scale3d(1, 1, 1);
+  -moz-transform:scale3d(1, 1, 1);
+  transform:scale3d(1, 1, 1);
+}
+
+ui-view.ng-leave {
+  opacity: 1;
+  /*padding-left: 0px;*/  
+  -webkit-transform:translate3d(0, 0, 0);
+  -moz-transform:translate3d(0, 0, 0);
+  transform:translate3d(0, 0, 0);
+}
+
+ui-view.ng-leave-active {
+  opacity: 0;
+  /*padding-left: 100px;*/
+  -webkit-transform:translate3d(100px, 0, 0);
+  -moz-transform:translate3d(100px, 0, 0);
+  transform:translate3d(100px, 0, 0);
+}
 
 

@@ -90,6 +90,9 @@ define(["angular"],function(){
 		$scope.uploadProfile = function(){
 			angular.element("#uploadProfilephoto").click();
 		};
+
+		
+		
 	}];
 	
 	return controller;
