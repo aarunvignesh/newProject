@@ -1,7 +1,7 @@
 
-define(["angular","angularRoute","angularPrimus","angularMaterial","ngFx","ngFlow","angularperfectScroll","./Controller/index","./Services/index","./Factory/index","./Directives/index"],
-	function(angular,angularRoute,angularPrimus,angularMaterial,ngFx,ngFlow,angularperfectScroll,controller,services,factory,directives){
-	var app=angular.module("newApp",["ui.router","primus","ngMaterial","ngAnimate","ngFx","flow","perfect_scrollbar"])
+define(["angular","angularRoute","angularMessages","angularPrimus","angularMaterial","ngFx","ngFlow","./Controller/index","./Services/index","./Factory/index","./Directives/index"],
+	function(angular,angularRoute,angularMessages,angularPrimus,angularMaterial,ngFx,ngFlow,controller,services,factory,directives){
+	var app=angular.module("newApp",["ui.router","ngMessages","primus","ngMaterial","ngAnimate","ngFx","flow"])
 
 	.config(["$stateProvider","primusProvider","$mdThemingProvider","$urlRouterProvider","$mdIconProvider",
 		function($stateProvider,primusProvider,$mdThemingProvider,$urlRouterProvider,$mdIconProvider){

@@ -1,9 +1,11 @@
 ﻿@import "./../animate.css";
 //@import "../../Scripts/materialize-v0.97.1/materialize/css/materialize.css";
-@import "../../Scripts/materialize-v0.97.1/materialize/css/angular-material-layout.css";
-@import "../../Scripts/materialize-v0.97.1/materialize/css/angular-material.css";
-@import "../../Scripts/bootstrap-3.3.2-dist/css/bootstrap-theme.min.css";
-@import "../../Scripts/materialize-v0.97.1/materialize/css/materialize.min.css";
+//@import "../../Scripts/materialize-v0.97.1/materialize/css/angular-material-layout.css";
+//@import "../../Scripts/materialize-v0.97.1/materialize/css/angular-material.css";
+//@import "../../Scripts/bootstrap-3.3.2-dist/css/bootstrap-theme.min.css";
+//@import "../../Scripts/materialize-v0.97.1/materialize/css/materialize.min.css";
+@import "../../libs/angular-material/angular-material.css";
+@import "../../libs/angular-material/angular-material.layout.css";
 @import "./../perfect-scrollbar.css";
 //@import url("http://fonts.googleapis.com/icon?family=Material+Icons");
 
@@ -104,6 +106,18 @@ html{
   .profileSettings{
     height:300px;
     overflow:hidden;
+
+      .validation-messages {
+            font-size: 15px;
+            color: darkred;
+            margin: 10px 0 0 25px; 
+      }
+    
+      md-datepicker {
+        .md-datepicker-input{
+           max-width: 125px;
+        }
+      }
   }
 }
 
@@ -126,7 +140,7 @@ html{
   height:100%;
 }
 .dropPhoto{
-  height:150px;
+  height:140px;
   border:4px dashed #9EB8FF;
   border-radius:12px;
   overflow:hidden;

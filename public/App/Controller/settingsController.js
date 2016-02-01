@@ -10,6 +10,8 @@ define(["angular"],function(){
 			loadingValue:0
 		};
 
+		$scope.todayDate = new Date();
+
 		$scope.coverFlags = {
 			showText:true,
 			showLoading:false,

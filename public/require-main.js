@@ -1,7 +1,7 @@
 require.config({
 	baseUrl:"App",
 	paths:{
-		jquery:"./../Scripts/jquery-2.1.1",
+		/*jquery:"./../Scripts/jquery-2.1.1",
 		angular:"./../Scripts/angular",
 		angularRoute:"./../Scripts/angular-state-route",
 		less:"./../Scripts/less.js-master/dist/less",
@@ -19,17 +19,49 @@ require.config({
 		flowStand:"./../Scripts/ng-flow-standalone",
 		ngFlow:"./../Scripts/ng-flow",
 		perfectScroll:"./../Scripts/perfect-scrollbar",
-		angularperfectScroll:"./../Scripts/angular-perfect-scrollbar"
+		angularperfectScroll:"./../Scripts/angular-perfect-scrollbar",
+		angularMessages:"./../Scripts/angular-messages"*/
+		jquery:"./../libs/jquery/dist/jquery",
+		angular:"./../libs/angular/angular",
+		angularRoute:"./../libs/angular-ui-router/release/angular-ui-router",
+		less:"./../libs/less/dist/less",
+		moment:"./../libs/moment/moment",
+		primus:"./../Scripts/primusClient",
+		angularPrimus:"./../libs/angular-primus/angular-primus",
+		angularAnimate:"./../libs/angular-animate/angular-animate",
+		angularMaterial:"./../libs/angular-material/angular-material",
+		material:"./../Scripts/materialize-v0.97.1/materialize/js/materialize",
+		angularAria:"./../libs/angular-aria/angular-aria",
+		//hammer:"./../Scripts/Hammer",
+		//hammerJquery:"./../Scripts/jqueryHammer",
+		ngFx:"./../libs/ngFx/dist/ngFx",
+		tweenMax:"./../libs/gsap/src/uncompressed/TweenMax",
+		//tweenLite:"./../Scripts/tweenLite",
+		flowStand:"./../libs/ng-flow/dist/ng-flow-standalone",
+		ngFlow:"./../libs/ng-flow/dist/ng-flow",
+		perfectScroll:"./../libs/perfect-scrollbar/js/perfect-scrollbar.jquery",
+		//angularperfectScroll:"./../Scripts/angular-perfect-scrollbar",
+		angularMessages:"./../libs/angular-messages/angular-messages",
+		visor:"./../libs/visor/release/visor"
 	},
 	shim:{
 		jquery:{
 			exports:"$"
 		},
+		moment:{
+			exports:"moment"
+		},
+		visor:{
+			deps:["angular"]
+		},
 		angular:{
-			deps:["jquery"],
+			deps:["jquery","perfectScroll","moment"],
 			exports:"angular"
 		},
 		angularRoute:{
+			deps:["angular"]
+		},
+		angularMessages:{
 			deps:["angular"]
 		},
 		flowStand:{
@@ -64,26 +96,27 @@ require.config({
 			deps:["jquery"],
 			exports:"TweenMax"
 		},
-		tweenLite:{
+		/*tweenLite:{
 			deps:["jquery"],
 			exports:"TweenMax"
-		},
+		},*/
 		ngFx:{
 			deps:["angular","angularAnimate","tweenMax"]
 		},
-		hammer:{
+	/*	hammer:{
 			deps:["jquery"],
 			exports:"Hammer"
 		},
 		hammerJquery:{
 			deps:["jquery","hammer"]
-		},
+		},*/
 		perfectScroll:{
 			deps:["jquery"]
-		},
+		}
+		/*,
 		angularperfectScroll:{
 			deps:["perfectScroll","angular"]
-		}
+		}*/
 	},
 	deps:["App"]
 });
