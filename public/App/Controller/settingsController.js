@@ -1,7 +1,7 @@
 define(["angular"],function(){
 	var controller=["$scope","$mdDialog","authenticate","$timeout","backgroundFactory",
 	function($scope,$mdDialog,authenticate,$timeout,backgroundFactory){
-		
+
 		$scope.userName = authenticate.getUsername().username;
 
 		$scope.profileFlags = {
@@ -17,9 +17,18 @@ define(["angular"],function(){
 			showLoading:false,
 			loadingValue:0
 		};
-		
+
 		$scope.close = function(){
 			$mdDialog.hide();
+		};
+
+		$scope.fileAdded = function(frame,file){
+			if((file.size/1000)>2100){
+				return false;
+			}
+			else {
+				return true;
+			}
 		};
 
 		$scope.checkFile = function(flow,frame){
@@ -76,11 +85,11 @@ define(["angular"],function(){
 
 		$scope.uploadprofileProgress = function(flow,frame){
 			if(frame=='profile'){
-				
+
 				$scope.profileFlags.loadingValue = (flow.files[0].progress()*100);
 			}
 			else if(frame=='cover'){
-				
+
 				$scope.coverFlags.loadingValue = (flow.files[0].progress()*100);
 			}
 		};
@@ -93,9 +102,9 @@ define(["angular"],function(){
 			angular.element("#uploadProfilephoto").click();
 		};
 
-		
-		
+
+
 	}];
-	
+
 	return controller;
 });

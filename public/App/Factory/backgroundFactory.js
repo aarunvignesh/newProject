@@ -5,7 +5,7 @@ define(["angular"],function(angular){
 				
 				angular.element(elem).css({
 					backgroundImage:"url(./api/photos/"+username+"/cover?"+Date.now()+")",
-					backgroundSize:"100% 100%",
+					backgroundSize:"cover",
 					backgroundPosition:"50% 50%"
 				});
 			},
@@ -13,7 +13,8 @@ define(["angular"],function(angular){
 				
 				angular.element(elem).css({
 					backgroundImage:"url(./api/photos/"+username+"/profile?"+Date.now()+")",
-					backgroundSize:"100% 100%"
+					backgroundSize:"cover",
+					backgroundPosition:"50% 50%"
 				});
 			
 			}
