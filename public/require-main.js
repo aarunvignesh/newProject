@@ -52,7 +52,7 @@ require.config({
 			exports:"moment"
 		},
 		visor:{
-			deps:["angular"]
+			deps:["angular","angularRoute"]
 		},
 		angular:{
 			deps:["jquery","perfectScroll","moment"],
