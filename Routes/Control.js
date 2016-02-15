@@ -35,7 +35,7 @@ var ctrl={
 			else if(user.length==0){
 				res.send({success:"Username is available..."});
 			}
-			
+
 		});
 	},
 	successLogin:function(req,res){
@@ -46,12 +46,14 @@ var ctrl={
 				}
 				else{
 					if(user.verifiedEmail){
-						
+
 						res.send({id:req.user._id,email:req.user.email,
 							validationStatus:true,
 							username:user.username,
 							isProfilepic:user.isProfilepicupdated,
-							isCoverpic:user.isCoverpicupdated
+							isCoverpic:user.isCoverpicupdated,
+							otherDetails:user.otherDetails,
+							name:user.name || req.user.email.split('@')[0]
 						});
 					}
 					else{
@@ -59,10 +61,10 @@ var ctrl={
 					}
 				}
 			});
-			
+
 		}
 		else{
-			res.send({err:"User has not Authenticated"});
+			res.send(null);
 		}
 	},
 	randomTextGenerator: function(req,res){
@@ -113,7 +115,7 @@ var ctrl={
 					});
 			    }
 			});
-			
+
 		}
 	},
 	failiureLogin:function(req,res){

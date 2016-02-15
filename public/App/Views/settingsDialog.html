@@ -14,19 +14,20 @@
         <md-tab label="Profile">
           <md-content class="md-padding">
             <form layout="row" name="profile" layout-padding>
+              <input type="hidden" ng-model="userdetails.username"/>
             <div flex="70" class="profileSettings" layout="column" perfectscroller>
               <div layout-padding>
                   <div layout="row">
                       <md-input-container class="flex" required>
                           <label>Name</label>
-                          <input type="text"  name="name" ng-model="userName" required/>
+                          <input type="text"  name="name" ng-model="userdetails.name" required/>
                       </md-input-container>
                   </div>
                   <div layout="row">
                       <div flex="50" layout="row">
-                             <md-input-container  flex required>
+                             <md-input-container flex required>
                                   <label>Gender</label>
-                                  <md-select name="gender" ng-model="gender" required>
+                                  <md-select name="gender"  ng-model="userdetails.otherDetails.gender" required>
                                     <md-option value="male">Male</md-option>
                                     <md-option value="female">Female</md-option>
                                     <md-option value="transgender">Transgender</md-option>
@@ -34,39 +35,39 @@
                               </md-input-container>
                       </div>
                       <div flex="50" layout="row" style="margin:15px;">
-                             <md-datepicker flex md-max-date="todayDate" name="bornDate" ng-model="bornDate" md-placeholder="Born Date"></md-datepicker>
+                             <md-datepicker ng-model="userdetails.otherDetails.born.date" flex md-max-date="todayDate" name="bornDate" ng-model="bornDate" md-placeholder="Born Date"></md-datepicker>
                       </div>
                   </div>
                   <div layout="row">
                       <div flex="50">
                           <md-input-container class="flex">
                               <label>Hometown</label>
-                              <input type="text" ng-model="hometown"/>
+                              <input type="text" ng-model="userdetails.otherDetails.hometown.name"/>
                       </md-input-container>
                       </div>
                       <div flex="50">
                           <md-input-container class="flex">
                               <label>Currently Lives at</label>
-                              <input type="text" ng-model="curr_city"/>
+                              <input type="text" ng-model="userdetails.otherDetails.livesAt.name"/>
                       </md-input-container>
                       </div>
                   </div>
                   <div layout="row">
                       <md-input-container class="flex">
                           <label>School Name</label>
-                          <input type="text" ng-model="school"/>
+                          <input type="text" ng-model="userdetails.otherDetails.school.name"/>
                       </md-input-container>
                   </div>
                   <div layout="row">
                       <md-input-container class="flex">
                           <label>Graduated at</label>
-                          <input type="text" ng-model="college"/>
+                          <input type="text" ng-model="userdetails.otherDetails.graduation.name"/>
                       </md-input-container>
                   </div>
                    <div layout="row">
                       <md-input-container class="flex">
                           <label>Currently Working at</label>
-                          <input type="text" ng-model="workname"/>
+                          <input type="text" ng-model="userdetails.otherDetails.work.name" />
                       </md-input-container>
                   </div>
               </div>
@@ -86,7 +87,7 @@
               </div>
               <div flex="30">
                   <md-button class="md-raised wave-effect">Reset</md-button>
-                  <md-button class="md-raised md-primary wave-effect" ng-disabled="profile.$invalid">Save</md-button>
+                  <md-button class="md-raised md-primary wave-effect" ng-click="saveUserDetails()" ng-disabled="profile.$invalid">Save</md-button>
               </div>
             </div>
             </form>

@@ -7,18 +7,18 @@
 	    	</div>
 	      </md-toolbar>
 	      <md-content layout-padding>
-	       
+
 	        <md-button ng-click="logout()" class="md-primary">
 	          Logout
 	        </md-button>
 	      </md-content>
 	    </md-sidenav>
-	 </section> 	
+	 </section>
 
 <div layout="column" layout-fill id="mainProfilepanel">
-	  
+
 	<div>
-		
+
 			<md-fab-toolbar md-open="fabOpen" count="0" md-direction="left">
 					 <md-fab-trigger class="align-with-text">
 					      <md-button aria-label="menu" class="md-fab md-primary">
@@ -44,7 +44,7 @@
 	         <md-icon class="material-icons" md-svg-icon="view-headline"></md-icon>
 	        </md-button>
     	</div>
-    	
+
     	<div layout-container layout="column" class="profilePage">
     		<div class="profileName" layout="row" layout-padding layout-align="end center">
     			<div class="profileNameCntr">
@@ -54,7 +54,7 @@
     		<div class="profileBase" layout-gt-sm="row" layout-sm="column" layout-padding layout-align-gt-sm="start end">
     				<div class="profileContainer md-whiteframe-20dp" flex-sm="80" flex-gt-sm="30" layout-padding layout="row">
     					<div id="profileImagepanel" flex class="profileImage"></div>
-    					
+
     				</div>
     				<div hide-sm flex></div>
     				<div class="profileDetailBtnCntr" flex-lg="20" flex-md="40" flex-sm layout="row" layout-align="center center">
@@ -69,13 +69,13 @@
 				           	 	<div layout="row">
 							     <div flex="20" layout="row">
 							     	<md-icon class="icon-color" md-svg-icon="{{detailTemplate[key].icon}}"></md-icon>
-							     </div>	
+							     </div>
 							     <div flex="80" layout="column">
 							     	<div class="profile-details-title">
-							     		<h4 class="no-margin">{{detailTemplate[key].title}}</h4> 
-							     	</div>	
+							     		<h4 class="no-margin">{{detailTemplate[key].title}}</h4>
+							     	</div>
 							     	<div class="profile-details">
-							     		{{profileUserDetails.otherDetails[key].detail}}
+							     		{{profileUserDetails.otherDetails[key].name}}
 							     	</div>
 					           	</div>
 					           	</div>
@@ -85,7 +85,7 @@
 				           	 	<div layout="row">
 							     <div flex="20" layout="row">
 							  		 <md-icon class="icon-color" md-svg-icon="{{adminUser?'settings':'account'}}"></md-icon>
-							     </div>	
+							     </div>
 							     <div flex="80" layout="column"  class="profile-details">
 							     	<h4 ng-if="adminUser">
 							     	We need to know more about you. Update us under profile tab in settings.
@@ -96,7 +96,7 @@
 					           	</div>
 					           	</div>
 					           	</div>
-					           	
+
 							  </md-whiteframe>
 							<!-- </perfect-scrollbar> -->
 				          </md-menu-content>

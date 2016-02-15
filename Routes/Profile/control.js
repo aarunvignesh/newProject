@@ -52,7 +52,7 @@ var ctrl={
 						res.send({success:"admin user",code:200});
 					}
 					else{
-						
+
 						res.send({success:"foreign details",user:user[0],req:req.user,code:202});
 					}
 				}
@@ -82,11 +82,10 @@ var ctrl={
 		upload(req,res,function(err) {
         if(err) {
             return res.send({code:420,error:"Error uploading file."});
-        }	
+        }
         else{
 	        User.userById({id:req.user._id}
 				,function(err,user){
-					console.log(user);
 					if(err){
 						res.send({code:420,success:"Facing New issue will recover soon"});
 					}
@@ -97,8 +96,6 @@ var ctrl={
 						else if(req.params.type=="cover"){
 							user.isCoverpicupdated = true;
 						}
-						console.log(req.params.type);
-						console.log(user);
 						var defer = updateUser.updateUser(user);
 						defer.then(function(){
 							res.send({code:200,success:"File is uploaded"});
@@ -110,11 +107,35 @@ var ctrl={
 					else{
 						return res.send({code:420,err:"Unable to find user"});
 					}
-	        	
+
 	    	});
-        }	
+        }
     });
-	}
+	},
+  updateUser:function(req,res){
+    if(req.body.username){
+        User.userById({id:req.user._id},function(err,user){
+            var received_data = req.body;
+            if(received_data.name){
+              user.name = received_data.name;
+            }
+            if(received_data.otherDetails){
+              user.otherDetails= received_data.otherDetails;
+            }
+            console.log(user);
+            var defer = updateUser.updateUser(user);
+            defer.then(function(){
+              res.send({code:200,success:"User detail updated"});
+            },
+            function(){
+              res.send({err:"Facing New Issue will Recover Soon....",code:404});
+            });
+        });
+    }
+    else {
+      res.send({err:"Username Required:::"});
+    }
+  }
 };
 
 module.exports=ctrl;

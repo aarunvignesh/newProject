@@ -14,7 +14,7 @@ define(["angular"],function(){
 		$scope.userValidationerror=[
 		{
 			value:true,
-			errText:"Please select ur username eith minimum of six characters"
+			errText:"Please select your username with minimum of six characters"
 		},
 		{
 			value:false,
@@ -40,14 +40,14 @@ define(["angular"],function(){
 
 		var setValidationError=function(index){
 			for(var i=0;i<4;i++){
-				$scope.userValidationerror[i].value=false;
+				$scope.userValidationerror[i].value = false;
 			}
 			if(index>-1){
-				$scope.userValidationerror[index].value=true;
-				$scope.showAvailBtn=false;
+				$scope.userValidationerror[index].value = true;
+				$scope.showAvailBtn = false;
 			}
 			else{
-				$scope.showAvailBtn=true;
+				$scope.showAvailBtn = true;
 			}
 		};
 
@@ -86,7 +86,7 @@ define(["angular"],function(){
 		};
 
 		$scope.showRegenDialog=function(ev){
-			
+
 		    var confirm = $mdDialog.confirm({
 		    	title:"Regenerate Pin",
 		    	textContent:"Didn't receive your verification email? Kindly check your spam folder too. Still haven't received your verification mail then continue by clicking regenerate.",
@@ -96,9 +96,9 @@ define(["angular"],function(){
 		    $mdDialog.show(confirm).then(function() {
 		     regeneratePin();
 		    }, function() {
-		      
+
 		    });
-			
+
 		};
 
 		var regeneratePin=function(){
@@ -124,8 +124,8 @@ define(["angular"],function(){
 			}
 			else if($scope.username.length>5){
 				setValidationError(-1);
-			}	
-			
+			}
+
 		};
 
 		$scope.proceed = function(){
@@ -143,7 +143,7 @@ define(["angular"],function(){
 						function(){
 							toastFactory.showWarnToast("Facing new issue will recover soon");
 						})
-						
+
 					}
 					else{
 						if(res.code==420){
@@ -160,7 +160,7 @@ define(["angular"],function(){
 							setValidationError(3);
 						}
 					}
-					
+
 				}).error(function(){
 					toastFactory.showWarnToast("Facing New Issue will Recover Soon....");
 				});
@@ -181,7 +181,7 @@ define(["angular"],function(){
 				$scope.enterFlag=false;
 			}, 1000);
 		});
-		 
+
 	}];
 	return controller;
 });
