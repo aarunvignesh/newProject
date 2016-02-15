@@ -11,7 +11,7 @@ define(["angular","angularRoute","angularMessages","angularPrimus","angularMater
 
 		visorProvider.notAuthorizedRoute="/welcome";
 
-		visorProvider.doOnNotAuthorized = function(visor,$state,authenticate){
+		visorProvider.doOnNotAuthorized = ["visor","$state","authenticate",function(visor,$state,authenticate){
 			console.log("not authorized");
 			if(visor.authData){
 				if(visor.authData.validationStatus){
@@ -24,15 +24,15 @@ define(["angular","angularRoute","angularMessages","angularPrimus","angularMater
 			else {
 				$state.go('welcome');
 			}
-		}
+		}];
 
 		visorProvider.shouldAddNext = false;
 
-		visorProvider.authenticate = function(authenticate){
+		visorProvider.authenticate = ["authenticate",function(authenticate){
 					var a = authenticate.visor_authenticator();
           return a.then(function(res){
 						return res.data != "" ? res.data : null;});
-  		};
+  		}];
 
 		$stateProvider
 		.state('welcome',
