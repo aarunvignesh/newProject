@@ -75,7 +75,7 @@
 							     		<h4 class="no-margin">{{detailTemplate[key].title}}</h4>
 							     	</div>
 							     	<div class="profile-details">
-							     		{{profileUserDetails.otherDetails[key].name}}
+							     		{{(profileUserDetails.otherDetails[key].name) || (profileUserDetails.otherDetails[key].type) || (profileUserDetails.otherDetails[key].date | momentFilter)}}
 							     	</div>
 					           	</div>
 					           	</div>

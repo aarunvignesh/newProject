@@ -1,6 +1,6 @@
 
-define(["angular","angularRoute","angularMessages","angularPrimus","angularMaterial","ngFx","ngFlow","visor","./Controller/index","./Services/index","./Factory/index","./Directives/index"],
-	function(angular,angularRoute,angularMessages,angularPrimus,angularMaterial,ngFx,ngFlow,visor,controller,services,factory,directives){
+define(["angular","angularRoute","angularMessages","angularPrimus","angularMaterial","ngFx","ngFlow","visor","./Controller/index","./Services/index","./Factory/index","./Directives/index","./Filter/index"],
+	function(angular,angularRoute,angularMessages,angularPrimus,angularMaterial,ngFx,ngFlow,visor,controller,services,factory,directives,filter){
 	var app=angular.module("newApp",["ui.router","ngMessages","primus","ngMaterial","ngAnimate","ngFx","flow","visor"])
 
 	.config(["$stateProvider","primusProvider","$mdThemingProvider","$urlRouterProvider","$mdIconProvider","visorProvider",
@@ -12,7 +12,6 @@ define(["angular","angularRoute","angularMessages","angularPrimus","angularMater
 		visorProvider.notAuthorizedRoute="/welcome";
 
 		visorProvider.doOnNotAuthorized = ["visor","$state","authenticate",function(visor,$state,authenticate){
-			console.log("not authorized");
 			if(visor.authData){
 				if(visor.authData.validationStatus){
 					$state.go('profile',{username:authenticate.getUsername().username});
@@ -150,7 +149,7 @@ define(["angular","angularRoute","angularMessages","angularPrimus","angularMater
 
 	}]);
 
-
+	filter(app);
 	services(app);
 	controller(app);
 	factory(app);

@@ -53,7 +53,9 @@ define(["angular"],function(){
 
 				$scope.profileUserDetails=profileDetails.user;
 			}
-			$scope.profileDetailKeys = $scope.profileUserDetails.otherDetails?Object.keys($scope.profileUserDetails.otherDetails):[];
+
+
+
 		}
 		else{
 
@@ -63,9 +65,13 @@ define(["angular"],function(){
 			}
 		};
 
+		$scope.refreshProfileDetails=function(){
+			$scope.profileDetailKeys = $scope.profileUserDetails.otherDetails?Object.keys($scope.profileUserDetails.otherDetails).filter(function(value){
+				return ($scope.profileUserDetails.otherDetails[value].name)||($scope.profileUserDetails.otherDetails[value].type) || ($scope.profileUserDetails.otherDetails[value].date);}):[];
+		}
 
-		$scope.profileDetailKeys = Object.keys($scope.profileUserDetails.otherDetails);
-
+		$scope.refreshProfileDetails();
+		
 		if($scope.profileUserDetails.isCoverpic){
 			backgroundFactory.setCoverPhoto(angular.element("#mainProfilepanel"),$scope.profileUserDetails.username);
 		}

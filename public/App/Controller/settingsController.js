@@ -1,12 +1,11 @@
 define(["angular"],function(){
-	var controller=["$scope","$mdDialog","authenticate","$timeout","backgroundFactory","$http",
-	function($scope,$mdDialog,authenticate,$timeout,backgroundFactory,$http){
+	var controller=["$scope","$mdDialog","authenticate","$timeout","backgroundFactory","$http","toastFactory",
+	function($scope,$mdDialog,authenticate,$timeout,backgroundFactory,$http,toastFactory){
 
 		$scope.userName = authenticate.getUsername().username;
 
 		$scope.userdetails = authenticate.getcurrentuser_details();
 
-		console.log($scope.userdetails);
 		//Profile photo upload flags
 		$scope.profileFlags = {
 			showText:true,
@@ -16,9 +15,11 @@ define(["angular"],function(){
 
 		$scope.saveUserDetails = function() {
 				$http.post("/api/user/details",$scope.userdetails).success(function(){
-						console.log("Update");
+						toastFactory.showToast("Saved Successfully...");
+						$scope.$$prevSibling.refreshProfileDetails();
+						$scope.close();
 				}).error(function(){
-						console.log("Error");
+						toastFactory.showWarnToast("Facing New issue will recover soon..");
 				});
 		};
 
