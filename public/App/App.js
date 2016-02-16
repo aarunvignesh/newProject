@@ -1,30 +1,67 @@
 
-define(["angular","angularRoute","angularMessages","angularPrimus","angularMaterial","ngFx","ngFlow","./Controller/index","./Services/index","./Factory/index","./Directives/index"],
-	function(angular,angularRoute,angularMessages,angularPrimus,angularMaterial,ngFx,ngFlow,controller,services,factory,directives){
-	var app=angular.module("newApp",["ui.router","ngMessages","primus","ngMaterial","ngAnimate","ngFx","flow"])
+define(["angular","angularRoute","angularMessages","angularPrimus","angularMaterial","ngFx","ngFlow","visor","./Controller/index","./Services/index","./Factory/index","./Directives/index","./Filter/index"],
+	function(angular,angularRoute,angularMessages,angularPrimus,angularMaterial,ngFx,ngFlow,visor,controller,services,factory,directives,filter){
+	var app=angular.module("newApp",["ui.router","ngMessages","primus","ngMaterial","ngAnimate","ngFx","flow","visor"])
 
-	.config(["$stateProvider","primusProvider","$mdThemingProvider","$urlRouterProvider","$mdIconProvider",
-		function($stateProvider,primusProvider,$mdThemingProvider,$urlRouterProvider,$mdIconProvider){
+	.config(["$stateProvider","primusProvider","$mdThemingProvider","$urlRouterProvider","$mdIconProvider","visorProvider",
+		function($stateProvider,primusProvider,$mdThemingProvider
+			,$urlRouterProvider,$mdIconProvider,visorProvider,authenticatedOnly,notForAuthenticated){
+
+		visorProvider.loginRoute="/welcome";
+
+		visorProvider.notAuthorizedRoute="/welcome";
+
+		visorProvider.doOnNotAuthorized = ["visor","$state","authenticate",function(visor,$state,authenticate){
+			if(visor.authData){
+				if(visor.authData.validationStatus){
+					$state.go('profile',{username:authenticate.getUsername().username});
+				}
+				else{
+					$state.go('verify');
+				}
+			}
+			else {
+				$state.go('welcome');
+			}
+		}];
+
+		visorProvider.shouldAddNext = false;
+
+		visorProvider.authenticate = ["authenticate",function(authenticate){
+					var a = authenticate.visor_authenticator();
+          return a.then(function(res){
+						return res.data != "" ? res.data : null;});
+  		}];
+
 		$stateProvider
 		.state('welcome',
 				{
 					url:"/welcome",
 					templateUrl:"/template/welcome",
-					controller:"loginController"
+					controller:"loginController",
+					restrict:function(auth){
+						return !auth;
+					}
 				}
 			)
 		.state('verify',
 				{
 					url:"/verify",
 					templateUrl:"/template/verify",
-					controller:"verifyController"
+					controller:"verifyController",
+					restrict:function(auth){
+						return auth && !auth.validationStatus;
+					}
 				}
 			)
 		.state('messages',
 				{
 					url:"/messages",
 					templateUrl:"/template/messages",
-					controller:"messagesController"
+					controller:"messagesController",
+					restrict:function(auth){
+						return auth && auth.validationStatus;
+					}
 				}
 			)
 		.state('profile',
@@ -32,6 +69,9 @@ define(["angular","angularRoute","angularMessages","angularPrimus","angularMater
 					url:"/profile/:username",
 					templateUrl:"/template/diagonostics",
 					controller:"profileController",
+					restrict:function(auth){
+						return auth && auth.validationStatus;
+					},
 					resolve:{
 						profileDetails:["$http","$stateParams","authenticate","$q",
 						function($http,$stateParams,authenticate,$q){
@@ -84,7 +124,7 @@ define(["angular","angularRoute","angularMessages","angularPrimus","angularMater
 	"authenticate",
 	"themeFactory",
 	"chatService",
-	
+	"visor",
 	function(
 		$state,
 		$log,
@@ -93,8 +133,11 @@ define(["angular","angularRoute","angularMessages","angularPrimus","angularMater
 		$http,
 		authenticate,
 		themeFactory,
-		chatService
+		chatService,
+		visor
 		){
+
+		$rootScope.loginPage=true;
 
 		themeFactory.initTheme();
 		$rootScope.$on("$viewContentLoaded",function(){
@@ -103,50 +146,14 @@ define(["angular","angularRoute","angularMessages","angularPrimus","angularMater
 		window.addEventListener("resize",function(){
 			angular.element(".animationBackground>li").height(angular.element(".animationBackground>li").width());
 		});
-		$rootScope.$on("$stateChangeStart",function(event,next,current){
-			//$rootScope.showLoading=true;
-			var auth=authenticate.isAuthenticatedUser();
-			auth.then(
-					function(user){
-						$rootScope.loginPage=false;
-						if(user.validationStatus){
-							chatService.joinMe(authenticate.getUserId());
-							var allowedRoutes=["profile","messages"];
-							if(allowedRoutes.indexOf(next.name)<0){
-								$state.go('profile',{username:user.username});
-							}
-							else{
-								return true;
-							}
-						}
-						else{
-							if($location.$$path != "/verify")
-							$state.go('verify');
-						}
-					},
-					function(){
-						$rootScope.loginPage=true;
-						$state.go('welcome');
-						return false;
-					}
-			);
-		});
 
-		$rootScope.$on("$stateChangeError",function(event,next,current){
-			//$rootScope.showLoading=false;
-		});
-
-		$rootScope.$on("$stateChangeSuccess",function(event,next,current){
-			//$rootScope.showLoading=false;
-		});
-		
 	}]);
 
-	
+	filter(app);
 	services(app);
 	controller(app);
 	factory(app);
 	directives(app);
-	angular.bootstrap(angular.element("html"), ["newApp"]) 
+	angular.bootstrap(angular.element("html"), ["newApp"])
 	return app;
 });

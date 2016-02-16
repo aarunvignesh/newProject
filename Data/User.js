@@ -2,7 +2,7 @@ var user=require("./../Schema/User");
 var rndGenerate=require("./../Shared/rndTxtgenerate");
 var data={
 	signIn:function(args,callback){
-		
+
 		user.findOne({email:args.email},function(err,res){
 			if(err){
 				callback(err,{err:"Sorry.. Some Error has Occured",code:404});
@@ -32,8 +32,19 @@ var data={
 				newUser.password=args.password
 				newUser.verifiedEmail=false;
 				newUser.username="";
+				newUser.name="";
 				newUser.isProfilepicupdated=false;
 				newUser.isCoverpicupdated=false;
+				newUser.otherDetails={
+					gender:String,
+					born:Object,
+					hometown:Object,
+					livesAt:Object,
+					school:Object,
+					graduation:Object,
+					work:Object,
+					phone:String
+				};
 				newUser.save();
 				rndGenerate.newRandomTextGenerate(newUser);
 				callback(null,{success:newUser});
@@ -41,11 +52,11 @@ var data={
 		});
 	},
 	userById:function(args,callback){
-	 user.findById(args.id,callback);	
+	 user.findById(args.id,callback);
 	}
 	,
 	userByUserName:function(args,callback){
-	 user.find({username:args.username},callback);	
+	 user.find({username:args.username},callback);
 	}
 };
 module.exports=data;

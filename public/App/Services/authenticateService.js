@@ -1,18 +1,57 @@
 define(["angular"],function(){
-	var service=["$http","$q","$timeout","$state",function($http,$q,$timeout,$state){
+	var service=["$http","$q","$timeout","$state","visor","$rootScope",function($http,$q,$timeout,$state,visor,$rootScope){
 		var scope=this;
 		this.userDetails={};
+		this.visor_authenticator = function(){
+
+			return $http.get("/success").success(function(res){
+					if(res.email){
+						scope.userDetails.email=res.email;
+						scope.userDetails.id=res.id;
+						scope.userDetails.name=res.name;
+						scope.userDetails.validationStatus=res.validationStatus;
+						scope.userDetails.username= res.username;
+						scope.userDetails.isProfilepic = res.isProfilepic;
+						scope.userDetails.isCoverpic = res.isCoverpic;
+						scope.userDetails.otherDetails = res.otherDetails;
+						if(scope.userDetails.otherDetails.born){
+								scope.userDetails.otherDetails.born.date = scope.userDetails.otherDetails.born.date?new Date(scope.userDetails.otherDetails.born.date):"";
+						}
+						$rootScope.loginPage=false;
+						return scope.userDetails;
+					}
+					else {
+							$rootScope.loginPage=true;
+							return null;
+						}
+					}).error(function(err){
+						console.log("In visor authentication");
+						return null;
+					});
+
+		};
+
+		this.getcurrentuser_details = function(){
+				return scope.userDetails;
+		};
+
 		this.authenticateUser=function(sendData){
 			var deferUser=$q.defer();
 			$http.post("/signIn",sendData).success(function(res){
 				if(res.email){
 					scope.userDetails.email = res.email;
 					scope.userDetails.id = res.id;
-					scope.userDetails.name = res.email.split("@")[0];
+					scope.userDetails.name = res.name;
 					scope.userDetails.validationStatus = res.validationStatus;
 					scope.userDetails.username = res.username;
 					scope.userDetails.isProfilepic = res.isProfilepic;
 					scope.userDetails.isCoverpic = res.isCoverpic;
+					scope.userDetails.otherDetails=res.otherDetails;
+					if(scope.userDetails.otherDetails.born){
+							scope.userDetails.otherDetails.born.date = scope.userDetails.otherDetails.born.date?new Date(scope.userDetails.otherDetails.born.date):"";
+					}
+					$rootScope.loginPage=false;
+					visor.setAuthenticated(scope.userDetails);
 					deferUser.resolve(scope.userDetails);
 				}
 				else if(res.err){
@@ -40,11 +79,12 @@ define(["angular"],function(){
 					scope.userDetails.email=res.email;
 					scope.userDetails.id=res.id;
 					scope.userDetails.name=res.email.split("@")[0];
-
 					scope.userDetails.validationStatus = res.validationStatus;
 					scope.userDetails.username = res.username;
 					scope.userDetails.isProfilepic = res.isProfilepic;
 					scope.userDetails.isCoverpic = res.isCoverpic;
+					$rootScope.loginPage=false;
+					visor.setAuthenticated(scope.userDetails);
 					deferUser.resolve(scope.userDetails);
 				}
 				else if(res.err){
@@ -111,6 +151,7 @@ define(["angular"],function(){
 					scope.userDetails.username= res.username;
 					scope.userDetails.isProfilepic = res.isProfilepic;
 					scope.userDetails.isCoverpic = res.isCoverpic;
+					scope.userDetails.otherDetails = res.otherDetails;
 					deferUser.resolve(scope.userDetails);
 				}
 				else if(res.err){
@@ -136,18 +177,22 @@ define(["angular"],function(){
 			else{
 				return scope.refreshUserDetails();
 			}
-			
+
 		};
 
 		this.logoutUser=function(){
 			var deferUser=$q.defer();
 			$http.post("/logout",{id:scope.userDetails.id}).success(function(res){
 				if(res.status){
-					scope.userDetails={err:"User Logged Out"};
+					scope.userDetails={};
+					visor.setAuthenticated(null);
+					$rootScope.loginPage=true;
 					deferUser.resolve();
 				}
 				else{
-					scope.userDetails={err:"User Logged Out"};
+					scope.userDetails={};
+					visor.setAuthenticated(null);
+					$rootScope.loginPage=true;
 					deferUser.reject();
 				}
 			}).error(function(){

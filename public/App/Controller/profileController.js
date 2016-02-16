@@ -1,13 +1,12 @@
 define(["angular"],function(){
 	var controller=["$scope","$http","authenticate","$state","chatService","profileDetails"
 	,"$timeout","$mdSidenav","$mdDialog","adminDetails","backgroundFactory",
-	
+
 	function($scope,$http,authenticate,$state,chatService,profileDetails,$timeout
 		,$mdSidenav,$mdDialog,adminDetails,backgroundFactory){
 		$scope.adminUser=false;
 
 		$scope.profileUserDetails={};
-
 		var adminName = authenticate.getUsername();
 
 		$scope.detailTemplate = {
@@ -49,65 +48,46 @@ define(["angular"],function(){
 
 			}
 			else{
-				
+
 				$scope.adminUser = false;
 
 				$scope.profileUserDetails=profileDetails.user;
 			}
-			$scope.profileDetailKeys = $scope.profileUserDetails.otherDetails?Object.keys($scope.profileUserDetails.otherDetails):[];
+
+
+
 		}
 		else{
-			
+
 			if(adminName.username){
 
 				$state.go('profile',{username:adminName.username});
 			}
 		};
 
+		$scope.refreshProfileDetails=function(){
+			$scope.profileDetailKeys = $scope.profileUserDetails.otherDetails?Object.keys($scope.profileUserDetails.otherDetails).filter(function(value){
+				return ($scope.profileUserDetails.otherDetails[value].name)||($scope.profileUserDetails.otherDetails[value].type) || ($scope.profileUserDetails.otherDetails[value].date);}):[];
+		}
 
-
-		$scope.profileUserDetails.otherDetails = {
-			school:{
-				detail:"TVS Matriculation Higher Secondary School"
-			},
-			graduation:{
-				detail:"Kamaraj College of Engineering and Teachnology"
-			},
-			work:{
-				detail:"Pearson English Business Solutions"
-			},
-			born:{
-				detail:"22/08/1990"
-			},
-			hometown:{
-				detail:"Madurai"
-			},
-			livesAt:{
-				detail:"Chennai"
-			},
-			gender:{
-				detail:"male"
-			}
-		};
-
-		//$scope.profileDetailKeys = Object.keys($scope.profileUserDetails.otherDetails);
-
+		$scope.refreshProfileDetails();
+		
 		if($scope.profileUserDetails.isCoverpic){
 			backgroundFactory.setCoverPhoto(angular.element("#mainProfilepanel"),$scope.profileUserDetails.username);
 		}
-		
+
 		backgroundFactory.setProfilePhoto(angular.element("#profileImagepanel"),$scope.profileUserDetails.username);
 
 
 		$scope.setProfiledetailScroller = function(setter){
 			if(setter)
 			{
-				
+
 				angular.element(".profilescrollersetter").perfectScrollbar();
 			}
 			else{
 				$timeout(function() {
-					
+
 					angular.element(".profilescrollersetter").perfectScrollbar("update");
 				}, 10);
 			}
@@ -156,7 +136,7 @@ define(["angular"],function(){
 		$scope.openSlideNav = function(){
 			$mdSidenav("mainSlider").toggle();
 		};
-		
+
 	}];
 	return controller;
 });

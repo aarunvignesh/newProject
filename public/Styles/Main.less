@@ -12,20 +12,22 @@
 //@import url(https://fonts.googleapis.com/css?family=PT+Sans);
 
 html{
-  
+
     font-family:RobotoDraft,Roboto,'Helvetica Neue',sans-serif;
     overflow:hidden !important;
 }
 .warn-text{
  text-align:center;
- font-size:1.35em; 
+ font-size:1.35em;
 }
 
 .no-margin{
   margin:0px;
 }
 
-
+.white-text{
+  color: white;
+}
 
 .profilescrollersetter {
     overflow: hidden;
@@ -73,7 +75,7 @@ html{
 .profilePage{
   .profileName{
     height:15%;
-      .profileNameCntr  
+      .profileNameCntr
         {
           font-size: 2em;
           text-shadow: 2px 2px #15110D;
@@ -90,7 +92,7 @@ html{
            height:100%;
           }
       }
-     
+
     .profileDetailBtnCntr{
         height:150px;
     }
@@ -110,9 +112,9 @@ html{
       .validation-messages {
             font-size: 15px;
             color: darkred;
-            margin: 10px 0 0 25px; 
+            margin: 10px 0 0 25px;
       }
-    
+
       md-datepicker {
         .md-datepicker-input{
            max-width: 125px;
@@ -146,11 +148,11 @@ html{
   overflow:hidden;
 }
 .pointer{
-  cursor: pointer;  
+  cursor: pointer;
 }
 
 .ng-hide-add{
-  animation: 1s fadeOut 1;  
+  animation: 1s fadeOut 1;
 }
 
 .animationBackground{
@@ -178,7 +180,7 @@ html{
       left:5%;
       top:-20%;
       -webkit-animation: ballDown 35s infinite;
-      animation: ballDown 35s infinite;     
+      animation: ballDown 35s infinite;
   }
   li:nth-child(3){
       //width: 75px;
@@ -201,14 +203,14 @@ html{
       left:14%;
       top:-20%;
       -webkit-animation: ballUP 35s infinite;
-      animation: ballUP 35s infinite;      
+      animation: ballUP 35s infinite;
   }
   li:nth-child(6){
       position:relative;
       left:17%;
       top:-20%;
       -webkit-animation: ballDown 35s infinite;
-      animation: ballDown 35s infinite;  
+      animation: ballDown 35s infinite;
   }
   li:nth-child(7){
       position:relative;
@@ -223,14 +225,14 @@ html{
       top:-20%;
       -webkit-animation: ballDown 35s infinite;
       animation: ballDown 35s infinite;
-      } 
+      }
       li:nth-child(9){
       position:relative;
       left:26%;
       top:-20%;
       -webkit-animation: ballUP 35s infinite;
       animation: ballUP 35s infinite;
-      }  
+      }
 }
 @-webkit-keyframes ballUP {
    from{
@@ -299,7 +301,7 @@ html{
   padding-top: 5%;
 }
 .availbility-btn{
- 
+
     text-align:center;
     text-transform:capitalize;
     padding: 10px 5px 10px 5px;
@@ -321,9 +323,16 @@ html{
     .imageCntr{
     border-radius:5px 0px 0px 5px;
     border-right:1.5px solid rgba(128, 128, 128, 0.45);
+    background: rgb(63,81,181);
+    md-icon{
+      color:white;
+      height: 75px;
+      width: 75px;
+    }
   }
   .inputCntr{
     border-radius:0px 5px 5px 0px;
+    background: white;
   }
   .errCntr{
   font-size:0.9em;
@@ -358,7 +367,7 @@ ui-view.ng-enter-active {
 
 ui-view.ng-leave {
   opacity: 1;
-  /*padding-left: 0px;*/  
+  /*padding-left: 0px;*/
   -webkit-transform:translate3d(0, 0, 0);
   -moz-transform:translate3d(0, 0, 0);
   transform:translate3d(0, 0, 0);
@@ -371,5 +380,18 @@ ui-view.ng-leave-active {
   -moz-transform:translate3d(100px, 0, 0);
   transform:translate3d(100px, 0, 0);
 }
-
-
+.userLink.ng-leave{
+  display: none;
+}
+.blue-text{
+  color: blue;
+}
+.red-text{
+  color: red;
+}
+.custom-toast-warning{
+  div{
+    background: yellow;
+    color:red;
+  }
+}

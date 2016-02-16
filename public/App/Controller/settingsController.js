@@ -1,27 +1,44 @@
 define(["angular"],function(){
-	var controller=["$scope","$mdDialog","authenticate","$timeout","backgroundFactory",
-	function($scope,$mdDialog,authenticate,$timeout,backgroundFactory){
+	var controller=["$scope","$mdDialog","authenticate","$timeout","backgroundFactory","$http","toastFactory",
+	function($scope,$mdDialog,authenticate,$timeout,backgroundFactory,$http,toastFactory){
 
 		$scope.userName = authenticate.getUsername().username;
 
+		$scope.userdetails = authenticate.getcurrentuser_details();
+
+		//Profile photo upload flags
 		$scope.profileFlags = {
 			showText:true,
 			showLoading:false,
 			loadingValue:0
 		};
 
+		$scope.saveUserDetails = function() {
+				$http.post("/api/user/details",$scope.userdetails).success(function(){
+						toastFactory.showToast("Saved Successfully...");
+						$scope.$$prevSibling.refreshProfileDetails();
+						$scope.close();
+				}).error(function(){
+						toastFactory.showWarnToast("Facing New issue will recover soon..");
+				});
+		};
+
+		//Date picker maxdate
 		$scope.todayDate = new Date();
 
+		//Cover photo upload flags
 		$scope.coverFlags = {
 			showText:true,
 			showLoading:false,
 			loadingValue:0
 		};
 
+		//Close dialog
 		$scope.close = function(){
 			$mdDialog.hide();
 		};
 
+		//Event for file added
 		$scope.fileAdded = function(frame,file){
 			if((file.size/1000)>2100){
 				return false;
@@ -31,6 +48,7 @@ define(["angular"],function(){
 			}
 		};
 
+		//Check file if image is added
 		$scope.checkFile = function(flow,frame){
 			if(flow.files.length>0){
 				if(flow.files[0].file.type=="image/jpeg"){
