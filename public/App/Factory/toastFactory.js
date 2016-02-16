@@ -1,14 +1,14 @@
 define(["angular","less"],function(angular,less){
 	var toastFactoryFn=["$mdToast",function($mdToast){
-			
+
 
 		//toast Generator
 		var prepareToastMessage=function(msg){
 			return '<md-toast class="animated bounceInDown">'+msg+'</md-toast>'
 		};
-		 
+
 		 var prepareWarnToastMessage=function(msg){
-			return '<md-toast class="animated bounceInDown" style="background:darkred;">'+msg+'</md-toast>'
+			return '<md-toast class="animated bounceInDown custom-toast-warning">'+msg+'</md-toast>'
 		};
 
 		var toastFactory={
@@ -16,14 +16,14 @@ define(["angular","less"],function(angular,less){
 				$mdToast.show({
 							template:prepareWarnToastMessage(msg),
 							position:"top right",
-							hideDelay:2000
+							hideDelay:5000
 				});
 			},
 			showToast:function(msg){
 				$mdToast.show({
 							template:prepareToastMessage(msg),
 							position:"top right",
-							hideDelay:2000
+							hideDelay:5000
 				});
 			}
 		};

@@ -4,6 +4,7 @@ var schema=mongo.Schema({
 	password:String,
 	username:String,
 	socketId:String,
+	name:String,
 	verifiedEmail:Boolean,
 	randomEmailValidationText:String,
 	isProfilepicupdated:Boolean,
@@ -22,7 +23,7 @@ schema.methods.validPassword=function(password){
 	if(password==this.password){
 		return true;
 	}
-	else 
+	else
 		return false;
 };
 

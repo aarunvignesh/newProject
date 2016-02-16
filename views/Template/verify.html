@@ -1,7 +1,7 @@
 <div class="" layout="column">
 	<div layout="row" layout-align="end end" layout-padding>
 		 <md-button class="md-fab md-primary" aria-label="Logout" ng-click="logout()">
-          <i class="material-icons white-text">power_settings_new</i>
+          <md-icon class="material-icons pointer" md-svg-icon="power"></md-icon>
         </md-button>
 	</div>
 	<div class="" layout="row" layout-align="center center">
@@ -11,16 +11,18 @@
 	</div>
 	<div class="" layout="row" layout-align="center center">
 		<div flex="55" flex-md="70" flex-sm="90" flex-grow layout="row" class="verifyCard z-depth-5 animated" ng-class="{'wobble':wrongPin,bounceInUp:enterFlag}">
-				
+
 					<!-- <div class="cardContainer z-depth-5"> -->
 						<div flex="30" layout="column" layout-align="center center" class="white-text blue imageCntr emailIcon imageCntr">
-							<i class="large material-icons">email</i>
+								<md-icon class="material-icons pointer" md-svg-icon="email"></md-icon>
 						</div>
 						<div flex="70"  layout-padding class="white inputCntr" layout="column">
-							<md-input-container>
+									<div layout="row">
+										<md-input-container flex>
 						         		<label>Please enter your Verify PIN here</label>
 						          		<input type="text" ng-model="verifypin" maxlength="7" required/>
-					        </md-input-container>
+					        	</md-input-container>
+									</div>
 					        <div layout="row">
 						        <md-input-container flex="80">
 							         		<label>Username</label>
@@ -31,7 +33,7 @@
 						        </div>
 					    	</div>
 					        <div layout="column" class="errCntr">
-					        	<span class="userLink" ng-class="{'blue-text':($index==0 || $index==1),'red-text':!($index==0 || $index==1)}" ng-repeat="error in userValidationerror track by $index" ng-show="error.value">
+					        	<span class="userLink" ng-class="{'blue-text':($index==0 || $index==1),'red-text':!($index==0 || $index==1)}" ng-repeat="error in userValidationerror track by $index" ng-if="error.value">
 									{{error.errText}}
 								</span>
 							</div>
@@ -40,13 +42,13 @@
 									<md-button class="blue-text text-darken-1" ng-click="showRegenDialog($event)">Regenerate</md-button>
 								<!-- </div> -->
 								<div flex="50" hide-sm layout="row" layout-align="end end">
-									
+
 								</div>
 									<md-button class="md-raised md-primary wave-effect" ng-click="proceed();" ng-disabled="(!userValidationerror[1].value || !verifypin)">Proceed</md-button>
-							</div>	
+							</div>
 						</div>
 					<!-- </div> -->
-				
+
 		</div>
 	</div>
 
