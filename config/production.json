@@ -4,5 +4,8 @@
 		"url":"mongodb://pingbase:shiva@apollo.modulusmongo.net",
 		"port":"27017",
 		"database":"eqopO9zu"
+	},
+	"server":{
+		"port":5000
 	}
 }

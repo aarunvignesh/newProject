@@ -15,7 +15,7 @@ define(["angular"],function(){
 						scope.userDetails.isCoverpic = res.isCoverpic;
 						scope.userDetails.otherDetails = res.otherDetails;
 						if(scope.userDetails.otherDetails.born){
-								scope.userDetails.otherDetails.born.date = scope.userDetails.otherDetails.born.date?new Date(scope.userDetails.otherDetails.born.date):"";
+								scope.userDetails.otherDetails.born.date = scope.userDetails.otherDetails.born.date?new Date(scope.userDetails.otherDetails.born.date):undefined;
 						}
 						$rootScope.loginPage=false;
 						return scope.userDetails;
@@ -48,7 +48,7 @@ define(["angular"],function(){
 					scope.userDetails.isCoverpic = res.isCoverpic;
 					scope.userDetails.otherDetails=res.otherDetails;
 					if(scope.userDetails.otherDetails.born){
-							scope.userDetails.otherDetails.born.date = scope.userDetails.otherDetails.born.date?new Date(scope.userDetails.otherDetails.born.date):"";
+							scope.userDetails.otherDetails.born.date = scope.userDetails.otherDetails.born.date?new Date(scope.userDetails.otherDetails.born.date):undefined;
 					}
 					$rootScope.loginPage=false;
 					visor.setAuthenticated(scope.userDetails);
