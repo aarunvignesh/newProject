@@ -1,3 +1,4 @@
+"use strict";
 var http=require('http');
 var express=require('express');
 var app = new express();
@@ -26,7 +27,7 @@ var flash=require('connect-flash');
 var config=require('./config');
 
 var mongoose=require('mongoose').connect(config("mongo"));
-app.use(body.urlencoded());
+app.use(body.urlencoded({extended:true}));
 app.use(body.json());
 
 
@@ -57,7 +58,7 @@ var httpServer;
 
 //else{
 	httpServer=http.createServer(app).listen(config("server").port);
-	
-	console.log(config("server").port);
-	require("./Shared/Socket/mainSocket").create(httpServer);	
+
+	console.log(process.env.OPENSHIFT_NODEJS_PORT || config("server").port);
+	require("./Shared/Socket/mainSocket").create(httpServer);
 //}

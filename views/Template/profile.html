@@ -39,10 +39,20 @@
 					      </md-fab-actions>
 	    			</md-toolbar>
 			</md-fab-toolbar>
-		<div class="absolute fixTotop" ng-hide="fabOpen">
-			<md-button class="md-fab md-primary" aria-label="Logout" ng-click="openSlideNav();">
-	         <md-icon class="material-icons" md-svg-icon="view-headline"></md-icon>
-	        </md-button>
+		<div class="absolute fixTotop header full-width" layout="row" ng-hide="fabOpen">
+					<div flex="10">
+						<md-button class="md-fab md-primary" aria-label="Logout" ng-click="openSlideNav();">
+	         		<md-icon class="material-icons" md-svg-icon="view-headline"></md-icon>
+	        	</md-button>
+					</div>
+					<div layout="row" layout-align="center center" layout-padding flex="80">
+						<div style="background:rgba(255,255,255,0.5);">
+						<md-input-container>
+							<label>Search</label>
+							<input type="text"/>
+						</md-input-container>
+					</div>
+					</div>
     	</div>
 
     	<div layout-container layout="column" class="profilePage">
