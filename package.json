@@ -4,7 +4,8 @@
   "description": "using angular and require",
   "main": "app.js",
   "scripts": {
-    "start": "node app.js"
+    "start": "node app.js",
+    "preinstall":"bower install && grunt"
   },
   "keywords": [
     "new"
