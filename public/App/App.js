@@ -78,17 +78,12 @@ define(["angular","angularRoute","angularMessages","angularPrimus","angularMater
 							var defer=$q.defer();
 							$http.post("api/userdetails/",{username:$stateParams.username})
 							.success(function(res){
-								defer.resolve(res);
-							});
-							return defer.promise;
-						}],
-						adminDetails:["authenticate","$q",function(authenticate,$q){
-							var defer = $q.defer();
-							authenticate.isAuthenticatedUser().then(function(user){
-								defer.resolve(user);
-							},
-							function(){
-								defer.reject();
+								if(res.code != 404){
+										defer.resolve(res);
+								}
+								else{
+									defer.reject();
+								}
 							});
 							return defer.promise;
 						}]
@@ -138,6 +133,17 @@ define(["angular","angularRoute","angularMessages","angularPrimus","angularMater
 		){
 
 		$rootScope.loginPage=true;
+
+		$rootScope.$on('$stateChangeStart',function(){
+			$rootScope.showLoading = true;
+		});
+		$rootScope.$on('$stateChangeSuccess',function(){
+			$rootScope.showLoading = false;
+		});
+
+		$rootScope.$on('$stateChangeError',function(){
+			$state.go('profile',{username:visor.authData.username});
+		});
 
 		themeFactory.initTheme();
 		$rootScope.$on("$viewContentLoaded",function(){

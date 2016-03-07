@@ -58,5 +58,9 @@ var data={
 	userByUserName:function(args,callback){
 	 user.find({username:args.username},callback);
 	}
+	,
+	searchUser:function(args,callback){
+	 user.find(args,callback);
+	}
 };
 module.exports=data;

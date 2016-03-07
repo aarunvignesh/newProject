@@ -1,11 +1,12 @@
 define(["angular"],function(){
-	var controller=["$scope","$http","authenticate","$state","chatService","profileDetails"
-	,"$timeout","$mdSidenav","$mdDialog","adminDetails","backgroundFactory",
+	var controller=["$scope","$q","$http","authenticate","$state","chatService","profileDetails"
+	,"$timeout","$mdSidenav","$mdDialog","backgroundFactory","visor",
 
-	function($scope,$http,authenticate,$state,chatService,profileDetails,$timeout
-		,$mdSidenav,$mdDialog,adminDetails,backgroundFactory){
+	function($scope,$q,$http,authenticate,$state,chatService,profileDetails,$timeout
+		,$mdSidenav,$mdDialog,backgroundFactory,visor){
 		$scope.adminUser=false;
 
+		$scope.curr_username = visor.authData.username;
 		$scope.profileUserDetails={};
 		var adminName = authenticate.getUsername();
 
@@ -44,7 +45,7 @@ define(["angular"],function(){
 			if(profileDetails.code==200){
 
 				$scope.adminUser = true;
-				$scope.profileUserDetails=adminDetails;
+				$scope.profileUserDetails=visor.authData;
 
 			}
 			else{
@@ -71,8 +72,8 @@ define(["angular"],function(){
 		}
 
 		$scope.refreshProfileDetails();
-		
-		if($scope.profileUserDetails.isCoverpic){
+
+		if($scope.profileUserDetails.isCoverpic || $scope.profileUserDetails.isCoverpicupdated){
 			backgroundFactory.setCoverPhoto(angular.element("#mainProfilepanel"),$scope.profileUserDetails.username);
 		}
 
@@ -137,6 +138,28 @@ define(["angular"],function(){
 			$mdSidenav("mainSlider").toggle();
 		};
 
+		//Search Methods
+
+		$scope.search = {
+			querySearch: function(text){
+				if(text){
+				 var defer = $q.defer();
+
+				 $http.get('api/search/?name='+text).success(function(response){
+					 defer.resolve(response);
+				 }).error(function(err){
+					 defer.reject();
+				 });
+				 return defer.promise;
+			 	}
+				else
+					return [];
+			},
+			selectedItem : function(val){
+
+				$state.go('profile',{username:val.username});
+			}
+		};
 	}];
 	return controller;
 });

@@ -1,10 +1,27 @@
 define(["angular"],function(){
-	var controller=["$scope","$mdDialog","authenticate","$timeout","backgroundFactory","$http","toastFactory",
-	function($scope,$mdDialog,authenticate,$timeout,backgroundFactory,$http,toastFactory){
+	var controller=["$scope","$mdDialog","visor","$timeout","backgroundFactory","$http","toastFactory",
+	function($scope,$mdDialog,visor,$timeout,backgroundFactory,$http,toastFactory){
 
-		$scope.userName = authenticate.getUsername().username;
+		$scope.userName = visor.authData.username;
 
-		$scope.userdetails = authenticate.getcurrentuser_details();
+		$scope.userdetails = {};
+		//$scope.userdetails = visor.authData;
+
+		copier($scope.userdetails,visor.authData);
+
+		function copier(value1,value2){
+				Object.keys(value2).forEach(function(val){
+					if(typeof value2[val] == "object")
+					{
+							value1[val]={};
+							copier(value1[val],value2[val]);
+					}
+					else{
+							value1[val]=value2[val];
+					}
+
+				});
+		};
 
 		//Profile photo upload flags
 		$scope.profileFlags = {
@@ -16,7 +33,7 @@ define(["angular"],function(){
 		$scope.saveUserDetails = function() {
 				$http.post("/api/user/details",$scope.userdetails).success(function(){
 						toastFactory.showToast("Saved Successfully...");
-						$scope.$$prevSibling.refreshProfileDetails();
+						copier(visor.authData,$scope.userdetails);
 						$scope.close();
 				}).error(function(){
 						toastFactory.showWarnToast("Facing New issue will recover soon..");
@@ -89,14 +106,16 @@ define(["angular"],function(){
 
 				$scope.profileFlags.loadingValue = 100;
 				$scope.profileFlags.showLoading = false;
-				authenticate.setprofilePhoto(true);
+				visor.authData.isProfilepic = true;
+				if(visor.authData.username==$scope.$$prevSibling.profileUserDetails.username)
 				backgroundFactory.setProfilePhoto(angular.element("#profileImagepanel"),$scope.userName);
 			}
 			else if(frame=='cover'){
 
 				$scope.coverFlags.loadingValue = 100;
 				$scope.coverFlags.showLoading = false;
-				authenticate.setcoverPhoto(true);
+				visor.authData.isCoverpic = true;
+				if(visor.authData.username==$scope.$$prevSibling.profileUserDetails.username)
 				backgroundFactory.setCoverPhoto(angular.element("#mainProfilepanel"),$scope.userName);
 			}
 		};

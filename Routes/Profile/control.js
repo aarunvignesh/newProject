@@ -135,6 +135,26 @@ var ctrl={
     else {
       res.send({err:"Username Required:::"});
     }
+  },
+  search:function(req,res){
+    var whereOptions = {verifiedEmail:true};
+    if(req.query.name){
+      whereOptions.name = new RegExp("^"+req.query.name);
+    }
+    else if(req.query.email){
+      whereOptions.email = new RegExp("^"+req.query.name);
+    }
+    if(req.query.name || req.query.email)
+    User.searchUser(whereOptions,function(err,user){
+      if(user){
+        res.send(user.map(function(val){
+          return {name:val.name,username:val.username }
+        }));
+      }
+    });
+    else{
+      res.status(200).send({})
+    }
   }
 };
 

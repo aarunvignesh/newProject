@@ -45,6 +45,7 @@ var ctrl={
 					res.send({err:"Error Occured with Database"});
 				}
 				else{
+					console.log(user);
 					if(user.verifiedEmail){
 
 						res.send({id:req.user._id,email:req.user.email,
