@@ -54,11 +54,8 @@ app.get("*",function(req,res,next){
 });
 
 var httpServer;
-
-console.log(process.env);
 //else{
 	httpServer=http.createServer(app).listen(process.env.OPENSHIFT_NODEJS_PORT || config("server").port);
 
-	console.log(process.env.OPENSHIFT_NODEJS_PORT || config("server").port);
 	require("./Shared/Socket/mainSocket").create(httpServer);
 //}
