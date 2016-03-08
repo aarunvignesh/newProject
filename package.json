@@ -5,17 +5,22 @@
   "main": "app.js",
   "scripts": {
     "start": "node app.js",
-    "preinstall":"bower install",
-    "postinstall":"grunt"
+    "preinstall": "bower install",
+    "postinstall": "grunt"
   },
   "keywords": [
     "new"
   ],
-  "author": "Arun Vignesh A",
+  "author": {
+    "name": "Arun vignesh",
+    "email": "a.s.arunvignesh@gmail.com",
+    "url": "http://www.openshift.com/"
+  },
   "license": "ISC",
   "dependencies": {
     "bcrypt-nodejs": "0.0.3",
     "body-parser": "^1.14.1",
+    "bower": "^1.7.7",
     "cluster": "^0.7.7",
     "config": "^1.16.0",
     "connect-flash": "^0.1.1",
@@ -53,14 +58,7 @@
     "node": ">= 0.6.0",
     "npm": ">= 1.0.0"
   },
-  "author": {
-    "name": "Arun vignesh",
-    "email": "a.s.arunvignesh@gmail.com",
-    "url": "http://www.openshift.com/"
-  },
   "devDependencies": {},
   "bundleDependencies": [],
-
-  "private": true,
-  "main": "app.js"
+  "private": true
 }
