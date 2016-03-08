@@ -120,6 +120,7 @@ define(["angular","angularRoute","angularMessages","angularPrimus","angularMater
 	"themeFactory",
 	"chatService",
 	"visor",
+	"$timeout",
 	function(
 		$state,
 		$log,
@@ -129,21 +130,27 @@ define(["angular","angularRoute","angularMessages","angularPrimus","angularMater
 		authenticate,
 		themeFactory,
 		chatService,
-		visor
+		visor,
+		$timeout
 		){
 
 		$rootScope.loginPage=true;
 
-		$rootScope.$on('$stateChangeStart',function(){
-			$rootScope.showLoading = true;
-		});
-		$rootScope.$on('$stateChangeSuccess',function(){
-			$rootScope.showLoading = false;
-		});
-
-		$rootScope.$on('$stateChangeError',function(){
-			$state.go('profile',{username:visor.authData.username});
-		});
+		// $rootScope.$on('$stateChangeStart',function(){
+		// 	console.log("Shiva route started");
+		// 	$rootScope.showLoading = true;
+		// });
+		// $rootScope.$on('$stateChangeSuccess',function(){
+		// 	console.warn("Shiva route success");
+		// 		$rootScope.showLoading = false;
+		// });
+		//
+		// $rootScope.$on('$stateChangeError',function(event){
+		// 	if(visor.isAuthenticated())
+		// 	$state.go('profile',{username:visor.authData.username});
+		// 	else
+		// 	$state.go('welcome');
+		// });
 
 		themeFactory.initTheme();
 		$rootScope.$on("$viewContentLoaded",function(){

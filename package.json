@@ -5,7 +5,8 @@
   "main": "app.js",
   "scripts": {
     "start": "node app.js",
-    "preinstall":"bower install && grunt"
+    "preinstall":"bower install",
+    "postinstall":"grunt"
   },
   "keywords": [
     "new"
@@ -47,5 +48,19 @@
     "randomstring": "^1.1.0",
     "redis": "^1.0.0",
     "session.socket.io": "^0.2.1"
-  }
+  },
+  "engines": {
+    "node": ">= 0.6.0",
+    "npm": ">= 1.0.0"
+  },
+  "author": {
+    "name": "Arun vignesh",
+    "email": "a.s.arunvignesh@gmail.com",
+    "url": "http://www.openshift.com/"
+  },
+  "devDependencies": {},
+  "bundleDependencies": [],
+
+  "private": true,
+  "main": "app.js"
 }

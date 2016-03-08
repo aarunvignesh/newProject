@@ -77,7 +77,7 @@ define(["angular"],function(){
 			backgroundFactory.setCoverPhoto(angular.element("#mainProfilepanel"),$scope.profileUserDetails.username);
 		}
 
-		backgroundFactory.setProfilePhoto(angular.element("#profileImagepanel"),$scope.profileUserDetails.username);
+
 
 
 		$scope.setProfiledetailScroller = function(setter){
@@ -138,6 +138,11 @@ define(["angular"],function(){
 			$mdSidenav("mainSlider").toggle();
 		};
 
+		$scope.$on("$viewContentLoaded",function(){
+				backgroundFactory.setProfilePhoto(angular.element("#profileImagepanel"),$scope.profileUserDetails.username);
+		});
+
+
 		//Search Methods
 
 		$scope.search = {
@@ -157,9 +162,11 @@ define(["angular"],function(){
 			},
 			selectedItem : function(val){
 
-				$state.go('profile',{username:val.username});
+				$state.go('profile',{username:val? val.username : $scope.curr_username});
 			}
 		};
+
+
 	}];
 	return controller;
 });

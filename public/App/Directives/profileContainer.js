@@ -4,16 +4,12 @@ define(["angular"],function(angular){
 			    restrict:"C",
 			    link:function($scope,$elem,$attrs){
 			    	$scope.$on("$viewContentLoaded",function(){
-			    		$timeout(function() {
-			    		$elem.height($elem.width());	
-			    	}, 0);
+							$elem.height($elem.width());
+						});
 			    	angular.element(window).bind("resize",function(){
-			    		$elem.height($elem.width());	
+			    		$elem.height($elem.width());
 			    	});
-			    });
-			    	
-			    		
-			    }
+					}
 			}
 		}];
 

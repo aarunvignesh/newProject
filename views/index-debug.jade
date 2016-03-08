@@ -16,5 +16,9 @@ html
 			li(flex="10")
 		div(class="container-fluid" ng-show="!$root.showLoading")
 			ui-view
-		div(class="container-fluid" layout="column" style="height:100%;" layout-align="center center" ng-show="$root.showLoading")
-			md-progress-circular(class="md-primary", md-mode="indeterminate",md-diameter="300")
+		div(class="container-fluid" layout="column" layout-fill layout-align="center center" ng-show="$root.showLoading")
+			md-progress-circular(class="md-primary", md-mode="indeterminate",md-diameter="200")
+			//div(class="load")
+				div(class="dot")
+				div(class="outline")
+					span
