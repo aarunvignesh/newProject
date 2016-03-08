@@ -53,9 +53,14 @@ app.get("*",function(req,res,next){
 	}
 });
 
+var ipaddress = process.env.OPENSHIFT_NODEJS_IP || "127.0.0.1";
+var port      = process.env.OPENSHIFT_NODEJS_PORT || config("server").port;
+
 var httpServer;
 //else{
-	httpServer=http.createServer(app).listen(process.env.OPENSHIFT_NODEJS_PORT || config("server").port);
+	httpServer=http.createServer(app).listen(port,ipaddress, function() {
+    console.log((new Date()) + ' Server is listening on port '+ipaddress + ':' + port);
+});
 
 	require("./Shared/Socket/mainSocket").create(httpServer);
 //}
