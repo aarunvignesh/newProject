@@ -1,5 +1,5 @@
 {
-	"htmlFileName":"index",
+	"htmlFileName":"index-debug",
 	"mongo":{
 		"url":"mongodb://pingbase:shiva@apollo.modulusmongo.net",
 		"port":"27017",
