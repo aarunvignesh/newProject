@@ -95,7 +95,7 @@ define(["angular","angularRoute","angularMessages","angularPrimus","angularMater
 		.setEndpoint(
 			window.location.protocol+"//"
 			+window.location.hostname
-			+(window.location.port?(":"+window.location.port):(""))+"/primus"
+			+(":"+8000)+"/primus"
 			)
 		.setOptions({
 			reconnect: {
