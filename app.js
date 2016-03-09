@@ -57,10 +57,14 @@ var ipaddress = process.env.OPENSHIFT_NODEJS_IP || "127.0.0.1";
 var port      = process.env.OPENSHIFT_NODEJS_PORT || config("server").port;
 
 var httpServer;
-//else{
+if(process.env.OPENSHIFT_NODEJS_IP){
 	httpServer=http.createServer(app).listen(port,ipaddress, function() {
-    console.log((new Date()) + ' Server is listening on port '+ipaddress + ':' + port);
-});
-
+		console.log((new Date()) + ' Server is listening on port '+ipaddress + ':' + port);
+	});
+}
+else{
+	httpServer=http.createServer(app).listen(port, function() {
+		console.log((new Date()) + ' Server is listening on port '+ipaddress + ':' + port);
+	});
+}
 	require("./Shared/Socket/mainSocket").create(httpServer);
-//}
