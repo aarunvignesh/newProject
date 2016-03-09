@@ -6,6 +6,7 @@ define(["angular","less"],function(angular,less){
 				var themesheet=angular.element('<link rel="stylesheet/less" href="./Styles/black/black.less"/>');
 				themesheet.appendTo('head');
 				less.sheets[0]=themesheet[0];
+				less.refresh();
 				less.refreshStyles();
 				// less.refresh().then(function(){
 				// 	$timeout(function() {
