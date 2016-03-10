@@ -7,13 +7,9 @@ OLD_HOME=$HOME
 
 ##########
 echo "INFO: Running 'bower install'"
+export HOME=$HOME/app-root/runtime/repo
 cd $OPENSHIFT_REPO_DIR
-export HOME=$OPENSHIFT_REPO_DIR
-bower install
-
-##########
-echo "INFO: Running 'grunt build'"
-grunt
+./node_modules/bower/bin/bower install
 
 #########
 export HOME=$OLD_HOME
