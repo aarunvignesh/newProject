@@ -34,7 +34,7 @@
     "visor": "~0.1.2"
   },
   "resolutions": {
-    "angular": "~1.4.8",
-    "angular-animate":"~1.5.0"
+    "angular": "^1.4.8",
+    "angular-animate": "~1.5.0"
   }
 }
