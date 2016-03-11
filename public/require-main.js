@@ -11,7 +11,7 @@ require.config({
 		angularPrimus:"./../libs/angular-primus/angular-primus",
 		angularAnimate:"./../libs/angular-animate/angular-animate",
 		angularMaterial:"./../libs/angular-material/angular-material",
-		material:"./../Scripts/materialize-v0.97.1/materialize/js/materialize",
+		//material:"./../Scripts/materialize-v0.97.1/materialize/js/materialize",
 		angularAria:"./../libs/angular-aria/angular-aria",
 
 		ngFx:"./../libs/ngFx/dist/ngFx",
@@ -61,9 +61,9 @@ require.config({
 		angularAnimate:{
 			deps:["angular"]
 		},
-		material:{
-			deps:["jquery","hammerJquery"]
-		},
+		// material:{
+		// 	deps:["jquery","hammerJquery"]
+		// },
 		angularAria:{
 			deps:["angular"]
 		},

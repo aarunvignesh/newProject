@@ -7,6 +7,26 @@ module.exports=function(grunt){
 			    {
 			      baseUrl: "public/App",
 			      mainConfigFile: "public/require-main.js",
+						paths:{
+							"jquery":"empty:",
+							"angular":"empty:",
+							"angularRoute":"empty:",
+							"less":"empty:",
+							"moment":"empty:",
+							"primus":"empty:",
+							"angularPrimus":"empty:",
+							"angularAnimate":"empty:",
+							"angularMaterial":"empty:",
+							"angularAria":"empty:",
+
+							"ngFx":"empty:",
+							"tweenMax":"empty:",
+							"flowStand":"empty:",
+							"ngFlow":"empty:",
+							"perfectScroll":"empty:",
+							"angularMessages":"empty:",
+							"visor":"empty:"
+						},
 			      name: "App", // assumes a production build using almond
 			      out: "public/App.js",
 				  	done: function(done, output) {

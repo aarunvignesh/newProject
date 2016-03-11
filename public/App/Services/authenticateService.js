@@ -13,9 +13,11 @@ define(["angular"],function(){
 						scope.userDetails.username= res.username;
 						scope.userDetails.isProfilepic = res.isProfilepic;
 						scope.userDetails.isCoverpic = res.isCoverpic;
-						scope.userDetails.otherDetails = res.otherDetails;
-						if(scope.userDetails.otherDetails.born){
-								scope.userDetails.otherDetails.born.date = scope.userDetails.otherDetails.born.date?new Date(scope.userDetails.otherDetails.born.date):undefined;
+						if(res.otherDetails){
+							scope.userDetails.otherDetails = res.otherDetails;
+							if(scope.userDetails.otherDetails.born){
+									scope.userDetails.otherDetails.born.date = scope.userDetails.otherDetails.born.date?new Date(scope.userDetails.otherDetails.born.date):undefined;
+							}
 						}
 						$rootScope.loginPage=false;
 						return scope.userDetails;

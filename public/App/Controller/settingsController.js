@@ -10,11 +10,19 @@ define(["angular"],function(){
 		copier($scope.userdetails,visor.authData);
 
 		function copier(value1,value2){
+
 				Object.keys(value2).forEach(function(val){
+
 					if(typeof value2[val] == "object")
 					{
-							value1[val]={};
-							copier(value1[val],value2[val]);
+							if(value2[val] instanceof Date){
+								value1[val] = value2[val]
+							}
+							else{
+								value1[val]={};
+								copier(value1[val],value2[val]);
+							}
+
 					}
 					else{
 							value1[val]=value2[val];

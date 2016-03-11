@@ -1,7 +1,7 @@
 define(["angular"],function(){
 	var controller=["$scope","$http","authenticate","$state","chatService"
-	,"$timeout","$animateCss","$location","toastFactory","$mdDialog",
-	function($scope,$http,authenticate,$state,chatService,$timeout,$animateCss,$location,toastFactory,$mdDialog){
+	,"$timeout","$animateCss","$location","toastFactory","$mdDialog","visor",
+	function($scope,$http,authenticate,$state,chatService,$timeout,$animateCss,$location,toastFactory,$mdDialog,visor){
 
 		$scope.username="";
 
@@ -136,14 +136,8 @@ define(["angular"],function(){
 					username:$scope.username
 				}).success(function(res){
 					if(res.success){
-						var defer=authenticate.refreshUserDetails();
-						defer.then(function(){
+							visor.authData.validationStatus = true;
 							$state.go("profile",{username:$scope.username});
-						},
-						function(){
-							toastFactory.showWarnToast("Facing new issue will recover soon");
-						})
-
 					}
 					else{
 						if(res.code==420){
