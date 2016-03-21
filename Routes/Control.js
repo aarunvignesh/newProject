@@ -45,7 +45,6 @@ var ctrl={
 					res.send({err:"Error Occured with Database"});
 				}
 				else{
-					console.log(user);
 					if(user.verifiedEmail){
 
 						res.send({id:req.user._id,email:req.user.email,
@@ -103,7 +102,7 @@ var ctrl={
 								user.username=req.body.username;
 								var defer=updateUser.updateUser(user);
 								defer.then(function(){
-									res.send({success:"Update Successful.... Access granted..."});
+									res.send({success:"Update Successful.... Access granted...",user:user});
 								},
 								function(){
 									res.send({err:"Facing New Issue will Recover Soon....",code:404});

@@ -61,6 +61,11 @@ define(["angular","angularRoute","angularMessages","angularPrimus","angularMater
 					controller:"messagesController",
 					restrict:function(auth){
 						return auth && auth.validationStatus;
+					},
+					resolve:{
+						loadSockets:["chatService",function(chatService) {
+							chatService.joinMe();
+						}]
 					}
 				}
 			)
@@ -73,12 +78,13 @@ define(["angular","angularRoute","angularMessages","angularPrimus","angularMater
 						return auth && auth.validationStatus;
 					},
 					resolve:{
-						profileDetails:["$http","$stateParams","authenticate","$q",
-						function($http,$stateParams,authenticate,$q){
+						profileDetails:["$http","$stateParams","authenticate","$q","chatService",
+						function($http,$stateParams,authenticate,$q,chatService){
 							var defer=$q.defer();
 							$http.post("api/userdetails/",{username:$stateParams.username})
 							.success(function(res){
 								if(res.code != 404){
+										chatService.joinMe();
 										defer.resolve(res);
 								}
 								else{

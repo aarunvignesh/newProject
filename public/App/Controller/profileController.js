@@ -41,6 +41,15 @@ define(["angular"],function(){
 			}
 		};
 
+		$scope.refreshAdminprofiledetails = function(){
+			if(profileDetails.code==200){
+
+				$scope.adminUser = true;
+				$scope.profileUserDetails=visor.authData;
+				$scope.refreshProfileDetails();
+			}
+		};
+
 		if(profileDetails.code == 200 || profileDetails.code == 202){
 			if(profileDetails.code==200){
 
@@ -73,9 +82,9 @@ define(["angular"],function(){
 
 		$scope.refreshProfileDetails();
 
-		if($scope.profileUserDetails.isCoverpic || $scope.profileUserDetails.isCoverpicupdated){
+		//if($scope.profileUserDetails.isCoverpic || $scope.profileUserDetails.isCoverpicupdated){
 			backgroundFactory.setCoverPhoto(angular.element("#mainProfilepanel"),$scope.profileUserDetails.username);
-		}
+		//}
 
 
 

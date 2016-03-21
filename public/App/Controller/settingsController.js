@@ -42,6 +42,7 @@ define(["angular"],function(){
 				$http.post("/api/user/details",$scope.userdetails).success(function(){
 						toastFactory.showToast("Saved Successfully...");
 						copier(visor.authData,$scope.userdetails);
+						$scope.$$prevSibling.refreshAdminprofiledetails();
 						$scope.close();
 				}).error(function(){
 						toastFactory.showWarnToast("Facing New issue will recover soon..");

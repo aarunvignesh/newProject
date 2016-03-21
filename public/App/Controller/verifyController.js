@@ -136,7 +136,11 @@ define(["angular"],function(){
 					username:$scope.username
 				}).success(function(res){
 					if(res.success){
-							visor.authData.validationStatus = true;
+							visor.authData.name = res.user.name;
+							visor.authData.username=res.user.username;
+							visor.authData.isCoverpic = res.user.isCoverpicupdated;
+							visor.authData.isProfilepic = res.user.isProfilepicupdated;
+							visor.authData.validationStatus = res.user.verifiedEmail;
 							$state.go("profile",{username:$scope.username});
 					}
 					else{

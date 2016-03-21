@@ -19,7 +19,7 @@ var primus=require("primus"),
     redis = require('redis');
     function createRedisClient() {
       var client = redis.createClient(redisConfig.port,redisConfig.url);
-      
+
       return client;
     }
 
@@ -40,11 +40,10 @@ var create=function(server){
            console.log("DATA");
            console.log(ev);
         });
-        
-    	spark.on('initialHandshake',function(msg){
+    		spark.on('initialHandshake',function(msg){
             console.log(spark.id);
-    	});
-        
+    		});
+
     });
 
     primusServer.on('disconnection',function(){
