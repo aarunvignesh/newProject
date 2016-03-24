@@ -20,11 +20,15 @@ require.config({
 		ngFlow:"./../libs/ng-flow/dist/ng-flow",
 		perfectScroll:"./../libs/perfect-scrollbar/js/perfect-scrollbar.jquery",
 		angularMessages:"./../libs/angular-messages/angular-messages",
-		visor:"./../libs/visor/release/visor"
+		visor:"./../libs/visor/release/visor",
+    config:"./../Config/config"
 	},
 	shim:{
 		jquery:{
 			exports:"$"
+		},
+		config:{
+			exports: "config"
 		},
 		moment:{
 			exports:"moment"

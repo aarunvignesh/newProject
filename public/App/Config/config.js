@@ -3,6 +3,6 @@ define([],function(){
     return {
       protocol:window.location.protocol,
 			host:window.location.hostname,
-			port:8000
+			port:window.location.port?window.location.port:undefined
     }
 });

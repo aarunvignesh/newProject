@@ -17,8 +17,7 @@ require.config({
 		angularMessages:"./../libs/angular-messages/angular-messages.min",
 		visor:"./../libs/visor/release/visor.min",
 		primus:"./../Scripts/primusClient",
-    config:"./../Config/config"
-
+    config:"./../Config/openshift"
 	},
 	shim:{
 		jquery:{

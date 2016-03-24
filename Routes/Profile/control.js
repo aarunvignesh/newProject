@@ -65,13 +65,14 @@ var ctrl={
 			res.send({result:"redirect back...",code:420});
 		}
 	},
+
 	photoThrower:function(req,res){
 		if(fileExists("./account/"+req.params.username+"/"+req.params.type+".jpeg")){
 			res.sendFile(path.resolve(__dirname+"/../../account/"+req.params.username+"/"+req.params.type+".jpeg"));
 		}
 		else{
 			if(req.params.type=="cover"){
-				res.sendFile(path.resolve(__dirname+"/../../pattern.jpg"));
+				res.sendFile(path.resolve(__dirname+"/../../pattern.png"));
 			}
 			else{
 				res.sendFile(path.resolve(__dirname+"/../../user.png"));
