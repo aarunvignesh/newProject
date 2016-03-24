@@ -41,7 +41,6 @@ app.use(passport.session());
 app.use(express.static(path.join(__dirname,"public")));
 app.use(routes);
 localStrategy(passport);
-console.log(process.env.NODE_ENV);
 
 
 app.get("*",function(req,res,next){
