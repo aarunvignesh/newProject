@@ -1,0 +1,20 @@
+html
+	head
+		title Angular
+		meta(name="viewport", content="width=device-width, initial-scale=1.0")
+		script(type="text/javascript", src="./Scripts/Require.js", data-main="./require-openshift.js")
+	body(ng-class="{'loginScreen':$root.loginPage,'appScreen':!$root.loginPage}")
+		//div(layout="row" flex="100" flex-layout="row" layout-padding class="animationBackground" style="color:white;")
+			li(flex="10")
+			li(flex="10")
+			li(flex="10")
+			li(flex="10")
+			li(flex="10")
+			li(flex="10")
+			li(flex="10")
+			li(flex="10")
+			li(flex="10")
+		div(class="container-fluid" ng-show="!$root.showLoading")
+			ui-view
+		div(class="container-fluid" layout="column" layout-fill layout-align="center center" ng-show="$root.showLoading")
+			md-progress-circular(class="md-primary", md-mode="indeterminate",md-diameter="100")

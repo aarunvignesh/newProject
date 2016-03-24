@@ -1,6 +1,6 @@
 
-define(["angular","angularRoute","angularMessages","angularPrimus","angularMaterial","ngFx","ngFlow","visor","./Controller/index","./Services/index","./Factory/index","./Directives/index","./Filter/index"],
-	function(angular,angularRoute,angularMessages,angularPrimus,angularMaterial,ngFx,ngFlow,visor,controller,services,factory,directives,filter){
+define(["angular","angularRoute","config","angularMessages","angularPrimus","angularMaterial","ngFx","ngFlow","visor","./Controller/index","./Services/index","./Factory/index","./Directives/index","./Filter/index"],
+	function(angular,angularRoute,config,angularMessages,angularPrimus,angularMaterial,ngFx,ngFlow,visor,controller,services,factory,directives,filter){
 	var app=angular.module("newApp",["ui.router","ngMessages","primus","ngMaterial","ngAnimate","ngFx","flow","visor"])
 
 	.config(["$stateProvider","primusProvider","$mdThemingProvider","$urlRouterProvider","$mdIconProvider","visorProvider",
@@ -97,11 +97,13 @@ define(["angular","angularRoute","angularMessages","angularPrimus","angularMater
 					}
 				}
 			);
+
+		console.log(config);
 		primusProvider
 		.setEndpoint(
-			window.location.protocol+"//"
-			+window.location.hostname
-			+(window.location.port?(":"+window.location.port):(""))+"/primus"
+			config.protocol+"//"
+			+config.hostname
+			+(config.port?(":"+config.port):(""))+"/primus"
 			)
 		.setOptions({
 			reconnect: {

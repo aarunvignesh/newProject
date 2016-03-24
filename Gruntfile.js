@@ -25,7 +25,8 @@ module.exports=function(grunt){
 							"ngFlow":"empty:",
 							"perfectScroll":"empty:",
 							"angularMessages":"empty:",
-							"visor":"empty:"
+							"visor":"empty:",
+							"config":"empty:"
 						},
 			      name: "App", // assumes a production build using almond
 			      out: "public/App.js",
