@@ -1,5 +1,5 @@
 define(["angular"],function(){
-	var service=["$http","$q","$timeout","$state","visor","$rootScope",function($http,$q,$timeout,$state,visor,$rootScope){
+	var service=["$http","$q","$timeout","$state","visor","$rootScope","sock",function($http,$q,$timeout,$state,visor,$rootScope,sock){
 		var scope=this;
 		this.userDetails={};
 		this.visor_authenticator = function(){
@@ -23,6 +23,10 @@ define(["angular"],function(){
 							scope.userDetails.otherDetails = {};
 						}
 						$rootScope.loginPage=false;
+						$timeout(function () {
+								sock.emit("authenticated");
+						}, 0);
+
 						return scope.userDetails;
 					}
 					else {
@@ -63,6 +67,7 @@ define(["angular"],function(){
 					$rootScope.loginPage=false;
 					visor.setAuthenticated(scope.userDetails);
 					deferUser.resolve(scope.userDetails);
+					sock.emit("authenticated");
 				}
 				else if(res.err){
 					this.userDetails=null;
@@ -213,4 +218,3 @@ define(["angular"],function(){
 	}];
 	return service;
 });
- 

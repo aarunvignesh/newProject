@@ -1,8 +1,8 @@
 define(["angular"],function(){
-	var controller=["$scope","$q","$http","authenticate","$state","chatService","profileDetails"
+	var controller=["$scope","$q","$http","authenticate","$state","profileDetails"
 	,"$timeout","$mdSidenav","$mdDialog","backgroundFactory","visor",
 
-	function($scope,$q,$http,authenticate,$state,chatService,profileDetails,$timeout
+	function($scope,$q,$http,authenticate,$state,profileDetails,$timeout
 		,$mdSidenav,$mdDialog,backgroundFactory,visor){
 		$scope.adminUser=false;
 
@@ -70,7 +70,7 @@ define(["angular"],function(){
 		else{
 
 			if(adminName.username){
-
+				console.log(adminName.username);
 				$state.go('profile',{username:adminName.username});
 			}
 		};
