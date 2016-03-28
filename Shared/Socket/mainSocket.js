@@ -16,7 +16,9 @@ var primus=require("primus"),
 	},
 	primusServer
 	,path=require('path'),
-    redis = require('redis');
+    redis = require('redis'),
+		userController=require("./../../lib/User")(),
+		updateUser=require("./../../lib/UpdateUser")();
     function createRedisClient() {
       var client = redis.createClient(redisConfig.port,redisConfig.url);
 
@@ -37,17 +39,46 @@ var create=function(server){
     primusServer.on('connection',function(spark){
 
         spark.on("data",function(ev){
-           console.log("DATA");
-           console.log(ev);
+						console.log("Data");
         });
+
     		spark.on('initialHandshake',function(msg){
-            console.log(spark.id);
+						userController.userById({id:msg.id},function(err,user){
+							if(user){
+									user.socketId=spark.id;
+									var defer = updateUser.updateUser(user);
+			            defer.then(function(){
+										primusServer.spark(spark.id).send("handshake:success");
+			            },
+			            function(){
+										primusServer.spark(spark.id).send("handshake:failiure");
+			            });
+							}
+							else if(err){
+                 primusServer.spark(spark.id).send("handshake:failiure");
+							}
+						});
     		});
 
     });
 
-    primusServer.on('disconnection',function(){
-            console.log("User have been Disconnected...");
+    primusServer.on('disconnection',function(spark){
+			userController.searchUser({socketId:spark.id},function(err,userArr){
+				user = userArr[0];
+				if(user){
+						user.socketId=null;
+						var defer = updateUser.updateUser(user);
+						defer.then(function(){
+
+						},
+						function(){
+
+						});
+				}
+				else if(err){
+
+				}
+			});
     });
 };
 module.exports={

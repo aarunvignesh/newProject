@@ -1,1 +1,1 @@
-'config/production.json merge=ours' 
+'config merge=ours' 

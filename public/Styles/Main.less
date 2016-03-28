@@ -137,7 +137,68 @@ html{
     width:90%;
 }
 
+  .chat-input-container{
+    padding:0px;
+    margin-top:5px;
+    overflow:hidden;
+    border-bottom:1px solid #89B9DA;
+    color: rgb(63,81,181);
+  }
+  div[msg-input]:empty:before{
+    content:attr(placeholder);
+    display:block;
+    padding:0px;
+  }
 
+  div[msg-input]:focus{
+  outline:0;
+  }
+
+.chat-window{
+  .chat-message-window{
+    border-bottom: 1px solid #89B9DA;
+  }
+}
+
+
+.chat-panel-header{
+  //  background-color:rgb(63,81,181);
+  background-color: #7986CB;
+    border-radius:3px;
+    .md-input-has-value{
+      label{
+        color: #E1E3F3 ;
+        display:none;
+      }
+      input{
+        color: #E1E3F3 ;
+      }
+    }
+    .md-input-focused{
+      input{
+        border-color: #E1E3F3 !important;
+        color: #E1E3F3 ;
+      }
+      label{
+          color: #E1E3F3 ;
+          display:none;
+      }
+    }
+    .search-input-container{
+
+      margin:8px 10px 5px 10px;
+      input{
+        border-color: #E1E3F3;
+      }
+      label{
+        color: #E1E3F3;
+      }
+    }
+    span{
+      margin: 10px;
+      color: #E1E3F3;
+    }
+}
 .photoadded{
   border-style:groove !important;
   background-color:aqua;
@@ -161,6 +222,10 @@ html{
 
 .ng-hide-add{
   animation: 1s fadeOut 1;
+}
+
+div[friendList]{
+    overflow: hidden;
 }
 
 .animationBackground{

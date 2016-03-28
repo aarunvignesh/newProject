@@ -61,11 +61,6 @@ define(["angular","angularRoute","config","angularMessages","angularPrimus","ang
 					controller:"messagesController",
 					restrict:function(auth){
 						return auth && auth.validationStatus;
-					},
-					resolve:{
-						loadSockets:["chatService",function(chatService) {
-							chatService.joinMe();
-						}]
 					}
 				}
 			)
@@ -78,13 +73,12 @@ define(["angular","angularRoute","config","angularMessages","angularPrimus","ang
 						return auth && auth.validationStatus;
 					},
 					resolve:{
-						profileDetails:["$http","$stateParams","authenticate","$q","chatService",
-						function($http,$stateParams,authenticate,$q,chatService){
+						profileDetails:["$http","$stateParams","authenticate","$q",
+						function($http,$stateParams,authenticate,$q){
 							var defer=$q.defer();
 							$http.post("api/userdetails/",{username:$stateParams.username})
 							.success(function(res){
 								if(res.code != 404){
-										chatService.joinMe();
 										defer.resolve(res);
 								}
 								else{
@@ -98,11 +92,10 @@ define(["angular","angularRoute","config","angularMessages","angularPrimus","ang
 				}
 			);
 
-		console.log(config);
 		primusProvider
 		.setEndpoint(
-			config.protocol+"//"
-			+config.hostname
+			config.protocol+"//"+
+			config.host
 			+(config.port?(":"+config.port):(""))+"/primus"
 			)
 		.setOptions({
@@ -126,7 +119,7 @@ define(["angular","angularRoute","config","angularMessages","angularPrimus","ang
 	"$http",
 	"authenticate",
 	"themeFactory",
-	"chatService",
+	"sock",
 	"visor",
 	"$timeout",
 	function(
@@ -137,7 +130,7 @@ define(["angular","angularRoute","config","angularMessages","angularPrimus","ang
 		$http,
 		authenticate,
 		themeFactory,
-		chatService,
+		sock,
 		visor,
 		$timeout
 		){
@@ -153,12 +146,15 @@ define(["angular","angularRoute","config","angularMessages","angularPrimus","ang
 		// 		$rootScope.showLoading = false;
 		// });
 		//
-		// $rootScope.$on('$stateChangeError',function(event){
-		// 	if(visor.isAuthenticated())
-		// 	$state.go('profile',{username:visor.authData.username});
-		// 	else
-		// 	$state.go('welcome');
-		// });
+		$rootScope.$on('$stateChangeError',function(event){
+			if(visor.isAuthenticated())
+			$state.go('profile',{username:visor.authData.username});
+			else
+			$state.go('welcome');
+		});
+		sock.listen("authenticated",function(){
+			this.joinMe();
+		});
 
 		themeFactory.initTheme();
 		$rootScope.$on("$viewContentLoaded",function(){
