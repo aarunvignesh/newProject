@@ -123,7 +123,6 @@ var ctrl={
             if(received_data.otherDetails){
               user.otherDetails= received_data.otherDetails;
             }
-            console.log(user);
             var defer = updateUser.updateUser(user);
             defer.then(function(){
               res.send({code:200,success:"User detail updated"});

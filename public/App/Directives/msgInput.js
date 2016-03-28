@@ -4,8 +4,7 @@ define(["angular"],function(angular){
 			return {
 			    restrict:"E",
 			    replace:true,
-			    templateUrl:"./App/Views/msgGrid.html",
-					controller:"chatController",
+			    templateUrl:"./App/Views/msgInput.html",
 			    compile:function($scope,$elem,$attrs){
 
 			    }

@@ -1,7 +1,7 @@
 define(["angular"],function(){
-	var controller=["$scope","$http","authenticate","$state","chatService"
+	var controller=["$scope","$http","authenticate","$state","sock"
 	,"$timeout","$animateCss","$location","toastFactory","$mdDialog","visor",
-	function($scope,$http,authenticate,$state,chatService,$timeout,$animateCss,$location,toastFactory,$mdDialog,visor){
+	function($scope,$http,authenticate,$state,sock,$timeout,$animateCss,$location,toastFactory,$mdDialog,visor){
 
 		$scope.username="";
 
@@ -142,6 +142,7 @@ define(["angular"],function(){
 							visor.authData.isProfilepic = res.user.isProfilepicupdated;
 							visor.authData.validationStatus = res.user.verifiedEmail;
 							$state.go("profile",{username:$scope.username});
+							sock.emit("authenticated");
 					}
 					else{
 						if(res.code==420){

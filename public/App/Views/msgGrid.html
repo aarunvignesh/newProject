@@ -1,7 +1,91 @@
-<md-dialog>
-<md-dialog-content>
+<md-whiteframe class="md-whiteframe-3dp" flex layout="column" style="background:white;margin-top:25px;overflow:hidden;">
+    <div flex="10" layout="row" class="chat-panel-header md-primary">
+      <div flex="40" layout="row">
+        <md-input-container class="search-input-container" flex>
+            <label>Search</label>
+              <input type="text" ng-model="searchKeyword" aria-label="Search Keyword"/>
 
-    <h1>Shiva</h1>
+        </md-input-container>
+      </div>
+      <div flex="60" layout="row" layout-align="start center">
+          <span flex class="md-headline">MY HEADING<span>
+      </div>
+    </div>
+    <div layout="row" flex="90">
+    <!--Main Friend List-->
+    <div flex="40" layout="column">
+      <!--Friend Search-->
+      <!-- <div flex="10" layout="row" class="friends-panel-header">
 
-</md-dialog-content>
-</md-dialog>
+      </div> -->
+      <!--Friend List-->
+      <div flex layout="row" friendList perfectscroller>
+        <div flex="50" layout="column">
+        <div flex ng-repeat="friend in friendList | nameFilter : {name: searchKeyword}" ng-if="$even">
+           <md-card>
+              <img ng-src={{"./api/photos/"+friend.username+"/profile"}} class="md-card-image"/>
+              <md-card-title>
+                    <md-card-title-text>
+                        <span class="md-headline" ng-bind="friend.name | nameformatFilter : {length: 4}"></span>
+                    </md-card-title-text>
+              </md-card-title>
+              <md-card-actions></md-card-actions>
+          </md-card>
+          <span ng-if="$last">
+            <span ng-if="$index+1 !=lastupdateFriendlistScroll">
+              {{updateFriendlistScroll($index)}}
+            </span>
+          </span>
+        </div>
+      </div>
+      <div flex="50" layout="column">
+        <div flex ng-repeat="friend in friendList | nameFilter : { name: searchKeyword}" ng-if="$odd">
+          <md-card>
+             <img ng-src={{"./api/photos/"+friend.username+"/profile"}} class="md-card-image"/>
+             <md-card-title>
+                   <md-card-title-text>
+                       <span class="md-headline" ng-bind="friend.name | nameformatFilter : {length: 4}"></span>
+                   </md-card-title-text>
+             </md-card-title>
+             <md-card-actions></md-card-actions>
+         </md-card>
+         <span ng-if="$last">
+           <span ng-if="$index+1 !=lastupdateFriendlistScroll">
+           {{updateFriendlistScroll($index)}}
+         </span>
+         </span>
+        </div>
+      </div>
+      </div>
+    </div>
+    <!--Chat Panel-->
+    <div flex="60" layout="column">
+      <!--Chat Window-->
+        <div flex="90" layout="column" class="chat-window">
+              <!--Chat Window Header-->
+              <!-- <div flex="10" layout="row" layout-align="start center" layout-padding class="chat-header">
+
+              </div> -->
+              <!--Chat Mesage Window-->
+              <div flex class="chat-message-window"></div>
+        </div>
+        <!--Chat Input-->
+        <div flex="10" layout="row">
+              <div flex-lg="70" flex-md="60" flex-sm="60" layout="column" class="chat-input-container md-body-1" perfectscroller>
+                  <msg-input flex></msg-input>
+              </div>
+              <div flex-lg="30" flex-md="40" flex-sm="40" layout="row">
+                  <md-button aria-label="send" class="md-raised md-primary md-hue-1 md-fab md-mini" ng-click="">
+                      <md-icon md-svg-icon="send"></md-icon>
+                  </md-button>
+                  <md-button aria-label="emoji" class="md-raised md-accent md-hue-1 md-fab md-mini" ng-click="">
+                      <md-icon md-svg-icon="reddit"></md-icon>
+                  </md-button>
+                  <md-button aria-label="send-file" class="md-raised md-accent md-hue-2 md-fab md-mini" ng-click="">
+                      <md-icon md-svg-icon="file-send"></md-icon>
+                  </md-button>
+              </div>
+        </div>
+    </div>
+  </div>
+</md-whiteframe>
