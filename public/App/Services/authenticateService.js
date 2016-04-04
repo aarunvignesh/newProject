@@ -199,6 +199,10 @@ define(["angular"],function(){
 			var deferUser=$q.defer();
 			$http.post("/logout",{id:scope.userDetails.id}).success(function(res){
 				if(res.status){
+					if(visor.authData.validationStatus){
+							sock.send('user:logout');
+							$rootScope.connectionEstablished=null;
+					}
 					scope.userDetails={};
 					visor.setAuthenticated(null);
 					$rootScope.loginPage=true;

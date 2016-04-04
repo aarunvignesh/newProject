@@ -3,7 +3,7 @@ var schema=mongo.Schema({
 	email:String,
 	password:String,
 	username:String,
-	socketId:String,
+	socketId:[String],
 	name:String,
 	verifiedEmail:Boolean,
 	randomEmailValidationText:String,

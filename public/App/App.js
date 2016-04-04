@@ -153,7 +153,9 @@ define(["angular","angularRoute","config","angularMessages","angularPrimus","ang
 			$state.go('welcome');
 		});
 		sock.listen("authenticated",function(){
-			this.joinMe();
+			if(visor.authData.validationStatus){
+				this.joinMe();
+			}
 		});
 
 		themeFactory.initTheme();

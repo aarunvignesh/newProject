@@ -4,6 +4,9 @@ var updateUser=require("./../lib/UpdateUser")();
 
 var rndGenerate=require("./../Shared/rndTxtgenerate");
 
+
+ require("./../lib/UpdateMulti")().updateUsers({},{$set:{socketId:[]}});
+
 var ctrl={
 	templateThrower:function(req,res){
 		switch(req.params.needTemplate){

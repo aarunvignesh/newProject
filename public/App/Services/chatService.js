@@ -24,6 +24,7 @@ define(["angular","primus"],function(){
 				options = options || {} ;
 				options.username = visor.authData.username ;
 				options.id = visor.authData.id;
+				console.log("Socket: "+eventname);
 				primus.send(eventname,options);
 		};
 
