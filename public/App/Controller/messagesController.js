@@ -4,7 +4,14 @@ define(["angular"],function(){
 
 		var userName = visor.authData.username;
 
+		$scope.senderDetails = {};
+
 		$scope.userFirstname = visor.authData.name.toUpperCase();
+
+		$scope.changeSenderdetails = function(senderInfo){
+				$scope.senderDetails.username = senderInfo.username;
+				$scope.senderDetails.name = senderInfo.name;
+		};
 
 		$scope.gotoProfile=function(){
 			$state.go("profile",{username:userName});

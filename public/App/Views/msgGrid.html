@@ -8,7 +8,7 @@
         </md-input-container>
       </div>
       <div flex="60" layout="row" layout-align="start center">
-          <span flex class="md-headline">MY HEADING<span>
+          <span flex class="md-headline" ng-bind="senderDetails.name || 'Messenger'"><span>
       </div>
     </div>
     <div layout="row" flex="90">
@@ -22,7 +22,7 @@
       <div flex layout="row" friendList perfectscroller>
         <div flex="50" layout="column">
         <div flex ng-repeat="friend in friendList | nameFilter : {name: searchKeyword}" ng-if="$even">
-           <md-card>
+           <md-card ng-click="changeSenderdetails(friend)">
               <img ng-src={{"./api/photos/"+friend.username+"/profile"}} class="md-card-image"/>
               <md-card-title>
                     <md-card-title-text>
@@ -40,7 +40,7 @@
       </div>
       <div flex="50" layout="column">
         <div flex ng-repeat="friend in friendList | nameFilter : { name: searchKeyword}" ng-if="$odd">
-          <md-card>
+          <md-card ng-click="changeSenderdetails(friend)">
              <img ng-src={{"./api/photos/"+friend.username+"/profile"}} class="md-card-image"/>
              <md-card-title>
                    <md-card-title-text>
@@ -61,7 +61,7 @@
     <!--Chat Panel-->
     <div flex="60" layout="column">
       <!--Chat Window-->
-        <div flex="90" layout="column" class="chat-window">
+        <div flex="90" layout="column" ng-class="{'chat-window':senderDetails.username}">
               <!--Chat Window Header-->
               <!-- <div flex="10" layout="row" layout-align="start center" layout-padding class="chat-header">
 
@@ -70,7 +70,7 @@
               <div flex class="chat-message-window"></div>
         </div>
         <!--Chat Input-->
-        <div flex="10" layout="row">
+        <div flex="10" layout="row" ng-hide="!senderDetails.username">
               <div flex-lg="70" flex-md="60" flex-sm="60" layout="column" class="chat-input-container md-body-1" perfectscroller>
                   <msg-input flex></msg-input>
               </div>
