@@ -17,6 +17,7 @@ require.config({
 		angularMessages:"./../libs/angular-messages/angular-messages.min",
 		visor:"./../libs/visor/release/visor.min",
 		primus:"./../Scripts/primusClient",
+		ngSanitize: "./../libs/angular-sanitize/angular-sanitize",
     config:"./../Config/config"
 
 	},

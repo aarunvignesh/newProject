@@ -23,7 +23,7 @@ define(["angular","primus"],function(){
 		this.send = function(eventname,options){
 				options = options || {} ;
 				options.username = visor.authData.username ;
-				options.id = visor.authData.id;
+				options.userid = visor.authData.id;
 				console.log("Socket: "+eventname);
 				primus.send(eventname,options);
 		};

@@ -67,7 +67,16 @@
 
               </div> -->
               <!--Chat Mesage Window-->
-              <div flex class="chat-message-window"></div>
+              <div flex class="chat-message-window">
+                    <div ng-if="receivePanel[senderDetails.username]" layout-padding layout="row" ng-repeat="message in receivePanel[senderDetails.username]" flex="100">
+                        <div ng-if="message.from == senderUsername" flex="50"></div>
+                        <div flex="50">
+                          <div class="bubble" ng-class="{'right':message.from == senderUsername,'left': message.from != senderUsername}" ng-bind-html="message.message">
+
+                          </div>
+                        </div>
+                    </div>
+              </div>
         </div>
         <!--Chat Input-->
         <div flex="10" layout="row" ng-hide="!senderDetails.username">
@@ -75,7 +84,7 @@
                   <msg-input flex></msg-input>
               </div>
               <div flex-lg="30" flex-md="40" flex-sm="40" layout="row">
-                  <md-button aria-label="send" class="md-raised md-primary md-hue-1 md-fab md-mini" ng-click="">
+                  <md-button ng-click="sendMsg()" aria-label="send" class="md-raised md-primary md-hue-1 md-fab md-mini" ng-click="">
                       <md-icon md-svg-icon="send"></md-icon>
                   </md-button>
                   <md-button aria-label="emoji" class="md-raised md-accent md-hue-1 md-fab md-mini" ng-click="">

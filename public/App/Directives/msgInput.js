@@ -5,10 +5,24 @@ define(["angular"],function(angular){
 			    restrict:"E",
 			    replace:true,
 			    templateUrl:"./App/Views/msgInput.html",
-			    compile:function($scope,$elem,$attrs){
+					require:"?ngModel",
+			    link:function($scope,$elem,$attrs,ngModel){
 
-			    }
-			}
+						if(ngModel){
+							ngModel.$render = function(){
+								$elem.html(ngModel.$viewValue || "");
+							};
+							$elem.on('blur keyup change keypress',function() {
+								$scope.$apply(read);
+							});
+							function read(){
+								var html = $elem.html();
+								ngModel.$setViewValue(html);
+							};
+							read();
+						}
+			  }
+			};
 		}];
 
 		return directive;

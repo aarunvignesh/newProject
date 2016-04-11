@@ -1,7 +1,7 @@
 
-define(["angular","angularRoute","config","angularMessages","angularPrimus","angularMaterial","ngFx","ngFlow","visor","./Controller/index","./Services/index","./Factory/index","./Directives/index","./Filter/index"],
-	function(angular,angularRoute,config,angularMessages,angularPrimus,angularMaterial,ngFx,ngFlow,visor,controller,services,factory,directives,filter){
-	var app=angular.module("newApp",["ui.router","ngMessages","primus","ngMaterial","ngAnimate","ngFx","flow","visor"])
+define(["angular","angularRoute","config","angularMessages","angularPrimus","angularMaterial","ngFx","ngFlow","visor","ngSanitize","./Controller/index","./Services/index","./Factory/index","./Directives/index","./Filter/index"],
+	function(angular,angularRoute,config,angularMessages,angularPrimus,angularMaterial,ngFx,ngFlow,visor,ngSanitize,controller,services,factory,directives,filter){
+	var app=angular.module("newApp",["ui.router","ngMessages","primus","ngMaterial","ngAnimate","ngFx","flow","visor","ngSanitize"])
 
 	.config(["$stateProvider","primusProvider","$mdThemingProvider","$urlRouterProvider","$mdIconProvider","visorProvider",
 		function($stateProvider,primusProvider,$mdThemingProvider

@@ -17,7 +17,9 @@ var schema=mongo.Schema({
 	// 	friends:"string",
 	// 	friendsCount:"integer"
 	// },
-	otherDetails:Object
+	otherDetails:Object,
+	friendRequestqueue:[Object],
+	friendList : [Object]
 });
 schema.methods.validPassword=function(password){
 	if(password==this.password){
