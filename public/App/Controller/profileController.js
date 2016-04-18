@@ -92,8 +92,9 @@ define(["angular"],function(){
 		$scope.setProfiledetailScroller = function(setter){
 			if(setter)
 			{
-
-				angular.element(".profilescrollersetter").perfectScrollbar();
+				$timeout(function() {
+					angular.element(".profilescrollersetter").perfectScrollbar();
+				});
 			}
 			else{
 				$timeout(function() {
@@ -104,7 +105,7 @@ define(["angular"],function(){
 
 		};
 
-		$scope.setProfiledetailScroller(true);
+		
 
 		$scope.openSettings=function(){
 
@@ -149,8 +150,22 @@ define(["angular"],function(){
 
 		$scope.$on("$viewContentLoaded",function(){
 				backgroundFactory.setProfilePhoto(angular.element("#profileImagepanel"),$scope.profileUserDetails.username);
+				$scope.setProfiledetailScroller(true);
 		});
 
+
+		$scope.sendfriendRequest = function(){
+			var requestObj = {
+				requestor: {},
+				requested:{}
+			};
+			requestObj.requestor.username =  	visor.authData.username;
+			requestObj.requestor.id = visor.authData.id;
+			requestObj.requested.username = 	$scope.profileUserDetails.username;	
+			requestObj.requested.id = 	$scope.profileUserDetails.id;	
+			console.log(requestObj);
+			console.log($scope.profileUserDetails);
+		};
 
 		//Search Methods
 

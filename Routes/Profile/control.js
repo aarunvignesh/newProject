@@ -52,8 +52,17 @@ var ctrl={
 						res.send({success:"admin user",code:200});
 					}
 					else{
-
-						res.send({success:"foreign details",user:user[0],req:req.user,code:202});
+						var userObj = {};
+						userObj.username = user[0].username;
+						userObj.name = user[0].name;
+						userObj.otherDetails = user[0].otherDetails;
+						userObj.id = user[0]._id;
+						userObj.username = user[0].username;
+						userObj.isCoverpicupdated = user[0].isCoverpicupdated;
+						userObj.isProfilepicupdated = user[0].isProfilepicupdated;
+						userObj.friendList = user[0].friendList;
+						userObj.friendRequestqueue = user[0].friendRequestqueue;
+						res.send({success:"foreign details",user:userObj,req:req.user,code:202});
 					}
 				}
 				else{
