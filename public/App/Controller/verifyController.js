@@ -141,6 +141,9 @@ define(["angular"],function(){
 							visor.authData.isCoverpic = res.user.isCoverpicupdated;
 							visor.authData.isProfilepic = res.user.isProfilepicupdated;
 							visor.authData.validationStatus = res.user.verifiedEmail;
+							visor.authData.friendList = [];
+							visor.authData.friendRequestrecievequeue = [];
+							visor.authData.friendRequestsentqueue = [];
 							$state.go("profile",{username:$scope.username});
 							sock.emit("authenticated");
 					}

@@ -3,7 +3,6 @@ var schema=mongo.Schema({
 	email:String,
 	password:String,
 	username:String,
-	socketId:[String],
 	name:String,
 	verifiedEmail:Boolean,
 	randomEmailValidationText:String,
@@ -18,8 +17,9 @@ var schema=mongo.Schema({
 	// 	friendsCount:"integer"
 	// },
 	otherDetails:Object,
-	friendRequestqueue:[Object],
-	friendList : [Object]
+	friendRequestrecievequeue:[{id:String,username:String}],
+	friendRequestsentqueue:[{id:String,username:String}],
+	friendList : [{id:String,username:String}]
 });
 schema.methods.validPassword=function(password){
 	if(password==this.password){

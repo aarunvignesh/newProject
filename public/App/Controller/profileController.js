@@ -1,9 +1,9 @@
 define(["angular"],function(){
 	var controller=["$scope","$q","$http","authenticate","$state","profileDetails"
-	,"$timeout","$mdSidenav","$mdDialog","backgroundFactory","visor",
+	,"$timeout","$mdSidenav","$mdDialog","backgroundFactory","visor","toastFactory",
 
 	function($scope,$q,$http,authenticate,$state,profileDetails,$timeout
-		,$mdSidenav,$mdDialog,backgroundFactory,visor){
+		,$mdSidenav,$mdDialog,backgroundFactory,visor,toastFactory){
 		$scope.adminUser=false;
 
 		$scope.curr_username = visor.authData.username;
@@ -86,8 +86,56 @@ define(["angular"],function(){
 			backgroundFactory.setCoverPhoto(angular.element("#mainProfilepanel"),$scope.profileUserDetails.username);
 		//}
 
+		var filterRelation = function(username){
+			var Friends = visor.authData.friendList.filter(function(val,index){
+				return val.username == username;
+			});
+			
+			if(Friends.length){
+				return "FRIEND"
+			}
 
+			var wantstobeFriend = visor.authData.friendRequestrecievequeue.filter(function(val,index){
+				return val.username == username;
+			});
+			
+			if(wantstobeFriend.length){
+				return "WANTS_TO_BE_FRIEND_WITH_ME";
+			}
 
+			var iwanttobeFriend = visor.authData.friendRequestsentqueue.filter(function(val,index){
+				return val.username == username;
+			});
+
+			if(iwanttobeFriend.length){
+				return "I_WANT_TO_BE_FRIEND"
+			}
+		};
+
+		var findFriend = function(){
+			$scope.myFriend = false;
+			$scope.friendRequested = false;
+			$scope.friendRequestsent = false;
+			switch(filterRelation($scope.profileUserDetails.username)){
+				case "FRIEND":
+					$scope.myFriend = true;
+					break;
+				case "WANTS_TO_BE_FRIEND_WITH_ME":
+					$scope.friendRequested = true;
+					break;
+				case "I_WANT_TO_BE_FRIEND":
+					$scope.friendRequestsent = true;			
+					break;
+				default:
+					$scope.myFriend = false;
+					$scope.friendRequested = false;
+					$scope.friendRequestsent = false;	
+			}
+		};
+
+		if(!$scope.adminUser){
+			findFriend();
+		}
 
 		$scope.setProfiledetailScroller = function(setter){
 			if(setter)
@@ -159,12 +207,47 @@ define(["angular"],function(){
 				requestor: {},
 				requested:{}
 			};
-			requestObj.requestor.username =  	visor.authData.username;
-			requestObj.requestor.id = visor.authData.id;
-			requestObj.requested.username = 	$scope.profileUserDetails.username;	
-			requestObj.requested.id = 	$scope.profileUserDetails.id;	
-			console.log(requestObj);
-			console.log($scope.profileUserDetails);
+			requestObj.requestor.username 	=  	visor.authData.username;
+			requestObj.requestor.id 		= 	visor.authData.id;
+			requestObj.requested.username 	= 	$scope.profileUserDetails.username;	
+			requestObj.requested.id 		= 	$scope.profileUserDetails.id;	
+			$http.post("/api/friendRequest",requestObj).success(function(res){
+				if(res.code == 200){
+					toastFactory.showToast(res.success);
+					visor.authData.friendRequestsentqueue.push(requestObj.requested);
+					findFriend();
+				}
+				else{
+					toastFactory.showWarnToast(res.err);
+				}
+			}).error(function(){
+				toastFactory.showWarnToast("Facing new issue will recover soon...");
+			});
+		};
+
+		$scope.acceptfriendRequest = function(){
+			var obj = {
+				acceptor:{},
+				requestor:{}
+			};
+			obj.acceptor.username  	=  	visor.authData.username;
+			obj.acceptor.id 		=	visor.authData.id;
+			obj.requestor.username 	=	$scope.profileUserDetails.username;
+			obj.requestor.id 		=	$scope.profileUserDetails.id;
+
+			$http.post("/api/acceptRequest",obj).success(function(res){
+				if(res.code == 200){
+					toastFactory.showToast(res.success);
+					visor.authData.friendList.push(obj.requestor);
+					findFriend();
+				}
+				else{
+					toastFactory.showWarnToast(res.err);
+				}
+			}).error(function(){
+				toastFactory.showWarnToast("Facing new issue will recover soon...");
+			});
+
 		};
 
 		//Search Methods

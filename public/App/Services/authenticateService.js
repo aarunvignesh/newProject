@@ -13,6 +13,9 @@ define(["angular"],function(){
 						scope.userDetails.username= res.username;
 						scope.userDetails.isProfilepic = res.isProfilepic;
 						scope.userDetails.isCoverpic = res.isCoverpic;
+						scope.userDetails.friendList = res.friendList;
+						scope.userDetails.friendRequestrecievequeue = res.friendRequestrecievequeue;
+						scope.userDetails.friendRequestsentqueue = res.friendRequestsentqueue;
 						if(res.otherDetails){
 							scope.userDetails.otherDetails = res.otherDetails;
 							if(scope.userDetails.otherDetails.born){
@@ -34,7 +37,6 @@ define(["angular"],function(){
 							return null;
 						}
 					}).error(function(err){
-						console.log("In visor authentication");
 						return null;
 					});
 
@@ -55,6 +57,9 @@ define(["angular"],function(){
 					scope.userDetails.username = res.username;
 					scope.userDetails.isProfilepic = res.isProfilepic;
 					scope.userDetails.isCoverpic = res.isCoverpic;
+					scope.userDetails.friendList = res.friendList;
+					scope.userDetails.friendRequestrecievequeue = res.friendRequestrecievequeue;
+					scope.userDetails.friendRequestsentqueue = res.friendRequestsentqueue;
 					if(res.otherDetails){
 						scope.userDetails.otherDetails = res.otherDetails;
 						if(scope.userDetails.otherDetails.born){
