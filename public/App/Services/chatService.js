@@ -1,5 +1,6 @@
 define(["angular","primus"],function(){
-	var chatService=["primus","$rootScope","visor",function(primus,$rootScope,visor){
+	var chatService=["primus","$rootScope","visor",
+	function(primus,$rootScope,visor){
 		var eventQueue = {};
 
 		this.listen = function(eventname,callback){

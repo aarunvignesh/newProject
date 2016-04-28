@@ -1,4 +1,4 @@
-var socketServer = require("./../mainSocket").getSocketserver(),
+var socketServer = require("./../mainSocket"),
   userController = require("./../../../lib/User")(),
   updateUser = require("./../../../lib/UpdateUser")(),
   socketDirectory = require("./../socketDirectory");
@@ -6,6 +6,7 @@ var socketServer = require("./../mainSocket").getSocketserver(),
 module.exports =  {
 
   receiveMessage : function(spark,msg){
+    socketServer = socketServer.getSocketserver();
       var senderIds = socketDirectory.getuserByusername(msg.to);
       senderIds.forEach(function(senderId){
         var sendWrapper = {};
@@ -21,8 +22,20 @@ module.exports =  {
             console.log("User Not online");
         }
       });
-      userController.findById({id:msg.userid},function(err,user){
-          
+      
+  },
+  sendNotification : function(sockets,msg){
+      
+      socketServer = socketServer.getSocketserver();
+       sockets.forEach(function(senderId){
+
+        var sender = socketServer.spark(senderId);
+        if(sender){
+            socketServer.spark(senderId).send("notification",msg);
+        }
+        else{
+            console.log("User Not online");
+        }
       });
   }
 

@@ -122,6 +122,7 @@ define(["angular","angularRoute","config","angularMessages","angularPrimus","ang
 	"sock",
 	"visor",
 	"$timeout",
+	"notificationFactory",
 	function(
 		$state,
 		$log,
@@ -132,7 +133,8 @@ define(["angular","angularRoute","config","angularMessages","angularPrimus","ang
 		themeFactory,
 		sock,
 		visor,
-		$timeout
+		$timeout,
+		notificationFactory
 		){
 
 		$rootScope.loginPage=true;
@@ -152,9 +154,11 @@ define(["angular","angularRoute","config","angularMessages","angularPrimus","ang
 			else
 			$state.go('welcome');
 		});
+		
 		sock.listen("authenticated",function(){
 			if(visor.authData.validationStatus){
 				this.joinMe();
+				notificationFactory.initialize();
 			}
 		});
 
