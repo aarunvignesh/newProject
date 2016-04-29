@@ -51,20 +51,20 @@ var upload = multer({ storage : receiveConfig}).single('file');
 var ctrl={
 	createFriendRequest: function(req,res){
 		var obj = req.body || {};
-		// if(obj.requestor && obj.requested){
-		// 	User.userById({id:obj.requested.id},function(err,requestedUser){
-		// 		if(requestedUser){
+		if(obj.requestor && obj.requested){
+			User.userById({id:obj.requested.id},function(err,requestedUser){
+				if(requestedUser){
 
-		// 			//requestedUser.friendRequestrecievequeue = requestedUser.friendRequestrecievequeue || [];
-		// 			requestedUser.friendRequestrecievequeue.push(obj.requestor);
-		//			obj.requested.name = requestedUser.name;
-		// 			updateUser.updateUser(requestedUser).then(function(){
-		// 					User.userById({id:obj.requestor.id},function(err,requestorUser){
-		// 						if(requestorUser){
-		// 							//requestorUser.friendRequestsentqueue = requestorUser.friendRequestsentqueue || [];
-		//							obj.requestor.name = requestorUser.name;
-		// 							requestorUser.friendRequestsentqueue.push(obj.requested);
-		// 							updateUser.updateUser(requestorUser).then(function(){
+					//requestedUser.friendRequestrecievequeue = requestedUser.friendRequestrecievequeue || [];
+					requestedUser.friendRequestrecievequeue.push(obj.requestor);
+					obj.requested.name = requestedUser.name;
+					updateUser.updateUser(requestedUser).then(function(){
+							User.userById({id:obj.requestor.id},function(err,requestorUser){
+								if(requestorUser){
+									//requestorUser.friendRequestsentqueue = requestorUser.friendRequestsentqueue || [];
+									obj.requestor.name = requestorUser.name;
+									requestorUser.friendRequestsentqueue.push(obj.requested);
+									updateUser.updateUser(requestorUser).then(function(){
 										var recUsersocket = socket_dir.getuserByusername(obj.requested.username);
 
 										if(recUsersocket.length>0){
@@ -76,25 +76,25 @@ var ctrl={
 											require("./../../Shared/Socket/Chat/message").sendNotification(recUsersocket,sendObject);
 										}
 									res.send({code:200,success:"Friend request is successfully raised..."});
-			// 						},function(){
+									},function(){
 
-			// 							res.send({err:"Facing new issue will recover soon....",code:404})
-			// 						})
-			// 					}
-			// 					else{
-			// 						res.send({err:"Facing new issue will recover soon....",code:404});
-			// 					}
-			// 				});
-			// 			},
-			// 			function(){
-			// 				res.send({err:"Facing New Issue will Recover Soon....",code:404});
-			// 			});
-			// 	}
-			// 	else{
-			// 		res.send({err:"Facing new issue will recover soon....",code:404});	
-			// 	}
-			// });
-		//}
+										res.send({err:"Facing new issue will recover soon....",code:404})
+									})
+								}
+								else{
+									res.send({err:"Facing new issue will recover soon....",code:404});
+								}
+							});
+						},
+						function(){
+							res.send({err:"Facing New Issue will Recover Soon....",code:404});
+						});
+				}
+				else{
+					res.send({err:"Facing new issue will recover soon....",code:404});	
+				}
+			});
+		}
 		
 	},
 	acceptFriendrequest: function(req,res){

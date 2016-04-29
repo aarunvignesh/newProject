@@ -1,11 +1,15 @@
 define(["angular"],function(angular){
-	var notificationFn=["sock",function(sock){
+	var notificationFn=["sock","toastFactory","visor",function(sock,toastFactory,visor){
 		var notification={
 			initialize:function(){
-				console.log(">>>>>Shiva Initialized<<<<<<")
 				sock.receive("notification",function(msg){
-					console.log(">>>>>Shiva Msg Received<<<<<<")
-					console.log(msg);
+					switch(msg.type){
+						case "FRIEND_REQUEST":
+							toastFactory.showToast(msg.requestor.name+" wants to be your friend ");
+							visor.authData.friendRequestrecievequeue.push({id:msg.requestor.id,username:msg.requestor.username});
+						break;
+						default:	
+					}
 				});
 			}
 		};

@@ -1,4 +1,4 @@
-var socketServer = require("./../mainSocket"),
+var socketServerobj = require("./../mainSocket"),
   userController = require("./../../../lib/User")(),
   updateUser = require("./../../../lib/UpdateUser")(),
   socketDirectory = require("./../socketDirectory");
@@ -6,7 +6,7 @@ var socketServer = require("./../mainSocket"),
 module.exports =  {
 
   receiveMessage : function(spark,msg){
-    socketServer = socketServer.getSocketserver();
+    socketServer = socketServerobj.getSocketserver();
       var senderIds = socketDirectory.getuserByusername(msg.to);
       senderIds.forEach(function(senderId){
         var sendWrapper = {};
@@ -26,7 +26,7 @@ module.exports =  {
   },
   sendNotification : function(sockets,msg){
       
-      socketServer = socketServer.getSocketserver();
+      socketServer = socketServerobj.getSocketserver();
        sockets.forEach(function(senderId){
 
         var sender = socketServer.spark(senderId);
