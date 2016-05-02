@@ -2,7 +2,6 @@ define(["angular"],function(angular){
 	var controller = ["$scope","$http",function($scope,$http){
     $scope.friendList = [];
     $http.get("/api/getFriends").success(function(res) {
-
      $scope.friendList = res.filter(function(val){
 				return val.username != undefined;
 			});

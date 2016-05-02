@@ -1,9 +1,9 @@
 define(["angular"],function(){
 	var controller=["$scope","$q","$http","authenticate","$state","profileDetails"
-	,"$timeout","$mdSidenav","$mdDialog","backgroundFactory","visor","toastFactory",
-
+	,"$timeout","$mdSidenav","$mdDialog","backgroundFactory","visor","toastFactory"
+	,"sock",
 	function($scope,$q,$http,authenticate,$state,profileDetails,$timeout
-		,$mdSidenav,$mdDialog,backgroundFactory,visor,toastFactory){
+		,$mdSidenav,$mdDialog,backgroundFactory,visor,toastFactory,sock){
 		$scope.adminUser=false;
 
 		$scope.curr_username = visor.authData.username;
@@ -249,6 +249,16 @@ define(["angular"],function(){
 			});
 
 		};
+
+		sock.listen("notification:friendRequest",function(msg){
+			if(msg.id == $scope.profileUserDetails.id){
+				findFriend();
+			}
+		});
+
+		$scope.$on("$destroy",function(){
+			sock.unbind("notification:friendRequest");
+		});
 
 		//Search Methods
 

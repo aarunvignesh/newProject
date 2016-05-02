@@ -13,6 +13,15 @@ define(["angular","primus"],function(){
 			}
 		};
 
+		this.unbind = function(eventname){
+			if(eventname){
+
+				if(eventQueue[eventname]){
+					delete eventQueue[eventname];
+				}
+			}
+		};
+
 		this.emit = function(eventname,options){
 			if(eventQueue[eventname]){
 				for(var i=0;i<eventQueue[eventname].length;i++){
