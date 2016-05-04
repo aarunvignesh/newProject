@@ -32,11 +32,11 @@
     "perfect-scrollbar": "~0.6.10",
     "moment": "~2.11.1",
     "visor": "~0.1.2",
-    "angular-sanitize": "~1.5.3",
+    "angular-sanitize": "~1.5.5",
     "angular-emoji": "angular-emoji-filter#~0.0.2"
   },
   "resolutions": {
-    "angular": "1.5.3",
+    "angular": "1.5.5",
     "angular-animate": "~1.5.0"
   }
 }

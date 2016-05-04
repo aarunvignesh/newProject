@@ -78,6 +78,9 @@ require.config({
 		},
 		perfectScroll:{
 			deps:["jquery"]
+		},
+		ngSanitize:{
+			deps:["angular"]
 		}
 	},
 	deps:["App"]
