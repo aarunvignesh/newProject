@@ -1,13 +1,14 @@
 var user=require("./../Schema/User");
 var deferProvider=require("q");
 var data={
-	updateUser:function(args){
+	updateAlluser:function(match,args){
 		var defer=deferProvider.defer();
-		user.update({_id:args._id},args,function(err,user){
+		user.update(match,args,{multi:true},function(err,user){
 			if(err){
 				defer.reject({err:"Error Occured"});
 			}
 			else{
+        console.log(user);
 				defer.resolve(user);
 			}
 		});

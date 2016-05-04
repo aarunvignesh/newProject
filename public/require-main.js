@@ -21,6 +21,7 @@ require.config({
 		perfectScroll:"./../libs/perfect-scrollbar/js/perfect-scrollbar.jquery",
 		angularMessages:"./../libs/angular-messages/angular-messages",
 		visor:"./../libs/visor/release/visor",
+		ngSanitize: "./../libs/angular-sanitize/angular-sanitize",
     config:"./../Config/config"
 	},
 	shim:{
@@ -32,6 +33,9 @@ require.config({
 		},
 		moment:{
 			exports:"moment"
+		},
+		ngSanitize:{
+			deps:["angular"]
 		},
 		visor:{
 			deps:["angular","angularRoute"]

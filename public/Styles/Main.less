@@ -158,6 +158,43 @@ html{
   .chat-message-window{
     border-bottom: 1px solid #89B9DA;
   }
+
+.bubble {
+  position: relative;
+  padding: 20px;
+  background: #ADB400;
+  color:white;
+}
+
+.bubble.left{
+  background: #7986CB;
+}
+
+.bubble.left:after{
+    left:-20px;
+    border-color: transparent #7986CB;
+    border-width:0px 25px 25px 0;
+}
+
+.bubble.right{
+  background: rgb(255, 128, 171);
+}
+
+.bubble.right:after{
+   right:-20px;
+   border-color: transparent rgb(255, 128, 171);
+   border-width:0px 0px 25px 25px;
+}
+
+.bubble:after {
+    content: "";
+    position: absolute;
+    top: 0px;
+    border-style: solid;
+    display: block;
+    width: 0;
+    z-index: 1;
+  }
 }
 
 

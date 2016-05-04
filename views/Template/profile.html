@@ -83,53 +83,78 @@
 
     				</div>
     				<div hide-sm flex></div>
-    				<div class="profileDetailBtnCntr" flex-lg="20" flex-md="40" flex-sm layout="row" layout-align="center center">
-    					<md-menu md-offset="0 -7">
-				          <md-button aria-label="user details" class="md-fab md-primary" ng-click="$mdOpenMenu($event);setProfiledetailScroller(false);">
-				            <md-icon md-svg-icon="account"></md-icon>
-				          </md-button>
-				          <md-menu-content layout="column" width="6" class="profile-menu">
-				          <!-- <perfect-scrollbar layout-container layout-padding class="scroller" wheel-propagation="true" wheel-speed="10" min-scrollbar-length="20"> -->
-				           	 <md-whiteframe layout-padding class="md-whiteframe-1dp profilescrollersetter" layout-container layout-align="center center">
-				           	 	<div layout="column"  ng-if="profileDetailKeys.length>0" ng-repeat="key in profileDetailKeys">
-				           	 	<div layout="row">
-							     <div flex="20" layout="row">
-							     	<md-icon class="icon-color" md-svg-icon="{{detailTemplate[key].icon}}"></md-icon>
-							     </div>
-							     <div flex="80" layout="column">
-							     	<div class="profile-details-title">
-							     		<h4 class="no-margin">{{detailTemplate[key].title}}</h4>
-							     	</div>
-							     	<div class="profile-details">
-							     		{{(profileUserDetails.otherDetails[key].name) || (profileUserDetails.otherDetails[key].type) || (profileUserDetails.otherDetails[key].date | momentFilter)}}
-							     	</div>
-					           	</div>
-					           	</div>
-							     <md-divider ng-if="!$last"></md-divider>
-					           	</div>
-					           	<div class="empty-placehoder" layout="column" ng-focus="$event.preventDefault();" ng-click="adminUser ? openSettings() : javascript.void(0);" ng-if="profileDetailKeys.length==0">
-				           	 	<div layout="row">
-							     <div flex="20" layout="row">
-							  		 <md-icon class="icon-color" md-svg-icon="{{adminUser?'settings':'account'}}"></md-icon>
-							     </div>
-							     <div flex="80" layout="column"  class="profile-details">
-							     	<h4 ng-if="adminUser">
-							     	We need to know more about you. Update us under profile tab in settings.
-							     	</h4>
-							     	<h4 ng-if="!adminUser">
-							     	{{profileUserDetails.name}} hasn't shared details with us.
-							     	</h4>
-					           	</div>
-					           	</div>
-					           	</div>
+    				<div class="profileDetailBtnCntr" flex-lg="20" flex-md="40" flex-sm layout="row" layout-align="end end">
+    					<!-- <md-content layout="row" layout-align="center center"> -->
+    				
+				       <md-fab-speed-dial md-open="demo" md-direction="up" class="md-scale">
+					        <md-fab-trigger>
+					          <md-button aria-label="menu" class="md-fab" ng-class="{'md-primary' :(!friendRequested && !friendRequestsent) ,'md-warn':(friendRequested || friendRequestsent)}">
+					            <md-icon md-svg-icon="{{(!myFriend && !friendRequested && !friendRequestsent) ? 'account' : (myFriend ? 'account-check' : 'account-alert')}}"></md-icon>
+					          </md-button>
 
-							  </md-whiteframe>
-							<!-- </perfect-scrollbar> -->
-				          </md-menu-content>
-				        </md-menu>
-				        <md-button aria-label="user details" class="md-fab md-primary" ng-click="$mdOpenMenu($event)">
-				            <md-icon md-svg-icon="close"></md-icon>
-				         </md-button>
+					        </md-fab-trigger>
+					        <md-fab-actions>
+
+					        	<md-menu md-offset="0 -7">
+							          <md-button aria-label="user details" class="md-fab md-raised md-mini" ng-click="$mdOpenMenu($event);setProfiledetailScroller(false);">
+							            <md-icon md-svg-icon="account"></md-icon>
+							          </md-button>
+							          <md-menu-content layout="column" width="6" class="profile-menu">
+							          <!-- <perfect-scrollbar layout-container layout-padding class="scroller" wheel-propagation="true" wheel-speed="10" min-scrollbar-length="20"> -->
+							           	 <md-whiteframe layout-padding class="md-whiteframe-1dp profilescrollersetter" layout-container layout-align="center center">
+							           	 	<div layout="column"  ng-if="profileDetailKeys.length>0" ng-repeat="key in profileDetailKeys">
+							           	 	<div layout="row">
+										     <div flex="20" layout="row">
+										     	<md-icon class="icon-color" md-svg-icon="{{detailTemplate[key].icon}}"></md-icon>
+										     </div>
+										     <div flex="80" layout="column">
+										     	<div class="profile-details-title">
+										     		<h4 class="no-margin">{{detailTemplate[key].title}}</h4>
+										     	</div>
+										     	<div class="profile-details">
+										     		{{(profileUserDetails.otherDetails[key].name) || (profileUserDetails.otherDetails[key].type) || (profileUserDetails.otherDetails[key].date | momentFilter)}}
+										     	</div>
+								           	</div>
+								           	</div>
+										     <md-divider ng-if="!$last"></md-divider>
+								           	</div>
+								           	<div class="empty-placehoder" layout="column" ng-focus="$event.preventDefault();" ng-click="adminUser ? openSettings() : javascript.void(0);" ng-if="profileDetailKeys.length==0">
+							           	 	<div layout="row">
+										     <div flex="20" layout="row">
+										  		 <md-icon class="icon-color" md-svg-icon="{{adminUser?'settings':'account'}}"></md-icon>
+										     </div>
+										     <div flex="80" layout="column"  class="profile-details">
+										     	<h4 ng-if="adminUser">
+										     	We need to know more about you. Update us under profile tab in settings.
+										     	</h4>
+										     	<h4 ng-if="!adminUser">
+										     	{{profileUserDetails.name}} hasn't shared details with us.
+										     	</h4>
+								           	</div>
+								           	</div>
+								           	</div>
+
+										  </md-whiteframe>
+										<!-- </perfect-scrollbar> -->
+							          </md-menu-content>
+							    </md-menu>
+
+					          	<md-button ng-disabled="friendRequestsent" ng-if="!adminUser && !myFriend && !friendRequested" ng-click="sendfriendRequest()" aria-label="Add as Friend" class="md-fab md-raised md-mini">
+					            	<md-icon md-svg-icon="account-plus" aria-label="Friend"></md-icon>
+					          	</md-button>
+
+					          	<md-button ng-if="!adminUser && !myFriend && friendRequested && !friendRequestsent" ng-click="acceptfriendRequest()" aria-label="Accept as Friend" class="md-fab md-primary md-raised md-mini">
+					            	<md-icon md-svg-icon="account-plus" aria-label="Friend"></md-icon>
+					          	</md-button>
+
+					          	<md-button ng-if="!adminUser" aria-label="Poke" class="md-fab md-raised md-mini">
+					            	<md-icon md-svg-icon="thumb-up" aria-label="Poke"></md-icon>
+					          	</md-button>
+					          
+					        </md-fab-actions>
+					      </md-fab-speed-dial> 
+					      
+				        <!-- </md-content> -->
     				</div>
     		</div>
     		<div class="profileFooter"></div>
