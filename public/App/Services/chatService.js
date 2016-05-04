@@ -1,5 +1,6 @@
 define(["angular","primus"],function(){
-	var chatService=["primus","$rootScope","visor",function(primus,$rootScope,visor){
+	var chatService=["primus","$rootScope","visor",
+	function(primus,$rootScope,visor){
 		var eventQueue = {};
 
 		this.listen = function(eventname,callback){
@@ -9,6 +10,15 @@ define(["angular","primus"],function(){
 			else{
 				eventQueue[eventname]=[];
 				eventQueue[eventname].push(callback);
+			}
+		};
+
+		this.unbind = function(eventname){
+			if(eventname){
+
+				if(eventQueue[eventname]){
+					delete eventQueue[eventname];
+				}
 			}
 		};
 
@@ -23,7 +33,8 @@ define(["angular","primus"],function(){
 		this.send = function(eventname,options){
 				options = options || {} ;
 				options.username = visor.authData.username ;
-				options.id = visor.authData.id;
+				options.userid = visor.authData.id;
+				console.log("Socket: "+eventname);
 				primus.send(eventname,options);
 		};
 

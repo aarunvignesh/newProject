@@ -26,6 +26,7 @@ module.exports=function(grunt){
 							"perfectScroll":"empty:",
 							"angularMessages":"empty:",
 							"visor":"empty:",
+							"ngSanitize":"empty:",
 							"config":"empty:"
 						},
 			      name: "App", // assumes a production build using almond

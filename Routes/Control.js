@@ -4,6 +4,9 @@ var updateUser=require("./../lib/UpdateUser")();
 
 var rndGenerate=require("./../Shared/rndTxtgenerate");
 
+
+// require("./../lib/UpdateMulti")().updateUsers({},{$set:{socketId:[]}});
+
 var ctrl={
 	templateThrower:function(req,res){
 		switch(req.params.needTemplate){
@@ -47,13 +50,17 @@ var ctrl={
 				else{
 					if(user.verifiedEmail){
 
-						res.send({id:req.user._id,email:req.user.email,
+						res.send({id:req.user._id,
+							email:req.user.email,
 							validationStatus:true,
 							username:user.username,
 							isProfilepic:user.isProfilepicupdated,
 							isCoverpic:user.isCoverpicupdated,
 							otherDetails:user.otherDetails,
-							name:user.name || req.user.email.split('@')[0]
+							name:user.name || req.user.email.split('@')[0],
+							friendList:user.friendList,
+							friendRequestrecievequeue:user.friendRequestrecievequeue,
+							friendRequestsentqueue:user.friendRequestsentqueue
 						});
 					}
 					else{

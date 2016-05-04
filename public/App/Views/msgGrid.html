@@ -8,7 +8,7 @@
         </md-input-container>
       </div>
       <div flex="60" layout="row" layout-align="start center">
-          <span flex class="md-headline">MY HEADING<span>
+          <span flex class="md-headline" ng-bind="senderDetails.name || 'Messenger'"><span>
       </div>
     </div>
     <div layout="row" flex="90">
@@ -22,7 +22,7 @@
       <div flex layout="row" friendList perfectscroller>
         <div flex="50" layout="column">
         <div flex ng-repeat="friend in friendList | nameFilter : {name: searchKeyword}" ng-if="$even">
-           <md-card>
+           <md-card ng-click="changeSenderdetails(friend)">
               <img ng-src={{"./api/photos/"+friend.username+"/profile"}} class="md-card-image"/>
               <md-card-title>
                     <md-card-title-text>
@@ -40,7 +40,7 @@
       </div>
       <div flex="50" layout="column">
         <div flex ng-repeat="friend in friendList | nameFilter : { name: searchKeyword}" ng-if="$odd">
-          <md-card>
+          <md-card ng-click="changeSenderdetails(friend)">
              <img ng-src={{"./api/photos/"+friend.username+"/profile"}} class="md-card-image"/>
              <md-card-title>
                    <md-card-title-text>
@@ -61,21 +61,30 @@
     <!--Chat Panel-->
     <div flex="60" layout="column">
       <!--Chat Window-->
-        <div flex="90" layout="column" class="chat-window">
+        <div flex="90" layout="column" ng-class="{'chat-window':senderDetails.username}">
               <!--Chat Window Header-->
               <!-- <div flex="10" layout="row" layout-align="start center" layout-padding class="chat-header">
 
               </div> -->
               <!--Chat Mesage Window-->
-              <div flex class="chat-message-window"></div>
+              <div flex class="chat-message-window">
+                    <div ng-if="receivePanel[senderDetails.username]" layout-padding layout="row" ng-repeat="message in receivePanel[senderDetails.username]" flex="100">
+                        <div ng-if="message.from == senderUsername" flex="50"></div>
+                        <div flex="50">
+                          <div class="bubble" ng-class="{'right':message.from == senderUsername,'left': message.from != senderUsername}" ng-bind-html="message.message">
+
+                          </div>
+                        </div>
+                    </div>
+              </div>
         </div>
         <!--Chat Input-->
-        <div flex="10" layout="row">
+        <div flex="10" layout="row" ng-hide="!senderDetails.username">
               <div flex-lg="70" flex-md="60" flex-sm="60" layout="column" class="chat-input-container md-body-1" perfectscroller>
                   <msg-input flex></msg-input>
               </div>
               <div flex-lg="30" flex-md="40" flex-sm="40" layout="row">
-                  <md-button aria-label="send" class="md-raised md-primary md-hue-1 md-fab md-mini" ng-click="">
+                  <md-button ng-click="sendMsg()" aria-label="send" class="md-raised md-primary md-hue-1 md-fab md-mini" ng-click="">
                       <md-icon md-svg-icon="send"></md-icon>
                   </md-button>
                   <md-button aria-label="emoji" class="md-raised md-accent md-hue-1 md-fab md-mini" ng-click="">

@@ -5,6 +5,7 @@ var multer=require("multer");
 var mkdir=require("mkdirp");
 var fs = require('fs');
 var path = require('path');
+var socket_dir = require("./../../Shared/Socket/socketDirectory");
 
 function fileExists(filePath)
 {
@@ -35,9 +36,100 @@ var receiveConfig = multer.diskStorage({
 	}
 });
 
+var usernameRemover = function(arr,filterValue){
+	var occurence = arr.filter(function(val){
+		return val.username == filterValue;
+	});
+	for(var i=0;i<occurence.length;i++){
+		arr.splice(arr.findIndex(function(value){return value.username==filterValue}),1);
+	}
+	return arr;
+};
+
 var upload = multer({ storage : receiveConfig}).single('file');
 
 var ctrl={
+	createFriendRequest: function(req,res){
+		var obj = req.body || {};
+		if(obj.requestor && obj.requested){
+			User.userById({id:obj.requested.id},function(err,requestedUser){
+				if(requestedUser){
+
+					//requestedUser.friendRequestrecievequeue = requestedUser.friendRequestrecievequeue || [];
+					requestedUser.friendRequestrecievequeue.push(obj.requestor);
+					obj.requested.name = requestedUser.name;
+					updateUser.updateUser(requestedUser).then(function(){
+							User.userById({id:obj.requestor.id},function(err,requestorUser){
+								if(requestorUser){
+									//requestorUser.friendRequestsentqueue = requestorUser.friendRequestsentqueue || [];
+									obj.requestor.name = requestorUser.name;
+									requestorUser.friendRequestsentqueue.push(obj.requested);
+									updateUser.updateUser(requestorUser).then(function(){
+										var recUsersocket = socket_dir.getuserByusername(obj.requested.username);
+
+										if(recUsersocket.length>0){
+											var sendObject = {
+												type: "FRIEND_REQUEST",
+												requestor:obj.requestor,
+												requested:obj.requested
+											};
+											require("./../../Shared/Socket/Chat/message").sendNotification(recUsersocket,sendObject);
+										}
+									res.send({code:200,success:"Friend request is successfully raised..."});
+									},function(){
+
+										res.send({err:"Facing new issue will recover soon....",code:404})
+									})
+								}
+								else{
+									res.send({err:"Facing new issue will recover soon....",code:404});
+								}
+							});
+						},
+						function(){
+							res.send({err:"Facing New Issue will Recover Soon....",code:404});
+						});
+				}
+				else{
+					res.send({err:"Facing new issue will recover soon....",code:404});	
+				}
+			});
+		}
+		
+	},
+	acceptFriendrequest: function(req,res){
+		var received_data = req.body;
+		if(received_data.acceptor && received_data.requestor){
+
+			User.userById({id:received_data.acceptor.id},function(err,acceptorUser){
+				if(acceptorUser){
+					var filteredCollection = usernameRemover(acceptorUser.friendRequestrecievequeue ,received_data.requestor.username);
+					acceptorUser.friendList.push(received_data.requestor);
+					updateUser.updateUser(acceptorUser).then(function(){
+						User.userById({id:received_data.requestor.id},function(err,requestorUser){
+							if(requestorUser){
+								var filteredCollection = usernameRemover(requestorUser.friendRequestsentqueue ,received_data.acceptor.username);
+								requestorUser.friendList.push(received_data.acceptor);
+								updateUser.updateUser(requestorUser).then(function(){
+
+									res.send({code:200,success:"Friend successfully added..."});
+								},function(){
+
+									res.send({err:"Facing new issue will recover soon....",code:404})
+								})
+							}
+							else{
+								res.send({err:"Facing new issue will recover soon....",code:404});
+							}
+						});
+					});
+				}
+				else{
+					res.send({err:"Facing new issue will recover soon....",code:404});
+				}
+			});
+		}
+	},
 	fetchUserdetails:function(req,res){
 		if(req.body.username && req.user){
 			User.userByUserName({username:req.body.username}
@@ -52,8 +144,20 @@ var ctrl={
 						res.send({success:"admin user",code:200});
 					}
 					else{
-
-						res.send({success:"foreign details",user:user[0],req:req.user,code:202});
+						var userObj = {};
+						userObj.username = user[0].username;
+						userObj.name = user[0].name;
+						userObj.otherDetails = user[0].otherDetails;
+						userObj.id = user[0]._id;
+						userObj.username = user[0].username;
+						userObj.isCoverpicupdated = user[0].isCoverpicupdated;
+						userObj.isProfilepicupdated = user[0].isProfilepicupdated;
+						userObj.friendList = user[0].friendList;
+						userObj.friendRequestqueue = user[0].friendRequestqueue;
+						userObj.friendList = user.friendList,
+						userObj.friendRequestrecievequeue = user[0].friendRequestrecievequeue,
+						userObj.friendRequestsentqueue = user[0].friendRequestsentqueue
+						res.send({success:"foreign details",user:userObj,req:req.user,code:202});
 					}
 				}
 				else{
