@@ -1,10 +1,15 @@
 define(["angular","primus"],function(){
+	var eventQueue = {};
 	var chatService=["primus","$rootScope","visor",
 	function(primus,$rootScope,visor){
-		var eventQueue = {};
 
 		this.listen = function(eventname,callback){
 			if(eventQueue[eventname]){
+				if(eventname=="notification:friendRequest"){
+					if(eventQueue[eventname].length>0){
+						return;
+					}
+				}
 				eventQueue[eventname].push(callback);
 			}
 			else{
@@ -15,11 +20,15 @@ define(["angular","primus"],function(){
 
 		this.unbind = function(eventname){
 			if(eventname){
-
+				if(eventname=="notification:friendRequest"){
+					if(eventQueue[eventname].length>0){
+						return;
+					}
+				}
 				if(eventQueue[eventname]){
 					delete eventQueue[eventname];
 				}
-			}
+			}	
 		};
 
 		this.emit = function(eventname,options){

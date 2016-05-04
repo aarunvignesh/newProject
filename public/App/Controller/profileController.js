@@ -256,10 +256,6 @@ define(["angular"],function(){
 			}
 		});
 
-		$scope.$on("$destroy",function(){
-			sock.unbind("notification:friendRequest");
-		});
-
 		//Search Methods
 
 		$scope.search = {
