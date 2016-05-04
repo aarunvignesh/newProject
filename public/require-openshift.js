@@ -13,7 +13,7 @@ require.config({
 		tweenMax:"./../libs/gsap/src/minified/TweenMax.min",
 		flowStand:"./../libs/ng-flow/dist/ng-flow-standalone.min",
 		ngFlow:"./../libs/ng-flow/dist/ng-flow.min",
-		perfectScroll:"./../libs/perfect-scrollbar/js/min/perfect-scrollbar.jquery.min",
+		perfectScroll:"./../libs/perfect-scrollbar/js/perfect-scrollbar.jquery.min",
 		angularMessages:"./../libs/angular-messages/angular-messages.min",
 		visor:"./../libs/visor/release/visor.min",
 		primus:"./../Scripts/primusClient",
