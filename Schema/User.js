@@ -19,7 +19,7 @@ var schema=mongo.Schema({
 	otherDetails:Object,
 	friendRequestrecievequeue:[{id:String,username:String}],
 	friendRequestsentqueue:[{id:String,username:String}],
-	friendList : [{id:String,username:String}]
+	friendList : [{id:String,username:String,msgthreadId:String}]
 });
 schema.methods.validPassword=function(password){
 	if(password==this.password){

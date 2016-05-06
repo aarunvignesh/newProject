@@ -110,6 +110,7 @@ var ctrl={
 				participants:msgProp
 			},function(err,msgSchema){
 				if(msgSchema){
+						console.log(msgSchema);
 						User.userById({id:received_data.acceptor.id},function(err,acceptorUser){
 							if(acceptorUser){
 								var filteredCollection = usernameRemover(acceptorUser.friendRequestrecievequeue ,received_data.requestor.username);

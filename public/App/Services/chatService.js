@@ -5,11 +5,6 @@ define(["angular","primus"],function(){
 
 		this.listen = function(eventname,callback){
 			if(eventQueue[eventname]){
-				if(eventname=="notification:friendRequest"){
-					if(eventQueue[eventname].length>0){
-						return;
-					}
-				}
 				eventQueue[eventname].push(callback);
 			}
 			else{
@@ -20,11 +15,6 @@ define(["angular","primus"],function(){
 
 		this.unbind = function(eventname){
 			if(eventname){
-				if(eventname=="notification:friendRequest"){
-					if(eventQueue[eventname].length>0){
-						return;
-					}
-				}
 				if(eventQueue[eventname]){
 					eventQueue[eventname].shift();
 				}
