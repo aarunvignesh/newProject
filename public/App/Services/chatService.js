@@ -26,7 +26,7 @@ define(["angular","primus"],function(){
 					}
 				}
 				if(eventQueue[eventname]){
-					delete eventQueue[eventname];
+					eventQueue[eventname].shift();
 				}
 			}	
 		};
