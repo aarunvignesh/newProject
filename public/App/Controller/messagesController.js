@@ -1,18 +1,61 @@
 define(["angular"],function(){
-	var controller=["$scope","$http","$mdSidenav","visor","$state","sock",
-	function($scope,$http,$mdSidenav,visor,$state,sock){
+	var controller=["$scope","$http","$mdSidenav","visor","$state","sock","$timeout",
+	function($scope,$http,$mdSidenav,visor,$state,sock,$timeout){
 
 		$scope.senderUsername = visor.authData.username;
 
 		$scope.senderDetails = {};
 
+		$scope.msgPanelreceiver = sock.msgList;
+
 		$scope.receivePanel = {};
 
+		var scroller_setstatus = false;
+
+		var setChatscroller = function(moveDown){
+			$timeout(function() {
+			if(!scroller_setstatus){
+					angular.element(".chat-window").perfectScrollbar();
+					scroller_setstatus=true;
+				}
+				else{
+					angular.element(".chat-window").perfectScrollbar("update");
+				}
+			if(moveDown){
+				var elem = angular.element(".chat-window");
+				elem.scrollTop(elem.prop("scrollHeight"));
+			}
+			}, 10);	
+		};
+
+		(function(msgList){
+
+			var friends = Object.keys(msgList);
+			for(var i=0;i<friends.length;i++){
+				$scope.receivePanel[friends[i]] = [];
+				for(var j=0;j<msgList[friends[i]].length;j++){
+					$scope.receivePanel[friends[i]].push(msgList[friends[i]][j]);
+				}
+			}
+
+		})($scope.msgPanelreceiver);
+
 		$scope.userFirstname = visor.authData.name.toUpperCase();
+
+		sock.listen("messageReceived",function(value){
+			$scope.receivePanel[value.from] = $scope.receivePanel[value.from] || [];
+			$scope.receivePanel[value.from].push(value);
+			if($scope.senderDetails.username == value.from){
+				setChatscroller(true);
+				$scope.$apply();
+			}
+		});
 
 		$scope.changeSenderdetails = function(senderInfo){
 				$scope.senderDetails.username = senderInfo.username;
 				$scope.senderDetails.name = senderInfo.name;
+				$scope.senderDetails.msgthreadId = senderInfo.msgthreadId;
+					setChatscroller();
 		};
 
 		$scope.gotoProfile=function(){
@@ -23,26 +66,37 @@ define(["angular"],function(){
 			$mdSidenav("msgSlider").toggle();
 		};
 
-		sock.receive("receive:message",function(msg){
-				//if(msg.from == $scope.senderDetails.username){
-						$scope.receivePanel[msg.from] = $scope.receivePanel[msg.from] || [];
-						$scope.receivePanel[msg.from].push(msg);
-						$scope.$apply();
-				//}
-				//else{
+		// sock.receive("receive:message",function(msg){
+		// 		//if(msg.from == $scope.senderDetails.username){
+		// 				$scope.receivePanel[msg.from] = $scope.receivePanel[msg.from] || [];
+		// 				$scope.receivePanel[msg.from].push(msg);
+		// 				$scope.$apply();
+		// 		//}
+		// 		//else{
 
-				//}
-		});
+		// 		//}
+		// });
 
 		$scope.sendMsg = function(){
 				sock.send("send:message",{
 					to:$scope.senderDetails.username,
-					message:$scope.msgInput
+					message:$scope.msgInput,
+					msgthreadId:$scope.senderDetails.msgthreadId
 				});
 				$scope.receivePanel[$scope.senderDetails.username] = $scope.receivePanel[$scope.senderDetails.username] || [];
 				$scope.receivePanel[$scope.senderDetails.username].push({message:$scope.msgInput,from:$scope.senderUsername});
+				sock.msgList[$scope.senderDetails.username] = sock.msgList[$scope.senderDetails.username] || [];
+				sock.msgList[$scope.senderDetails.username].push({message:$scope.msgInput,from:$scope.senderUsername});				
 				$scope.msgInput = "";
+				$timeout(function() {
+					 angular.element(".chat-input-container").perfectScrollbar("update");
+				});
+				setChatscroller(true);
 		};
+
+		$scope.$on("$destroy",function(){
+			sock.unbind("messageReceived");
+		});
 
 	}];
 

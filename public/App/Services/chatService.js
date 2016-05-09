@@ -3,6 +3,8 @@ define(["angular","primus"],function(){
 	var chatService=["primus","$rootScope","visor",
 	function(primus,$rootScope,visor){
 
+		var scope= this;
+
 		this.listen = function(eventname,callback){
 			if(eventQueue[eventname]){
 				eventQueue[eventname].push(callback);
@@ -41,6 +43,7 @@ define(["angular","primus"],function(){
 				primus.on(eventname,callback);
 		};
 
+		this.msgList = {};
 
 		this.joinMe=function(userObj){
 			if(!$rootScope.connectionEstablished){
@@ -50,6 +53,19 @@ define(["angular","primus"],function(){
 				});
 				this.receive("handshake:failiure",function(){
 					console.log("{Handshake Failed}");
+				});
+				this.receive("receive:message",function(msg){
+					scope.msgList[msg.from] = scope.msgList[msg.from] || [];
+					scope.msgList[msg.from].push(msg);
+					scope.emit("messageReceived",msg);
+					// if(msg.from == $scope.senderDetails.username){
+					// 	$scope.receivePanel[msg.from] = $scope.receivePanel[msg.from] || [];
+					// 	$scope.receivePanel[msg.from].push(msg);
+					// 	$scope.$apply();
+					// }
+					//else{
+
+					//}
 				});
 				$rootScope.connectionEstablished=true;
 			}

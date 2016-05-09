@@ -1,13 +1,26 @@
 var socketServerobj = require("./../mainSocket"),
   userController = require("./../../../lib/User")(),
   updateUser = require("./../../../lib/UpdateUser")(),
-  socketDirectory = require("./../socketDirectory");
+  socketDirectory = require("./../socketDirectory"),
+  messageLib = require("./../../../lib/Message")();
 
 module.exports =  {
 
   receiveMessage : function(spark,msg){
     socketServer = socketServerobj.getSocketserver();
       var senderIds = socketDirectory.getuserByusername(msg.to);
+
+       var saveMsg = {
+                        from:msg.username,
+                        to:msg.to,
+                        message:msg.message,
+                    };
+        messageLib.pushMessage({id:msg.msgthreadId,message:msg},function(err,message){
+            if(message){
+              console.log("Message Successfully Posted in DB");
+            }
+        });
+
       senderIds.forEach(function(senderId){
         var sendWrapper = {};
         sendWrapper.from = msg.username;
@@ -21,6 +34,7 @@ module.exports =  {
         else{
             console.log("User Not online");
         }
+
       });
       
   },

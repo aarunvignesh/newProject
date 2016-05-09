@@ -9,13 +9,19 @@ module.exports = {
           return val.id;
         });
 
+        var msgMapper = {};
+        user.friendList.forEach(function(value){
+            msgMapper[value.username] = value.msgthreadId;
+        });
+
         User.searchUser({_id:{$in:arr_id}},function(error,friends){
             if(friends.length > 0){
                       res.send(friends.map(function(val){
                           return {
                               username:val.username,
                               name:val.name,
-                              id:val.id
+                              id:val.id,
+                              msgthreadId:msgMapper[val.username]
                           }
                       }));
             }

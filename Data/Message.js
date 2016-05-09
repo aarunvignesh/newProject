@@ -7,6 +7,13 @@ var data={
    		newMessage.save(function(err,msg){
      		callback(err,msg);
    		});
+	},
+	pushMessage:function(args,callback){
+		message.update({_id:args.id},{$push:{messageThread:args.message}},function(err,msg){
+			console.log(err);
+			console.log(msg);
+			callback(err,msg);
+		});
 	}
 };
 module.exports=data;
