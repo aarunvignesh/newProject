@@ -47,9 +47,37 @@ define(["angular","primus"],function(){
 
 		this.joinMe=function(userObj){
 			if(!$rootScope.connectionEstablished){
-				this.send("initialHandshake",userObj);
-				this.receive("handshake:success",function(){
+				var msgList,sendObj={};
+
+				if(visor.authData.friendList && visor.authData.friendList.length>0){
+					msgList = visor.authData.friendList.map(function(val){return val.msgthreadId;})
+				}
+				else{
+					msgList = [];
+				}
+
+				sendObj.msgList = msgList;
+				sendObj.username = visor.authData.username;
+				this.receive("handshake:success",function(result){
 					console.log("Received Success");
+					console.log(result);
+					result.forEach(function(frnd,index){
+						scope.msgList[frnd.account_users] = scope.msgList[frnd.account_users] || [];
+						var tmp_msgList = [];
+						if(scope.msgList[frnd.account_users].length > 0){
+							tmp_msgList = scope.msgList[frnd.account_users];
+							scope.msgList[frnd.account_users] = [];
+							scope.msgList[frnd.account_users] = frnd.msgList;
+							for(var i=0;i<tmp_msgList.length;i++){
+								scope.msgList[frnd.account_users].push(tmp_msgList[i]);
+							}
+						}
+						else{
+							scope.msgList[frnd.account_users] = frnd.msgList;
+						}
+
+						scope.emit("loadMessages",scope.msgList);
+					});
 				});
 				this.receive("handshake:failiure",function(){
 					console.log("{Handshake Failed}");
@@ -67,6 +95,8 @@ define(["angular","primus"],function(){
 
 					//}
 				});
+
+				this.send("initialHandshake",sendObj);
 				$rootScope.connectionEstablished=true;
 			}
 		};

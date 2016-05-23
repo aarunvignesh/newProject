@@ -40,6 +40,17 @@ define(["angular"],function(){
 
 		})($scope.msgPanelreceiver);
 
+		sock.listen("loadMessages",function(msgList){
+			var friends = Object.keys(msgList);
+			for(var i=0;i<friends.length;i++){
+				$scope.receivePanel[friends[i]] = [];
+				for(var j=0;j<msgList[friends[i]].length;j++){
+					$scope.receivePanel[friends[i]].push(msgList[friends[i]][j]);
+				}
+			}
+			setChatscroller(true);
+		});
+
 		$scope.userFirstname = visor.authData.name.toUpperCase();
 
 		sock.listen("messageReceived",function(value){
@@ -55,7 +66,7 @@ define(["angular"],function(){
 				$scope.senderDetails.username = senderInfo.username;
 				$scope.senderDetails.name = senderInfo.name;
 				$scope.senderDetails.msgthreadId = senderInfo.msgthreadId;
-					setChatscroller();
+				setChatscroller();
 		};
 
 		$scope.gotoProfile=function(){
@@ -79,9 +90,11 @@ define(["angular"],function(){
 
 		$scope.sendMsg = function(){
 				sock.send("send:message",{
+					from:$scope.senderUsername,
 					to:$scope.senderDetails.username,
 					message:$scope.msgInput,
-					msgthreadId:$scope.senderDetails.msgthreadId
+					msgthreadId:$scope.senderDetails.msgthreadId,
+					
 				});
 				$scope.receivePanel[$scope.senderDetails.username] = $scope.receivePanel[$scope.senderDetails.username] || [];
 				$scope.receivePanel[$scope.senderDetails.username].push({message:$scope.msgInput,from:$scope.senderUsername});
@@ -96,6 +109,7 @@ define(["angular"],function(){
 
 		$scope.$on("$destroy",function(){
 			sock.unbind("messageReceived");
+			sock.unbind("loadMessages");
 		});
 
 	}];

@@ -1,5 +1,6 @@
 var message=require("./../Schema/Message");
 var rndGenerate=require("./../Shared/rndTxtgenerate");
+
 var data={
 	createMessagethread:function(args,callback){
 	 var newMessage = new message();
@@ -13,6 +14,11 @@ var data={
 			console.log(err);
 			console.log(msg);
 			callback(err,msg);
+		});
+	},
+	retrieveMessages:function(args,callback){
+		message.aggregate(args,function(err,result){
+			callback(err,result);
 		});
 	}
 };

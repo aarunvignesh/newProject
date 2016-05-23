@@ -15,7 +15,7 @@ module.exports =  {
                         to:msg.to,
                         message:msg.message,
                     };
-        messageLib.pushMessage({id:msg.msgthreadId,message:msg},function(err,message){
+        messageLib.pushMessage({id:msg.msgthreadId,message:saveMsg},function(err,message){
             if(message){
               console.log("Message Successfully Posted in DB");
             }
