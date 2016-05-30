@@ -21,12 +21,13 @@
       <!--Friend List-->
       <div flex layout="row" friendList perfectscroller>
         <div flex="50" layout="column">
-        <div flex ng-repeat="friend in friendList | nameFilter : {name: searchKeyword}" ng-if="$even">
+        <div flex ng-repeat="friend in friendList track by $index | nameFilter : {name: searchKeyword}" ng-if="$even">
            <md-card ng-click="changeSenderdetails(friend)">
               <img ng-src={{"./api/photos/"+friend.username+"/profile"}} class="md-card-image"/>
               <md-card-title>
-                    <md-card-title-text>
-                        <span class="md-headline" ng-bind="friend.name | nameformatFilter : {length: 4}"></span>
+                    <md-card-title-text layout="row">
+                        <div flex-md="50" flex-lg="70" flex-sm="30" class="md-headline" ng-bind="friend.name | nameformatFilter : {length: 4}"></div>
+                        <div ng-if="friend.totalMsgCount - friend.lastReadmsg > 0" class="chipMsg" flex-lg="30" flex-md="50" flex-sm="70"><strong ng-bind="friend.totalMsgCount - friend.lastReadmsg > 9 ? '9+' : friend.totalMsgCount - friend.lastReadmsg"></strong></div>
                     </md-card-title-text>
               </md-card-title>
               <md-card-actions></md-card-actions>

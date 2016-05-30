@@ -19,7 +19,7 @@ define(["angular"],function(){
 					scroller_setstatus=true;
 				}
 				else{
-					angular.element(".chat-window").perfectScrollbar("update");
+					angular.element(".chat-window").perfectScrollbar();
 				}
 			if(moveDown){
 				var elem = angular.element(".chat-window");
@@ -66,7 +66,20 @@ define(["angular"],function(){
 				$scope.senderDetails.username = senderInfo.username;
 				$scope.senderDetails.name = senderInfo.name;
 				$scope.senderDetails.msgthreadId = senderInfo.msgthreadId;
-				setChatscroller();
+				$scope.friendList.forEach(function(value){
+					if(value.username == $scope.senderDetails.username){
+						value.lastReadmsg = value.totalMsgCount;
+					}
+				});
+				
+				sock.friendList[$scope.senderDetails.username].lastReadmsg = sock.friendList[$scope.senderDetails.username].totalMsgCount;
+				
+				sock.emit("user:updateReadmsg",{
+					msgthreadId 	: senderInfo.msgthreadId,
+					totalMsgCount	: sock.friendList[$scope.senderDetails.username].totalMsgCount
+				});
+
+				setChatscroller(true);
 		};
 
 		$scope.gotoProfile=function(){
@@ -94,13 +107,21 @@ define(["angular"],function(){
 					to:$scope.senderDetails.username,
 					message:$scope.msgInput,
 					msgthreadId:$scope.senderDetails.msgthreadId,
-					
+					totalMsgCount:sock.friendList[$scope.senderDetails.username].totalMsgCount+1
 				});
 				$scope.receivePanel[$scope.senderDetails.username] = $scope.receivePanel[$scope.senderDetails.username] || [];
 				$scope.receivePanel[$scope.senderDetails.username].push({message:$scope.msgInput,from:$scope.senderUsername});
 				sock.msgList[$scope.senderDetails.username] = sock.msgList[$scope.senderDetails.username] || [];
 				sock.msgList[$scope.senderDetails.username].push({message:$scope.msgInput,from:$scope.senderUsername});				
 				$scope.msgInput = "";
+				$scope.friendList.forEach(function(value){
+					if(value.username == $scope.senderDetails.username){
+						value.totalMsgCount++;
+						value.lastReadmsg++;
+					}
+				});
+				sock.friendList[$scope.senderDetails.username].totalMsgCount++;
+				sock.friendList[$scope.senderDetails.username].lastReadmsg++;
 				$timeout(function() {
 					 angular.element(".chat-input-container").perfectScrollbar("update");
 				});

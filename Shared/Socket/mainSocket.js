@@ -58,6 +58,10 @@ var create = function(server){
 					chatControl.receiveMessage(spark,msg);
 				});
 
+                spark.on('user:updateReadmsg',function(value){
+                    chatControl.updateReadmessage(value);
+                });
+
     });
 
 		primusServer.on('disconnection',require("./disConnect"));

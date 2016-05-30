@@ -45,6 +45,8 @@ define(["angular","primus"],function(){
 
 		this.msgList = {};
 
+		this.friendList = {};
+
 		this.joinMe=function(userObj){
 			if(!$rootScope.connectionEstablished){
 				var msgList,sendObj={};
@@ -63,6 +65,9 @@ define(["angular","primus"],function(){
 					console.log(result);
 					result.forEach(function(frnd,index){
 						scope.msgList[frnd.account_users] = scope.msgList[frnd.account_users] || [];
+						scope.friendList[frnd.account_users] = scope.friendList[frnd.account_users] || {};
+						scope.friendList[frnd.account_users].lastReadmsg = frnd.lastReadmsg;
+						scope.friendList[frnd.account_users].totalMsgCount = frnd.totalMsgCount;
 						var tmp_msgList = [];
 						if(scope.msgList[frnd.account_users].length > 0){
 							tmp_msgList = scope.msgList[frnd.account_users];

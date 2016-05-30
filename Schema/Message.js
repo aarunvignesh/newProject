@@ -14,7 +14,8 @@ var schema=mongo.Schema({
     		default:"text"
     	}
     }],
-    participants:Object
+    participants:Object,
+    account_users:[String]
 });
 
 module.exports = mongo.model("Message",schema);
