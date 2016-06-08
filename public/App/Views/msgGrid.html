@@ -21,6 +21,7 @@
       <!--Friend List-->
       <div flex layout="row" friendList perfectscroller>
         <div flex="50" layout="column">
+
         <div flex ng-repeat="friend in friendList track by $index | nameFilter : {name: searchKeyword}" ng-if="$even">
            <md-card ng-click="changeSenderdetails(friend)">
               <img ng-src={{"./api/photos/"+friend.username+"/profile"}} class="md-card-image"/>
@@ -60,8 +61,11 @@
       </div>
     </div>
     <!--Chat Panel-->
-    <div flex="60" layout="column">
+    <div flex="60" layout="column" class="friendList-container">
       <!--Chat Window-->
+      <div class="loadprevious-container" layout="row" layout-align="center center" ng-if="receivePanel[senderDetails.username] && showLoadmore">
+          <div flex-lg="20" flex-md="40" class="loadmore-btn">Load previous</div>
+      </div>
         <div flex="90" layout="column" ng-class="{'chat-window':senderDetails.username}">
               <!--Chat Window Header-->
               <!-- <div flex="10" layout="row" layout-align="start center" layout-padding class="chat-header">

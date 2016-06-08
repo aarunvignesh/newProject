@@ -15,7 +15,7 @@ define(["angular"],function(){
 		var setChatscroller = function(moveDown){
 			$timeout(function() {
 			if(!scroller_setstatus){
-					angular.element(".chat-window").perfectScrollbar();
+					var elem = angular.element(".chat-window").perfectScrollbar();
 					scroller_setstatus=true;
 				}
 				else{
@@ -24,6 +24,17 @@ define(["angular"],function(){
 			if(moveDown){
 				var elem = angular.element(".chat-window");
 				elem.scrollTop(elem.prop("scrollHeight"));
+				elem.unbind("scroll");
+				elem.on("scroll",function(){
+					if(elem.scrollTop()==0){
+						$scope.showLoadmore = true;
+						$scope.$apply();
+					}
+					else{
+						$scope.showLoadmore = false;
+						$scope.$apply();
+					}
+				});
 			}
 			}, 10);	
 		};
