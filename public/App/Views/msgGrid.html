@@ -64,7 +64,7 @@
     <div flex="60" layout="column" class="friendList-container">
       <!--Chat Window-->
       <div class="loadprevious-container" layout="row" layout-align="center center" ng-if="receivePanel[senderDetails.username] && showLoadmore">
-          <div flex-lg="20" flex-md="40" class="loadmore-btn">Load previous</div>
+          <div flex-lg="20" flex-md="40" class="loadmore-btn" ng-click="loadOldermessages()">Load previous</div>
       </div>
         <div flex="90" layout="column" ng-class="{'chat-window':senderDetails.username}">
               <!--Chat Window Header-->

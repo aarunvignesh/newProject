@@ -61,25 +61,31 @@ define(["angular","primus"],function(){
 				sendObj.msgList = msgList;
 				sendObj.username = visor.authData.username;
 				this.receive("handshake:success",function(result){
-					console.log("Received Success");
-					console.log(result);
+
 					result.forEach(function(frnd,index){
 						scope.msgList[frnd.account_users] = scope.msgList[frnd.account_users] || [];
 						scope.friendList[frnd.account_users] = scope.friendList[frnd.account_users] || {};
 						scope.friendList[frnd.account_users].lastReadmsg = frnd.lastReadmsg;
 						scope.friendList[frnd.account_users].totalMsgCount = frnd.totalMsgCount;
+						scope.friendList[frnd.account_users].msgstartIndex = frnd.totalMsgCount - frnd.msgList.length;
 						var tmp_msgList = [];
-						if(scope.msgList[frnd.account_users].length > 0){
-							tmp_msgList = scope.msgList[frnd.account_users];
-							scope.msgList[frnd.account_users] = [];
+
+						//if message already exists then pushing the message received first
+						// if(scope.msgList[frnd.account_users].length > 0){
+						// 	// tmp_msgList = scope.msgList[frnd.account_users];
+						// 	// scope.msgList[frnd.account_users] = [];
+						// 	// scope.msgList[frnd.account_users] = frnd.msgList;
+						// 	// for(var i=0;i<tmp_msgList.length;i++){
+						// 	// 	scope.msgList[frnd.account_users].push(tmp_msgList[i]);
+						// 	// }
+						// 	for(var i=frnd.msgList.length-1;i>-1;i--)
+						// 	{
+						// 		scope.msgList[frnd.account_users].splice(0,0,frnd.msgList[i]);
+						// 	}	
+						// }
+						// else{
 							scope.msgList[frnd.account_users] = frnd.msgList;
-							for(var i=0;i<tmp_msgList.length;i++){
-								scope.msgList[frnd.account_users].push(tmp_msgList[i]);
-							}
-						}
-						else{
-							scope.msgList[frnd.account_users] = frnd.msgList;
-						}
+						// }
 
 						scope.emit("loadMessages",scope.msgList);
 					});
@@ -87,9 +93,34 @@ define(["angular","primus"],function(){
 				this.receive("handshake:failiure",function(){
 					console.log("{Handshake Failed}");
 				});
+
+				this.receive("user:prevMessages",function(msg){
+					var frndName = msg.account_users.filter(function(val){
+						return val != visor.authData.username;
+					});
+					frndName = frndName[0];
+
+					for(var i=msg.messageThread.length-1;i>-1;i--){
+						scope.msgList[frndName].splice(0,0,msg.messageThread[i]);
+						scope.emit("loadPreviousmessages",{frndUsername:frndName,msg:msg.messageThread[i]});
+					}
+
+					scope.friendList[frndName].msgstartIndex = scope.friendList[frndName].msgstartIndex - msg.messageThread.length;
+
+				});
+
 				this.receive("receive:message",function(msg){
 					scope.msgList[msg.from] = scope.msgList[msg.from] || [];
+					scope.friendList[msg.from] = scope.friendList[msg.from] || {};
 					scope.msgList[msg.from].push(msg);
+					if(scope.friendList[msg.from].totalMsgCount){
+
+						scope.friendList[msg.from].totalMsgCount = scope.friendList[msg.from].totalMsgCount + 1;
+					}
+					else{
+
+						scope.friendList[msg.from].totalMsgCount = scope.msgList[msg.from].length;
+					}
 					scope.emit("messageReceived",msg);
 					// if(msg.from == $scope.senderDetails.username){
 					// 	$scope.receivePanel[msg.from] = $scope.receivePanel[msg.from] || [];

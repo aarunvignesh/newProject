@@ -5,6 +5,7 @@ var schema=mongo.Schema({
     	from:String,
     	to:String,
     	message:String,
+        timestamp:Date,
     	msgType:{
     		type:String,
     		default:"text",

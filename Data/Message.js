@@ -13,9 +13,10 @@ var data={
 	pushMessage:function(args,callback){
 		var updateReadcount = "participants."+args.message.from+".lastReadmsg";
 		var updateItem = {$push:{messageThread:args.message},$set:{}}
-
+		console.log(args.totalMsgCount);
 		updateItem.$set[updateReadcount] = args.totalMsgCount; 
 		message.update({_id:args.id},updateItem,function(err,msg){
+			console.log(msg);
 			callback(err,msg);
 		});
 	},
@@ -25,16 +26,27 @@ var data={
 		});
 	},
 	updateReadmessage: function(args,callback){
-		var updateItem = {$set:{participants:{}}};
-		
-		updateItem.$set.participants[args.username] = {};
 
-		updateItem.$set.participants[args.username].lastReadmsg = args.totalMsgCount;
-		console.log("Called");
-		message.findById(args.msgthreadId,{participants:true},function(err,result){
-			console.log(result);
-		})
-		message.update({_id:args.msgthreadId},updateItem);
+		var updateReadcount = "participants."+args.username+".lastReadmsg";
+
+		var updateItem = {$set:{}};
+		
+		updateItem.$set[updateReadcount] = args.totalMsgCount;
+
+
+		console.log(args.username);
+		
+		message.update({_id:args.msgthreadId},updateItem,function(err,msg){
+			//callback(err,msg);
+		});
+	},
+	sliceMessageThread:function(args,callback){
+		var filter = {participants:false,messageThread:{$slice:[args.startLimit,args.endLimit]}}
+		console.log(filter);
+		message.findById(args.msgthreadId,filter,function(err,result){
+
+			callback(err,result);
+		});
 	}
 };
 module.exports=data;

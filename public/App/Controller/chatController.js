@@ -15,6 +15,7 @@ define(["angular"],function(angular){
     }).error(function(){
 
     });
+
     sock.listen("loadMessages",function(msgList){
     	$scope.friendList = $scope.friendList.map(function(value){
 	     	value.totalMsgCount = sock.friendList[value.username].totalMsgCount;
@@ -22,6 +23,7 @@ define(["angular"],function(angular){
 	     	return value;
      	});
      });
+    
 		var friendListCntr = angular.element("div[friendList]");
 		$scope.lastupdateFriendlistScroll = 0;
 		$scope.updateFriendlistScroll = function(index){

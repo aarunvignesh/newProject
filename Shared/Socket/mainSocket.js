@@ -62,6 +62,10 @@ var create = function(server){
                     chatControl.updateReadmessage(value);
                 });
 
+                spark.on('user:prevMessages',function(value){
+                    chatControl.loadOldmessages(value);
+                });
+
     });
 
 		primusServer.on('disconnection',require("./disConnect"));
