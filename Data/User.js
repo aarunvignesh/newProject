@@ -14,7 +14,7 @@ var data={
 				callback(null,res);
 			}
 			else{
-				callback(null,{error:true,err:"Sorry.. Invalid Username/Password",code:420});
+				callback(null,{err:true,err:"Sorry.. Invalid Username/Password",code:420});
 			}
 		});
 	},

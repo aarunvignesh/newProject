@@ -19,36 +19,50 @@ passport.use('local-signup', new LocalStrategy(
         passReqToCallback : true
     },
     function(req,username, password, done) {
-        User.signUp({email:username,password:password},function(err,response){
-            if(err){
-              return done(response.error,req.flash("message",response));  
-            }
-            if(response.err){
-              return done(null,false,req.flash("message",response));  
-            }
-            else{
-               
-                return done(null, response.success);
-            }
-        });
+         if(req.isAuthenticated()) {
+                return done(null,false,req.flash("message",{err:true,err:"You are already authenticated...",code:420})); 
+        }
+        else{
 
-    }));
-    passport.use('local-login', new LocalStrategy(
+            User.signUp({email:username,password:password},function(err,response){
+                if(err){
+                  return done(response.error,req.flash("message",response));  
+                }
+                if(response.err){
+                  return done(null,false,req.flash("message",response));  
+                }
+                else{
+                   
+                    return done(null, response.success);
+                }
+            });
+        }
+}));
+
+passport.use('local-login', new LocalStrategy(
         {
             passReqToCallback : true
         },
         function(req,username, password, done) {
-            User.signIn({email:username,password:password},function(err,response){
-            if(err){
-              return done(response.error,req.flash("message",response));  
-            }
-            else if(response.error){
-               return done(null,false,req.flash("message",response));  
-            }
-                
-            return done(null, response);
-            
-        });
+            if(req.isAuthenticated()){
 
-    }));
-}
+                return done(null,false,req.flash("message",{error:true,err:"You are already authenticated...",code:420})); 
+            }
+            else {
+                User.signIn({email:username,password:password},function(err,response){
+                if(err){
+                  return done(response.err,req.flash("message",response));  
+                }
+                else if(response.error){
+                   return done(null,false,req.flash("message",response));  
+                }
+                    
+                return done(null, response);
+                });
+            }
+
+        
+
+        }));
+
+};

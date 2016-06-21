@@ -1,5 +1,6 @@
 
 var User=require("./../../lib/User")();
+var messageSchema=require("./../../lib/Message")();
 var updateUser=require("./../../lib/UpdateUser")();
 var multer=require("multer");
 var mkdir=require("mkdirp");
@@ -66,7 +67,6 @@ var ctrl={
 									requestorUser.friendRequestsentqueue.push(obj.requested);
 									updateUser.updateUser(requestorUser).then(function(){
 										var recUsersocket = socket_dir.getuserByusername(obj.requested.username);
-
 										if(recUsersocket.length>0){
 											var sendObject = {
 												type: "FRIEND_REQUEST",
@@ -100,29 +100,57 @@ var ctrl={
 	acceptFriendrequest: function(req,res){
 		var received_data = req.body;
 		if(received_data.acceptor && received_data.requestor){
+			var msgProp = {};
+			msgProp[received_data.acceptor.username] = {};
+			msgProp[received_data.acceptor.username].lastReadmsg = 0;
+			msgProp[received_data.requestor.username] = {};
+			msgProp[received_data.requestor.username].lastReadmsg = 0;
+			messageSchema.createMessagethread({
+				participants:msgProp,
+				account_users:[received_data.acceptor.username,received_data.requestor.username]
+			},function(err,msgSchema){
+				if(msgSchema){
+						User.userById({id:received_data.acceptor.id},function(err,acceptorUser){
+							if(acceptorUser){
+								var filteredCollection = usernameRemover(acceptorUser.friendRequestrecievequeue ,received_data.requestor.username);
+								received_data.requestor.msgthreadId = msgSchema._id;
+								received_data.acceptor.name = acceptorUser.name;
+								acceptorUser.friendList.push(received_data.requestor);
+								updateUser.updateUser(acceptorUser).then(function(){
+									User.userById({id:received_data.requestor.id},function(err,requestorUser){
+										if(requestorUser){
+											var filteredCollection = usernameRemover(requestorUser.friendRequestsentqueue ,received_data.acceptor.username);
+											received_data.acceptor.msgthreadId = msgSchema._id;
+											requestorUser.friendList.push(received_data.acceptor);
+											
+											updateUser.updateUser(requestorUser).then(function(){
+												var recUsersocket = socket_dir.getuserByusername(received_data.requestor.username);
+												
+												if(recUsersocket.length > 0){
+													var sendObject = {
+														type: "FRIEND_REQUEST_ACCEPTED",
+														requestor:received_data.requestor,
+														requested:received_data.acceptor,
+														msgId:msgSchema._id
+													};
+													require("./../../Shared/Socket/Chat/message").sendNotification(recUsersocket,sendObject);
+												}
+												res.send({code:200,success:"Friend successfully added...",msgDetails:msgSchema});
+											},function(){
 
-			User.userById({id:received_data.acceptor.id},function(err,acceptorUser){
-				if(acceptorUser){
-					var filteredCollection = usernameRemover(acceptorUser.friendRequestrecievequeue ,received_data.requestor.username);
-					acceptorUser.friendList.push(received_data.requestor);
-					updateUser.updateUser(acceptorUser).then(function(){
-						User.userById({id:received_data.requestor.id},function(err,requestorUser){
-							if(requestorUser){
-								var filteredCollection = usernameRemover(requestorUser.friendRequestsentqueue ,received_data.acceptor.username);
-								requestorUser.friendList.push(received_data.acceptor);
-								updateUser.updateUser(requestorUser).then(function(){
-
-									res.send({code:200,success:"Friend successfully added..."});
-								},function(){
-
-									res.send({err:"Facing new issue will recover soon....",code:404})
-								})
+												res.send({err:"Facing new issue will recover soon....",code:404})
+											})
+										}
+										else{
+											res.send({err:"Facing new issue will recover soon....",code:404});
+										} 
+									});
+								});
 							}
 							else{
 								res.send({err:"Facing new issue will recover soon....",code:404});
 							}
 						});
-					});
 				}
 				else{
 					res.send({err:"Facing new issue will recover soon....",code:404});

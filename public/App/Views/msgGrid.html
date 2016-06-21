@@ -21,12 +21,14 @@
       <!--Friend List-->
       <div flex layout="row" friendList perfectscroller>
         <div flex="50" layout="column">
-        <div flex ng-repeat="friend in friendList | nameFilter : {name: searchKeyword}" ng-if="$even">
+
+        <div flex ng-repeat="friend in friendList track by $index | nameFilter : {name: searchKeyword}" ng-if="$even">
            <md-card ng-click="changeSenderdetails(friend)">
               <img ng-src={{"./api/photos/"+friend.username+"/profile"}} class="md-card-image"/>
               <md-card-title>
-                    <md-card-title-text>
-                        <span class="md-headline" ng-bind="friend.name | nameformatFilter : {length: 4}"></span>
+                    <md-card-title-text layout="row">
+                        <div flex-md="50" flex-lg="70" flex-sm="30" class="md-headline" ng-bind="friend.name | nameformatFilter : {length: 4}"></div>
+                        <div ng-if="friend.totalMsgCount - friend.lastReadmsg > 0" class="chipMsg" flex-lg="30" flex-md="50" flex-sm="70"><strong ng-bind="friend.totalMsgCount - friend.lastReadmsg > 9 ? '9+' : friend.totalMsgCount - friend.lastReadmsg"></strong></div>
                     </md-card-title-text>
               </md-card-title>
               <md-card-actions></md-card-actions>
@@ -59,24 +61,27 @@
       </div>
     </div>
     <!--Chat Panel-->
-    <div flex="60" layout="column">
+    <div flex="60" layout="column" class="friendList-container">
       <!--Chat Window-->
+      <div class="loadprevious-container" layout="row" layout-align="center center" ng-if="receivePanel[senderDetails.username] && showLoadmore">
+          <div flex-lg="20" flex-md="40" class="loadmore-btn" ng-click="loadOldermessages()">Load previous</div>
+      </div>
         <div flex="90" layout="column" ng-class="{'chat-window':senderDetails.username}">
               <!--Chat Window Header-->
               <!-- <div flex="10" layout="row" layout-align="start center" layout-padding class="chat-header">
 
               </div> -->
               <!--Chat Mesage Window-->
-              <div flex class="chat-message-window">
-                    <div ng-if="receivePanel[senderDetails.username]" layout-padding layout="row" ng-repeat="message in receivePanel[senderDetails.username]" flex="100">
+               <div flex="grow"> 
+                    <div ng-if="receivePanel[senderDetails.username]" layout="row" layout-padding ng-repeat="message in receivePanel[senderDetails.username]">
                         <div ng-if="message.from == senderUsername" flex="50"></div>
-                        <div flex="50">
-                          <div class="bubble" ng-class="{'right':message.from == senderUsername,'left': message.from != senderUsername}" ng-bind-html="message.message">
+                        <div flex="50" layout="row">
+                          <div class="bubble" flex="90" ng-class="{'right':message.from == senderUsername,'left': message.from != senderUsername}" ng-bind-html="message.message">
 
                           </div>
                         </div>
                     </div>
-              </div>
+               </div> 
         </div>
         <!--Chat Input-->
         <div flex="10" layout="row" ng-hide="!senderDetails.username">

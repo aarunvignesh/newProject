@@ -238,7 +238,12 @@ define(["angular"],function(){
 			$http.post("/api/acceptRequest",obj).success(function(res){
 				if(res.code == 200){
 					toastFactory.showToast(res.success);
+					obj.requestor.msgthreadId = res.msgDetails._id;
 					visor.authData.friendList.push(obj.requestor);
+					sock.msgList[obj.requestor.username] = [];
+					sock.friendList[obj.requestor.username] = {};
+					sock.friendList[obj.requestor.username].lastReadmsg = 0;
+					sock.friendList[obj.requestor.username].totalMsgCount = 0; 
 					findFriend();
 				}
 				else{
@@ -254,10 +259,6 @@ define(["angular"],function(){
 			if(msg.id == $scope.profileUserDetails.id){
 				findFriend();
 			}
-		});
-
-		$scope.$on("$destroy",function(){
-			sock.unbind("notification:friendRequest");
 		});
 
 		//Search Methods

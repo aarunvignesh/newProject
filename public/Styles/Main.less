@@ -21,7 +21,14 @@ html{
  text-align:center;
  font-size:1.35em;
 }
-
+.chipMsg{
+    background-color: #EC3E3E;
+    height: 20px;
+    text-align: center;
+    padding: 2px;
+    border-radius: 20px;
+    color: #fff;
+}
 .full-width{
   width:100%;
   md-input-container{
@@ -43,6 +50,32 @@ html{
     .ps-scrollbar-x-rail{
         display:none !important;
       }
+}
+
+.friendList-container{
+  position:relative;
+  .loadprevious-container{
+    position:absolute;
+    top:0px;
+    width:100%;
+    height:30px;
+  }
+  .loadmore-btn{
+    font-weight:bold;
+    background-color:blue;
+    font-weight: bold;
+    background-color: #7986CB;
+    padding: 5px;
+    text-align: center;
+    border-radius: 20px;
+    color: #E1DAE7;
+    opacity:0.75;
+    z-index:1;
+  }
+  .loadmore-btn:hover{
+    opacity:1;
+    cursor:pointer;
+  }  
 }
 
 .profile-menu{
@@ -155,15 +188,18 @@ html{
   }
 
 .chat-window{
-  .chat-message-window{
-    border-bottom: 1px solid #89B9DA;
-  }
+  
+  border-bottom: 1px solid #89B9DA;
+  overflow:hidden;
+  position :relative;
 
 .bubble {
   position: relative;
-  padding: 20px;
+  padding: 10px;
   background: #ADB400;
   color:white;
+  margin:5px;
+  word-break: break-word;
 }
 
 .bubble.left{
