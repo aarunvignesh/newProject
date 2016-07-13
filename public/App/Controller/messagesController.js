@@ -27,8 +27,11 @@ define(["angular"],function(){
 				elem.unbind("scroll");
 				elem.on("scroll",function(){
 					if(elem.scrollTop()==0){
-						$scope.showLoadmore = true;
-						$scope.$apply();
+						if(sock.friendList[$scope.senderDetails.username].msgstartIndex>0){
+
+							$scope.showLoadmore = true;
+							$scope.$apply();
+						}
 					}
 					else{
 						$scope.showLoadmore = false;
@@ -95,9 +98,12 @@ define(["angular"],function(){
 		sock.listen("loadPreviousmessages",function(value){
 			$scope.receivePanel[value.frndUsername] = $scope.receivePanel[value.frndUsername] || [];
 			$scope.receivePanel[value.frndUsername].splice(0,0,value.msg);
-			//console.log(value);
-			setChatscroller();
-			$scope.$apply();
+			//console.log(sock.friendList[$scope.senderDetails.username].msgstartIndex);
+			
+
+			$scope.$apply(function(){
+				setChatscroller();
+			});
 		});
 
 		$scope.loadOldermessages = function(){
@@ -112,6 +118,11 @@ define(["angular"],function(){
 				};
 
 				sock.send('user:prevMessages',sendObj)
+			}
+			else{
+				//if(sock.friendList[$scope.senderDetails.username].msgstartIndex<1){
+				$scope.showLoadmore = false;
+				//}
 			}
 		};
 

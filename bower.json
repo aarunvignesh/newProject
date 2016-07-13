@@ -36,7 +36,7 @@
     "angular-emoji": "angular-emoji-filter#~0.0.2"
   },
   "resolutions": {
-    "angular": "1.5.5",
+    "angular": "^1.4.8",
     "angular-animate": "~1.5.0"
   }
 }
