@@ -27,7 +27,7 @@
               <img ng-src={{"./api/photos/"+friend.username+"/profile"}} class="md-card-image"/>
               <md-card-title>
                     <md-card-title-text layout="row">
-                        <div flex-md="50" flex-lg="70" flex-sm="30" class="md-headline" ng-bind="friend.name | nameformatFilter : {length: 4}"></div>
+                        <div  class="md-headline" ng-bind="friend.name | nameformatFilter : {length: 4}"></div>
                         <div ng-if="friend.totalMsgCount - friend.lastReadmsg > 0" class="chipMsg" flex-lg="30" flex-md="50" flex-sm="70"><strong ng-bind="friend.totalMsgCount - friend.lastReadmsg > 9 ? '9+' : friend.totalMsgCount - friend.lastReadmsg"></strong></div>
                     </md-card-title-text>
               </md-card-title>
@@ -46,7 +46,8 @@
              <img ng-src={{"./api/photos/"+friend.username+"/profile"}} class="md-card-image"/>
              <md-card-title>
                    <md-card-title-text>
-                       <span class="md-headline" ng-bind="friend.name | nameformatFilter : {length: 4}"></span>
+                       <span flex-md="50" flex-lg="70" flex-sm="30" class="md-headline" ng-bind="friend.name | nameformatFilter : {length: 4}"></span>
+                        <div ng-if="friend.totalMsgCount - friend.lastReadmsg > 0" class="chipMsg" flex-lg="30" flex-md="50" flex-sm="70"><strong ng-bind="friend.totalMsgCount - friend.lastReadmsg > 9 ? '9+' : friend.totalMsgCount - friend.lastReadmsg"></strong></div>
                    </md-card-title-text>
              </md-card-title>
              <md-card-actions></md-card-actions>

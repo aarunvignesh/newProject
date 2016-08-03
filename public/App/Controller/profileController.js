@@ -87,6 +87,7 @@ define(["angular"],function(){
 		//}
 
 		var filterRelation = function(username){
+			visor.authData.friendList = visor.authData.friendList || [];
 			var Friends = visor.authData.friendList.filter(function(val,index){
 				return val.username == username;
 			});
@@ -176,6 +177,26 @@ define(["angular"],function(){
 			})
 		};
 
+		$scope.openFriendsDialog=function(){
+
+			$mdDialog.show({
+				controller: "friendsDialogController",
+		      	templateUrl: './App/Views/friendsDialog.html',
+		      	parent: angular.element(document.body),
+				clickOutsideToClose:true,
+				height:500,
+				width:500,
+				openFrom:{
+					top:window.innerHeight,
+					left:window.innerWidth/2,
+					width:30,
+					height:30
+				},
+				closeTo:{
+					bottom:0
+				}
+			})
+		};
 		$scope.gotoMessages = function(){
 			$state.go("messages");
 		};
