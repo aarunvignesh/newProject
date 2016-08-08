@@ -1,6 +1,7 @@
 define(["./loginController","./profileController","./verifyController","./messagesController","./settingsController","./chatController",
-	"./friendsDialogController"],
-	function(loginController,profileController,verifyController,messagesController,settingsController,chatController,friendsDialogController){
+	"./friendsDialogController","./notifyDialogController"],
+	function(loginController,profileController,verifyController,messagesController,settingsController,chatController
+		,friendsDialogController,notifyDialogController){
 	var fn=function(app){
 	app.controller("loginController",loginController);
 	app.controller("profileController",profileController);
@@ -9,6 +10,7 @@ define(["./loginController","./profileController","./verifyController","./messag
 	app.controller("settingsController",settingsController);
 	app.controller("chatController",chatController);
 	app.controller("friendsDialogController",friendsDialogController);
+	app.controller("notifyDialogController",notifyDialogController);
 	};
 return fn;
 });

@@ -8,10 +8,16 @@ define(["angular"],function(){
 		};
 
 		$scope.friendList = [];
-	    $http.get("/api/getFriends").success(function(res) {
+
+		$scope.adminUser = $scope.$$prevSibling.adminUser;
+
+		$scope.name = $scope.$$prevSibling.profileUserDetails.name;
+
+	    $http.get("/api/friends/"+$scope.$$prevSibling.profileUserDetails.id)
+	    .success(function(res) {
 	     	$scope.friendList = res.filter(function(val){
 					return val.username != undefined;
-				});
+			});
 	    }).error(function(){
 
 	    });

@@ -9,6 +9,9 @@ app.all("/api/*",function(req,res,next){
 		res.send({err:"Unauthenticated user"});
 	}
 });
+
 app.get("/api/getFriends",control.getFriends);
+app.get("/api/friends/:id",control.friends);
+app.get("/api/requests",control.friendRequests);
 
 module.exports=app;

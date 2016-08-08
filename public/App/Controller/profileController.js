@@ -184,8 +184,8 @@ define(["angular"],function(){
 		      	templateUrl: './App/Views/friendsDialog.html',
 		      	parent: angular.element(document.body),
 				clickOutsideToClose:true,
-				height:500,
-				width:500,
+				height:"500px",
+				width:"500px",
 				openFrom:{
 					top:window.innerHeight,
 					left:window.innerWidth/2,
@@ -195,8 +195,31 @@ define(["angular"],function(){
 				closeTo:{
 					bottom:0
 				}
-			})
+			});
 		};
+
+		$scope.openNotification = function(){
+
+				$mdDialog.show({
+				controller: "notifyDialogController",
+		      	templateUrl: './App/Views/notifyDialog.html',
+		      	parent: angular.element(document.body),
+				clickOutsideToClose:true,
+				height:"500px",
+				width:"500px",
+				openFrom:{
+					top:window.innerHeight,
+					left:window.innerWidth/2,
+					width:30,
+					height:30
+				},
+				closeTo:{
+					bottom:0
+				}
+			});
+
+		};
+
 		$scope.gotoMessages = function(){
 			$state.go("messages");
 		};

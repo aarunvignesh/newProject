@@ -1,8 +1,8 @@
-<md-dialog aria-label="friend" class="settingsDialog">
+<md-dialog aria-label="notifications" class="settingsDialog">
 
     <md-toolbar>
       <div class="md-toolbar-tools">
-        <h2>Friend List</h2>
+        <h2>Friend Request Notifications</h2>
         <span flex></span>
         <md-button class="md-icon-button" ng-click="close()">
           <md-icon md-svg-icon="close" aria-label="Close dialog"></md-icon>
@@ -13,23 +13,19 @@
     	
     	<div flex layout-fill>
       	<div flex layout="column">
-          <div ng-if="friendList.length==0">
+          <div ng-if="friendRequestlist.length==0">
 
                 <md-whiteframe class="md-whiteframe-3dp" layout-padding flex layout="row" style="height:100px; margin:30px;">
   
                   <div flex="100" layout="row" layout-align="center center">
-                      <div class="md-headline" ng-if="adminUser" style="text-align:center;">
-                            Search and Catch your Friends..........
-                      </div>
-
-                      <div class="md-headline" ng-if="!adminUser" style="text-align:center;">
-                            Help <span style="text-transform:capitalize;">{{name}}</span> to find Friends..........
+                      <div class="md-headline" style="text-align:center;">
+                            No pending Friend Requests...
                       </div>
                   </div>
                 </md-whiteframe>
               </div>
           </div>
-          <div flex ng-if="friendList.length>0" ng-repeat="friend in friendList track by $index">
+          <div flex ng-if="friendRequestlist.length>0" ng-repeat="friend in friendRequestlist track by $index">
                <!-- <md-card>
                   <img ng-src={{"./api/photos/"+friend.username+"/profile"}} class="md-card-image"/>
                   <md-card-title>
@@ -41,7 +37,7 @@
                   <md-card-actions></md-card-actions>
                 </md-card> -->
 
-                <md-whiteframe class="md-whiteframe-3dp" layout-padding flex layout="row" style="height:100px; margin:30px;">
+                <md-whiteframe class="md-whiteframe-3dp" layout-padding flex layout="row" style="height:100px; margin:30px;cursor:pointer;" ng-click="gotoProfile(friend.username);">
                   <div flex="30" style="background-image:url({{'./api/photos/'+friend.username+'/profile'}});background-size:contain;background-repeat:no-repeat;background-position:50% 50%;">
                   </div>  
                   <div flex="70" layout="row" layout-align="center center">

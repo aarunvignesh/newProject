@@ -16,6 +16,7 @@ define(["angular"],function(angular){
 
     });
 
+    
     sock.listen("loadMessages",function(msgList){
     	$scope.friendList = $scope.friendList.map(function(value){
 	     	value.totalMsgCount = sock.friendList[value.username].totalMsgCount;
