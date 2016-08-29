@@ -1,5 +1,6 @@
 define(["angular"],function(angular){
 	var notificationFn=["sock","toastFactory","visor",function(sock,toastFactory,visor){
+		this.checkedNotication = false;
 		var notification={
 			initialize:function(){
 				sock.receive("notification",function(msg){
@@ -21,6 +22,9 @@ define(["angular"],function(angular){
 						default:	
 					}
 				});
+			},
+			setNotification:function(value){
+				this.checkedNotication = value;
 			}
 		};
 		return notification;

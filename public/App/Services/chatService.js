@@ -86,9 +86,9 @@ define(["angular","primus"],function(){
 						// else{
 							scope.msgList[frnd.account_users] = frnd.msgList;
 						// }
-
-						scope.emit("loadMessages",scope.msgList);
+						
 					});
+						scope.emit("loadMessages",scope.msgList);
 				});
 				this.receive("handshake:failiure",function(){
 					console.log("{Handshake Failed}");

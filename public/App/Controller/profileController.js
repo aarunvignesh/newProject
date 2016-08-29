@@ -8,6 +8,13 @@ define(["angular"],function(){
 
 		$scope.curr_username = visor.authData.username;
 		$scope.profileUserDetails={};
+
+		$scope.notifyUser = $scope.$parent.updatNotified?false:visor.authData.friendRequestrecievequeue.length;
+		
+		$scope.updateNotification = function(value){
+			$scope.$parent.updatNotified = value?true:false;
+		};
+
 		var adminName = authenticate.getUsername();
 
 		$scope.detailTemplate = {
@@ -300,6 +307,10 @@ define(["angular"],function(){
 		};
 
 		sock.listen("notification:friendRequest",function(msg){
+			$scope.notifyUser = visor.authData.friendRequestrecievequeue.length;
+			if($scope.notifyUser){
+				$scope.updateNotification();
+			}
 			if(msg.id == $scope.profileUserDetails.id){
 				findFriend();
 			}

@@ -21,7 +21,7 @@
 
 			<md-fab-toolbar md-open="fabOpen" count="0" md-direction="left">
 					 <md-fab-trigger class="align-with-text">
-					      <md-button aria-label="menu" class="md-fab md-primary">
+					      <md-button ng-class="{'notify md-warning':notifyUser, 'md-primary':!notifyUser}" ng-click="notifyUser=false;updateNotification(true);" aria-label="menu" class="md-fab animated">
 					       <md-icon class="material-icons" md-svg-icon="yeast"></md-icon>
 					      </md-button>
 				   	 </md-fab-trigger>

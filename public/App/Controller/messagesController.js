@@ -20,6 +20,7 @@ define(["angular"],function(){
 				}
 				else{
 					angular.element(".chat-window").perfectScrollbar();
+					angular.element(".chat-window").perfectScrollbar("update");
 				}
 			if(moveDown){
 				var elem = angular.element(".chat-window");

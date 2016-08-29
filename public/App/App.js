@@ -148,6 +148,7 @@ define(["angular","angularRoute","config","angularMessages","angularPrimus","ang
 		// 		$rootScope.showLoading = false;
 		// });
 		//
+
 		$rootScope.$on('$stateChangeError',function(event){
 			if(visor.isAuthenticated())
 			$state.go('profile',{username:visor.authData.username});
